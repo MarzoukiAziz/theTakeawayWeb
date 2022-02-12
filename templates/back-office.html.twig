@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Ansonika">
+    {% block links %}{% endblock %}
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="assets/front-office/images/logo2.svg" type="image/x-icon">
+
+    <!-- Bootstrap core CSS-->
+    <link href="assets/back-office/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Main styles -->
+    <link href="assets/back-office/css/admin.css" rel="stylesheet">
+    <!-- Icon fonts-->
+    <link href="assets/back-office/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Plugin styles -->
+    <link href="assets/back-office/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Your custom styles -->
+    <link href="assets/back-office/css/custom.css" rel="stylesheet">
+
+</head>
+
+<body class="fixed-nav sticky-footer" id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-default fixed-top" id="mainNav">
+    <a class="navbar-brand" href="index.html"><img src="assets/front-office/images/logo2.svg" data-retina="true" alt=""
+                                                   height="36"></a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <a class="nav-link" href="index.html">
+                    <img src="{{ asset("assets/back-office/img/dashboard.png") }}" height="20px">
+                    <span class="nav-link-text">Tableau de Board</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
+                <a class="nav-link" href="messages.html">
+                    <img src="{{ asset("assets/back-office/img/stock.png") }}" height="20px">
+                    <span class="nav-link-text">Stock</span>
+                </a>
+            </li>
+
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Bookings">
+                <a class="nav-link" href="bookings.html">
+                    <img src="{{ asset("assets/back-office/img/customer.png") }}" height="20px">
+                    <span class="nav-link-text">clients </span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Bookings">
+                <a class="nav-link" href="bookings.html">
+                    <img src="{{ asset("assets/back-office/img/booking.png") }}" height="20px">
+                    <span class="nav-link-text">Réservations <span class="badge badge-pill badge-primary">6 En Attente</span></span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Bookings">
+                <a class="nav-link" href="bookings.html">
+                    <img src="{{ asset("assets/back-office/img/order.png") }}" height="20px">
+                    <span class="nav-link-text">Commandes <span class="badge badge-pill badge-primary">14 En Attente</span></span>
+                </a>
+            </li>
+
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bookmarks">
+                <a class="nav-link" href="bookmarks.html">
+                    <img src="{{ asset("assets/back-office/img/restaurant.png") }}" height="20px">
+                    <span class="nav-link-text">Restaurants</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
+                <a class="nav-link" href="reviews.html">
+                    <img src="{{ asset("assets/back-office/img/menu.png") }}" height="20px">
+                    <span class="nav-link-text">Menu</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add listing">
+                <a class="nav-link" href="add-listing.html">
+                    <img src="{{ asset("assets/back-office/img/article.png") }}" height="20px">
+                    <span class="nav-link-text">Articles</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+                <a class="nav-link" href="user-profile.html">
+                    <img src="{{ asset("assets/back-office/img/blog.png") }}" height="20px">
+                    <span class="nav-link-text">Blog</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
+                <a class="nav-link" href="messages.html">
+                    <img src="{{ asset("assets/back-office/img/complain.png") }}" height="20px">
+                    <span class="nav-link-text">Réclamations</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
+                <a class="nav-link" href="messages.html">
+                    <img src="{{ asset("assets/back-office/img/tag.png") }}" height="20px">
+                    <span class="nav-link-text">Promotions</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav sidenav-toggler">
+            <li class="nav-item">
+                <a class="nav-link text-center" id="sidenavToggler">
+                    <i class="fa fa-fw fa-angle-left"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-fw fa-sign-out"></i>Déconnexion</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- /Navigation-->
+<div class="content-wrapper">
+    <div class="container-fluid">
+        {%  block contenu %}{% endblock %}
+    </div>
+    <!-- /.container-fluid-->
+</div>
+<!-- /.container-wrapper-->
+<footer class="sticky-footer">
+    <div class="container">
+        <div class="text-center">
+            <small>Copyright © The Takeaway 2022 - made with <i class="fa red-clr fa-heart " style=""></i> by Runtime Terror Esprit </small>
+        </div>
+    </div>
+</footer>
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fa fa-angle-up"></i>
+</a>
+<!-- Logout Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Prêt à partir?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Sélectionnez "Déconnexion" ci-dessous si vous êtes prêt à mettre fin à votre session en cours.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                <a class="btn btn-primary" href="login.html">Déconnexion</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap core JavaScript-->
+<script src="assets/back-office/vendor/jquery/jquery.min.js"></script>
+<script src="assets/back-office/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="assets/back-office/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Page level plugin JavaScript-->
+<script src="assets/back-office/vendor/chart.js/Chart.js"></script>
+<script src="assets/back-office/vendor/datatables/jquery.dataTables.js"></script>
+<script src="assets/back-office/vendor/datatables/dataTables.bootstrap4.js"></script>
+<script src="assets/back-office/vendor/jquery.selectbox-0.2.js"></script>
+<script src="assets/back-office/vendor/retina-replace.min.js"></script>
+<script src="assets/back-office/vendor/jquery.magnific-popup.min.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="assets/back-office/js/admin.js"></script>
+<!-- Custom scripts for this page-->
+<script src="assets/back-office/js/admin-charts.js"></script>
+{% block scripts %}{% endblock %}
+</body>
+
+</html>
