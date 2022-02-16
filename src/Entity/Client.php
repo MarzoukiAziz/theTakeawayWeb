@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -50,6 +52,21 @@ class Client implements UserInterface
      * @ORM\Column(type="string", length=8, nullable=true)
      */
     private $num_tel;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $points;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Restaurant::class)
+     */
+    private $restaurant;
+
+    public function __construct()
+    {
+        $this->restaurant = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -164,6 +181,42 @@ class Client implements UserInterface
     public function setNumTel(?string $num_tel): self
     {
         $this->num_tel = $num_tel;
+
+        return $this;
+    }
+
+    public function getPoints(): ?int
+    {
+        return $this->points;
+    }
+
+    public function setPoints(int $points): self
+    {
+        $this->points = $points;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Restaurant[]
+     */
+    public function getRestaurant(): Collection
+    {
+        return $this->restaurant;
+    }
+
+    public function addRestaurant(Restaurant $restaurant): self
+    {
+        if (!$this->restaurant->contains($restaurant)) {
+            $this->restaurant[] = $restaurant;
+        }
+
+        return $this;
+    }
+
+    public function removeRestaurant(Restaurant $restaurant): self
+    {
+        $this->restaurant->removeElement($restaurant);
 
         return $this;
     }

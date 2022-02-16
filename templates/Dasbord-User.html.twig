@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Ansonika">
+    <title>FOOGRA - Admin dashboard</title>
+    <link rel="stylesheet" href={{ asset("assets/front-office/css/icons.min.css") }}>
+    <link rel="shortcut icon" href={{ asset("assets/back-office/img/favicon.ico") }} type="image/x-icon">
+    <link rel="apple-touch-icon" type="image/x-icon" href={{ asset("assets/back-office/img/apple-touch-icon-57x57-precomposed.png") }} >
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href={{ asset("assets/back-office/img/apple-touch-icon-72x72-precomposed.png") }} >
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href={{ asset("assets/back-office/img/apple-touch-icon-114x114-precomposed.png") }} >
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href={{ asset("assets/back-office/img/apple-touch-icon-144x144-precomposed.png") }} >
+
+    {% block links %}{% endblock %}
+
+
+    <link href={{ asset("assets/back-office/vendor/bootstrap/css/bootstrap.min.css") }} rel="stylesheet">
+    <link  href={{ asset("assets/back-office/css/admin.css") }} rel="stylesheet">
+    <link  href={{ asset("assets/back-office/vendor/font-awesome/css/font-awesome.min.css") }} rel="stylesheet" type="text/css">
+    <link  href={{ asset("assets/back-office/vendor/datatables/dataTables.bootstrap4.css") }}rel="stylesheet">
+    <link   href={{ asset("assets/back-office/css/custom.css") }} rel="stylesheet">
+
+</head>
+
+<body class="fixed-nav sticky-footer" id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-default fixed-top" id="mainNav">
+    <a class="navbar-brand" href="index.html"><img src="assets/front-office/images/logo2.svg" data-retina="true" alt="" width="142"
+                                                   height="36"></a>
+
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <a class="nav-link" href="/dashboard">
+                    <i class="fa fa-fw fa-dashboard"></i>
+                    <span class="nav-link-text">Tableau de Board</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
+                <a class="nav-link" href="/test">
+                    <i class="fa fa-fw fa-cubes"></i>
+                    <span class="nav-link-text">Mes Carte</span>
+                </a>
+            </li>
+
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Bookings">
+                <a class="nav-link" href="bookings.html">
+                    <i class="fa fa-fw fa-user"></i>
+                    <span class="nav-link-text">clients </span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Bookings">
+                <a class="nav-link" href="bookings.html">
+                    <i class="fa fa-fw fa-calendar-check-o"></i>
+                    <span class="nav-link-text">Réservations <span class="badge badge-pill badge-primary">6 New</span></span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My listings">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMylistings"
+                   data-parent="#mylistings">
+                    <i class="fa fa-fw fa-shopping-basket"></i>
+                    <span class="nav-link-text">Commandes</span>
+                </a>
+                <ul class="sidenav-second-level collapse" id="collapseMylistings">
+                    <li>
+                        <a href="listings.html">Sur place <span class="badge badge-pill badge-primary">6</span></a>
+                    </li>
+                    <li>
+                        <a href="listings.html">takeaway <span class="badge badge-pill badge-success">6</span></a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bookmarks">
+                <a class="nav-link" href="bookmarks.html">
+                    <i class="fa fa-fw fa-utensils"></i>
+                    <span class="nav-link-text">Restaurants</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
+                <a class="nav-link" href="reviews.html">
+                    <i class="fa fa-fw fa-drumbstick-bite"></i>
+                    <span class="nav-link-text">Plats</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add listing">
+                <a class="nav-link" href="add-listing.html">
+                    <i class="fa fa-fw  fa-newspaper"></i>
+                    <span class="nav-link-text">Articles</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
+                <a class="nav-link" href="user-profile.html">
+                    <i class="fa fa-fw  fa-blog"></i>
+                    <span class="nav-link-text">Blog</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
+                <a class="nav-link" href="messages.html">
+                    <i class="fa fa-fw fa-exclamation"></i>
+                    <span class="nav-link-text">Réclamations</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents"
+                   data-parent="#Components">
+                    <i class="fa fa-fw fa-tags"></i>
+                    <span class="nav-link-text">Réduction </span>
+                </a>
+                <ul class="sidenav-second-level collapse" id="collapseComponents">
+                    <li>
+                        <a href="charts.html">Promotions </a>
+                    </li>
+                    <li>
+                        <a href="tables.html">Coupons</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="navbar-nav sidenav-toggler">
+            <li class="nav-item">
+                <a class="nav-link text-center" id="sidenavToggler">
+                    <i class="fa fa-fw fa-angle-left"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+
+                <div class="dropdown-menu" aria-labelledby="messagesDropdown">
+                    <h6 class="dropdown-header">New Messages:</h6>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">
+                        <strong>David Miller</strong>
+                        <span class="small float-right text-muted">11:21 AM</span>
+                        <div class="dropdown-message small">Hey there! This new version of SB Admin is pretty awesome! These
+                            messages clip off when they reach the end of the box so they don't overflow over to the sides!</div>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">
+                        <strong>Jane Smith</strong>
+                        <span class="small float-right text-muted">11:21 AM</span>
+                        <div class="dropdown-message small">I was wondering if you could meet for an appointment at 3:00 instead
+                            of 4:00. Thanks!</div>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">
+                        <strong>John Doe</strong>
+                        <span class="small float-right text-muted">11:21 AM</span>
+                        <div class="dropdown-message small">I've sent the final files over to you for review. When you're able to
+                            sign off of them let me know and we can discuss distribution.</div>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item small" href="#">View all messages</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+
+                <div class="dropdown-menu" aria-labelledby="alertsDropdown">
+                    <h6 class="dropdown-header">New Alerts:</h6>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">
+              <span class="text-success">
+                <strong>
+                  <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
+              </span>
+                        <span class="small float-right text-muted">11:21 AM</span>
+                        <div class="dropdown-message small">This is an automated server response message. All systems are online.
+                        </div>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">
+              <span class="text-danger">
+                <strong>
+                  <i class="fa fa-long-arrow-down fa-fw"></i>Status Update</strong>
+              </span>
+                        <span class="small float-right text-muted">11:21 AM</span>
+                        <div class="dropdown-message small">This is an automated server response message. All systems are online.
+                        </div>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">
+              <span class="text-success">
+                <strong>
+                  <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
+              </span>
+                        <span class="small float-right text-muted">11:21 AM</span>
+                        <div class="dropdown-message small">This is an automated server response message. All systems are online.
+                        </div>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item small" href="#">View all alerts</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <form class="form-inline my-2 my-lg-0 mr-lg-2">
+                    <div class="input-group">
+
+
+                    </div>
+                </form>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="modal" data-target="#exampleModal" >
+                    <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- /Navigation-->
+{% block contenu %}
+
+{% endblock %}
+        <!-- /.container-wrapper-->
+        <footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center">
+                    <small>Copyright © FOOGRA 2019</small>
+                </div>
+            </div>
+        </footer>
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="assets/back-office/vendor/jquery/jquery.min.js"></script>
+        <script src="assets/back-office/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/back-office/vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="assets/back-office/vendor/chart.js/Chart.js"></script>
+        <script src="assets/back-office/vendor/datatables/jquery.dataTables.js"></script>
+        <script src="assets/back-office/vendor/datatables/dataTables.bootstrap4.js"></script>
+        <script src="assets/back-office/vendor/jquery.selectbox-0.2.js"></script>
+        <script src="assets/back-office/vendor/retina-replace.min.js"></script>
+        <script src="assets/back-office/vendor/jquery.magnific-popup.min.js"></script>
+        <script src="assets/back-office/js/admin.js"></script>
+        <script src="assets/back-office/js/admin-charts.js"></script>
+        {% block scripts %}{% endblock %}
+
+</body>
+
+</html>

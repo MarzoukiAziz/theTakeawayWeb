@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220215095627 extends AbstractMigration
+final class Version20220216133004 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -24,7 +24,8 @@ final class Version20220215095627 extends AbstractMigration
         $this->addSql('CREATE TABLE article (id INT AUTO_INCREMENT NOT NULL, author_id INT NOT NULL, title VARCHAR(255) NOT NULL, date DATE NOT NULL, heure TIME NOT NULL, contenu LONGTEXT NOT NULL, banner VARCHAR(255) NOT NULL, INDEX IDX_23A0E66F675F31B (author_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE blog_client (id INT AUTO_INCREMENT NOT NULL, author_id INT NOT NULL, title VARCHAR(255) NOT NULL, contenu LONGTEXT NOT NULL, date DATE NOT NULL, heure TIME NOT NULL, statut VARCHAR(255) NOT NULL, INDEX IDX_520BA194F675F31B (author_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE carte_bancaire (id INT AUTO_INCREMENT NOT NULL, client_id_id INT NOT NULL, numero VARCHAR(16) NOT NULL, nom VARCHAR(255) NOT NULL, cvv VARCHAR(3) NOT NULL, email VARCHAR(255) NOT NULL, INDEX IDX_59E3C22DDC2902E0 (client_id_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE client (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', password VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_C7440455E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE client (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', password VARCHAR(255) NOT NULL, nom VARCHAR(100) DEFAULT NULL, prenom VARCHAR(100) DEFAULT NULL, num_tel VARCHAR(8) DEFAULT NULL, points INT NOT NULL, UNIQUE INDEX UNIQ_C7440455E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE client_restaurant (client_id INT NOT NULL, restaurant_id INT NOT NULL, INDEX IDX_7BC12F7E19EB6921 (client_id), INDEX IDX_7BC12F7EB1E7706E (restaurant_id), PRIMARY KEY(client_id, restaurant_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE commande (id INT AUTO_INCREMENT NOT NULL, restaurant_id_id INT DEFAULT NULL, client_id_id INT NOT NULL, employe_charge_id INT NOT NULL, carte_id_id INT DEFAULT NULL, prix_total DOUBLE PRECISION NOT NULL, statut VARCHAR(255) NOT NULL, date DATE NOT NULL, heure TIME NOT NULL, methode VARCHAR(255) NOT NULL, point_utilisees INT NOT NULL, statut_paiement VARCHAR(255) NOT NULL, INDEX IDX_6EEAA67D35592D86 (restaurant_id_id), INDEX IDX_6EEAA67DDC2902E0 (client_id_id), INDEX IDX_6EEAA67D94064F42 (employe_charge_id), INDEX IDX_6EEAA67DF7EBEA88 (carte_id_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE commentaire (id INT AUTO_INCREMENT NOT NULL, author_id INT NOT NULL, no_id INT NOT NULL, date DATE NOT NULL, contenu LONGTEXT NOT NULL, heure TIME NOT NULL, INDEX IDX_67F068BCF675F31B (author_id), INDEX IDX_67F068BC1A65C546 (no_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE element_details (id INT AUTO_INCREMENT NOT NULL, commande_id_id INT NOT NULL, element_id_id INT NOT NULL, quantite INT NOT NULL, options LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\', INDEX IDX_85CD4BDE462C4194 (commande_id_id), INDEX IDX_85CD4BDEBB66EACE (element_id_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -46,6 +47,8 @@ final class Version20220215095627 extends AbstractMigration
         $this->addSql('ALTER TABLE article ADD CONSTRAINT FK_23A0E66F675F31B FOREIGN KEY (author_id) REFERENCES admin (id)');
         $this->addSql('ALTER TABLE blog_client ADD CONSTRAINT FK_520BA194F675F31B FOREIGN KEY (author_id) REFERENCES client (id)');
         $this->addSql('ALTER TABLE carte_bancaire ADD CONSTRAINT FK_59E3C22DDC2902E0 FOREIGN KEY (client_id_id) REFERENCES client (id)');
+        $this->addSql('ALTER TABLE client_restaurant ADD CONSTRAINT FK_7BC12F7E19EB6921 FOREIGN KEY (client_id) REFERENCES client (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE client_restaurant ADD CONSTRAINT FK_7BC12F7EB1E7706E FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE commande ADD CONSTRAINT FK_6EEAA67D35592D86 FOREIGN KEY (restaurant_id_id) REFERENCES restaurant (id)');
         $this->addSql('ALTER TABLE commande ADD CONSTRAINT FK_6EEAA67DDC2902E0 FOREIGN KEY (client_id_id) REFERENCES client (id)');
         $this->addSql('ALTER TABLE commande ADD CONSTRAINT FK_6EEAA67D94064F42 FOREIGN KEY (employe_charge_id) REFERENCES employe (id)');
@@ -84,6 +87,7 @@ final class Version20220215095627 extends AbstractMigration
         $this->addSql('ALTER TABLE commande DROP FOREIGN KEY FK_6EEAA67DF7EBEA88');
         $this->addSql('ALTER TABLE blog_client DROP FOREIGN KEY FK_520BA194F675F31B');
         $this->addSql('ALTER TABLE carte_bancaire DROP FOREIGN KEY FK_59E3C22DDC2902E0');
+        $this->addSql('ALTER TABLE client_restaurant DROP FOREIGN KEY FK_7BC12F7E19EB6921');
         $this->addSql('ALTER TABLE commande DROP FOREIGN KEY FK_6EEAA67DDC2902E0');
         $this->addSql('ALTER TABLE commentaire DROP FOREIGN KEY FK_67F068BCF675F31B');
         $this->addSql('ALTER TABLE note DROP FOREIGN KEY FK_CFBDFA14DC2902E0');
@@ -101,6 +105,7 @@ final class Version20220215095627 extends AbstractMigration
         $this->addSql('ALTER TABLE promotion DROP FOREIGN KEY FK_C11D7DD11F1F2A24');
         $this->addSql('ALTER TABLE reponse DROP FOREIGN KEY FK_5FB6DEC72D6BA2D9');
         $this->addSql('ALTER TABLE reservation_table DROP FOREIGN KEY FK_B5565FE1B83297E7');
+        $this->addSql('ALTER TABLE client_restaurant DROP FOREIGN KEY FK_7BC12F7EB1E7706E');
         $this->addSql('ALTER TABLE commande DROP FOREIGN KEY FK_6EEAA67D35592D86');
         $this->addSql('ALTER TABLE etat_element DROP FOREIGN KEY FK_469F61BCB1E7706E');
         $this->addSql('ALTER TABLE ingrediant DROP FOREIGN KEY FK_6CA6D0AC35592D86');
@@ -111,6 +116,7 @@ final class Version20220215095627 extends AbstractMigration
         $this->addSql('DROP TABLE blog_client');
         $this->addSql('DROP TABLE carte_bancaire');
         $this->addSql('DROP TABLE client');
+        $this->addSql('DROP TABLE client_restaurant');
         $this->addSql('DROP TABLE commande');
         $this->addSql('DROP TABLE commentaire');
         $this->addSql('DROP TABLE element_details');
