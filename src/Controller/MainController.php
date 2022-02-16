@@ -6,15 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class TestController extends AbstractController
+class MainController extends AbstractController
 {
     /**
-     * @Route("/test", name="test")
+     * @Route("/", name="main")
      */
     public function index(): Response
     {
-        return $this->red('front-erreur.html.twig', [
-            'controller_name' => 'TestController',
+        return $this->render('main/index.html.twig', [
         ]);
     }
 }

@@ -60,6 +60,12 @@ class Reservation
      */
     private $adminCharge;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Restaurant::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $restaurant;
+
     public function __construct()
     {
         $this->tables = new ArrayCollection();
@@ -174,6 +180,18 @@ class Reservation
     public function setAdminCharge(?Admin $adminCharge): self
     {
         $this->adminCharge = $adminCharge;
+
+        return $this;
+    }
+
+    public function getRestaurant(): ?Restaurant
+    {
+        return $this->restaurant;
+    }
+
+    public function setRestaurant(?Restaurant $restaurant): self
+    {
+        $this->restaurant = $restaurant;
 
         return $this;
     }
