@@ -3,14 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
-class Client
+class Client implements UserInterface
 {
     /**
      * @ORM\Id
@@ -20,78 +21,39 @@ class Client
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=8)
-     */
-    private $telephone;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $motDePasse;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $prenom;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=8, nullable=true)
      */
-    private $points;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Restaurant::class)
-     */
-    private $wishlist;
-
-    /**
-     * @ORM\OneToMany(targetEntity=BlogClient::class, mappedBy="author", orphanRemoval=true)
-     */
-    private $blogs;
-
-    public function __construct()
-    {
-        $this->wishlist = new ArrayCollection();
-        $this->blogs = new ArrayCollection();
-    }
+    private $num_tel;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getTelephone(): ?string
-    {
-        return $this->telephone;
-    }
-
-    public function setTelephone(string $telephone): self
-    {
-        $this->telephone = $telephone;
-
-        return $this;
-    }
-
-    public function getMotDePasse(): ?string
-    {
-        return $this->motDePasse;
-    }
-
-    public function setMotDePasse(string $motDePasse): self
-    {
-        $this->motDePasse = $motDePasse;
-
-        return $this;
     }
 
     public function getEmail(): ?string
@@ -99,11 +61,75 @@ class Client
         return $this->email;
     }
 
-    public function setEmail(?string $email): self
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
         return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getNom(): ?string
@@ -130,68 +156,14 @@ class Client
         return $this;
     }
 
-    public function getPoints(): ?int
+    public function getNumTel(): ?string
     {
-        return $this->points;
+        return $this->num_tel;
     }
 
-    public function setPoints(int $points): self
+    public function setNumTel(?string $num_tel): self
     {
-        $this->points = $points;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Restaurant[]
-     */
-    public function getWishlist(): Collection
-    {
-        return $this->wishlist;
-    }
-
-    public function addWishlist(Restaurant $wishlist): self
-    {
-        if (!$this->wishlist->contains($wishlist)) {
-            $this->wishlist[] = $wishlist;
-        }
-
-        return $this;
-    }
-
-    public function removeWishlist(Restaurant $wishlist): self
-    {
-        $this->wishlist->removeElement($wishlist);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|BlogClient[]
-     */
-    public function getBlogs(): Collection
-    {
-        return $this->blogs;
-    }
-
-    public function addBlog(BlogClient $blog): self
-    {
-        if (!$this->blogs->contains($blog)) {
-            $this->blogs[] = $blog;
-            $blog->setAuthor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBlog(BlogClient $blog): self
-    {
-        if ($this->blogs->removeElement($blog)) {
-            // set the owning side to null (unless already changed)
-            if ($blog->getAuthor() === $this) {
-                $blog->setAuthor(null);
-            }
-        }
+        $this->num_tel = $num_tel;
 
         return $this;
     }

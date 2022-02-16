@@ -13,7 +13,7 @@ class TestController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('front-erreur.html.twig', [
+        return $this->render('front-office.html.twig', [
             'controller_name' => 'TestController',
         ]);
     }

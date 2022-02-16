@@ -1,3 +1,5 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+Hello_page:
+  path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+  defaults:
+    template: 'front-office.html.twig'
