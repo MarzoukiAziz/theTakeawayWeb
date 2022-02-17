@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\CarteBancaire;
+use App\Entity\CartBancaire;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method CarteBancaire|null find($id, $lockMode = null, $lockVersion = null)
- * @method CarteBancaire|null findOneBy(array $criteria, array $orderBy = null)
- * @method CarteBancaire[]    findAll()
- * @method CarteBancaire[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method CartBancaire|null find($id, $lockMode = null, $lockVersion = null)
+ * @method CartBancaire|null findOneBy(array $criteria, array $orderBy = null)
+ * @method CartBancaire[]    findAll()
+ * @method CartBancaire[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CarteBancaireRepository extends ServiceEntityRepository
+class CartBancaireRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, CarteBancaire::class);
+        parent::__construct($registry, CartBancaire::class);
     }
 
     // /**
-    //  * @return CarteBancaire[] Returns an array of CarteBancaire objects
+    //  * @return CartBancaire[] Returns an array of CartBancaire objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class CarteBancaireRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?CarteBancaire
+    public function findOneBySomeField($value): ?CartBancaire
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

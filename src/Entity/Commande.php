@@ -65,7 +65,7 @@ class Commande
     private $pointUtilisees;
 
     /**
-     * @ORM\ManyToOne(targetEntity=CarteBancaire::class)
+     * @ORM\ManyToOne(targetEntity=CartBancaire::class)
      */
     private $carteId;
 
