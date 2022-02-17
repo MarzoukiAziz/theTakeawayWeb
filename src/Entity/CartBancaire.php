@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use App\Repository\CartBancaireRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,23 +18,34 @@ class CartBancaire
      */
     private $id;
 
+
     /**
-     * @ORM\Column(type="string", length=26)
+     * @ORM\Column(type="integer")
+     * @Assert\Type("integer")
+     *
      */
     private $numero;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\Type("string")
+     *
+     *
      */
     private $nomcomplet;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
+     *
+     *
      */
     private $datexp;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer", length=255)
+     * @Assert\Type("integer")
+     * @Assert\Range(min = 100, max = 999, notInRangeMessage = "Cvv must content 3 Numbers")
+     *
      */
     private $cvv;
 
@@ -42,12 +54,12 @@ class CartBancaire
         return $this->id;
     }
 
-    public function getNumero(): ?string
+    public function getNumero(): ?int
     {
         return $this->numero;
     }
 
-    public function setNumero(string $numero): self
+    public function setNumero(int $numero): self
     {
         $this->numero = $numero;
 
@@ -78,12 +90,13 @@ class CartBancaire
         return $this;
     }
 
-    public function getCvv(): ?string
+
+    public function getCvv(): ?int
     {
         return $this->cvv;
     }
 
-    public function setCvv(string $cvv): self
+    public function setCvv(int $cvv): self
     {
         $this->cvv = $cvv;
 

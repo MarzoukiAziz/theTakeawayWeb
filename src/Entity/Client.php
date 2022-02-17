@@ -8,6 +8,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
+
+
+
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
@@ -24,8 +30,12 @@ class Client implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
      */
     private $email;
+
+
+
 
     /**
      * @ORM\Column(type="json")
@@ -37,24 +47,34 @@ class Client implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+ 
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     *@Assert\Type("String")
      */
     private $nom;
+ 
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     *
+     * @ORM\Column(type="string", length=100)
+     * @Assert\Type("String")
      */
     private $prenom;
 
     /**
-     * @ORM\Column(type="string", length=8, nullable=true)
+     * @ORM\Column(type="integer")
+     * @Assert\Range(min = 1000000, max = 99999999, notInRangeMessage = "Phone must content 8 Numbers")
+     * @Assert\Type("integer")
      */
     private $num_tel;
-
+    
+ 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type("integer")
+     *
      */
     private $points;
 
@@ -62,6 +82,13 @@ class Client implements UserInterface
      * @ORM\ManyToMany(targetEntity=Restaurant::class)
      */
     private $restaurant;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $Date_curent;
+
+
 
     public function __construct()
     {
@@ -173,17 +200,8 @@ class Client implements UserInterface
         return $this;
     }
 
-    public function getNumTel(): ?string
-    {
-        return $this->num_tel;
-    }
+    
 
-    public function setNumTel(?string $num_tel): self
-    {
-        $this->num_tel = $num_tel;
-
-        return $this;
-    }
 
     public function getPoints(): ?int
     {
@@ -217,6 +235,29 @@ class Client implements UserInterface
     public function removeRestaurant(Restaurant $restaurant): self
     {
         $this->restaurant->removeElement($restaurant);
+
+        return $this;
+    }
+
+    public function getDateCurent(): ?\DateTimeInterface
+    {
+        return $this->Date_curent;
+    }
+
+    public function setDateCurent(\DateTimeInterface $Date_curent): self
+    {
+        $this->Date_curent = $Date_curent;
+
+        return $this;
+    }
+    public function getNumTel(): ?int
+    {
+        return $this->num_tel;
+    }
+
+    public function setNumTel(int $num_tel): self
+    {
+        $this->num_tel = $num_tel;
 
         return $this;
     }

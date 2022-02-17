@@ -1,9 +1,7 @@
 {% extends 'Dasbord-User.html.twig' %}
 
 {% block links %}
-    <title>
-        S'authentifier
-    </title>
+ 
 {% endblock %}
 
 {% block contenu %}
@@ -13,7 +11,7 @@
         <li class="breadcrumb-item">
             <a href="#">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">My Dashboard</li>
+        <li class="breadcrumb-item active">Mes cartes</li>
     </ol>
 
         <table class="table">
@@ -36,8 +34,8 @@
                     <td>{{ cart_bancaire.datexp }}</td>
                     <td>{{ cart_bancaire.cvv }}</td>
                     <td>
-                        <a href="{{ path('cart_bancaire_show', {'id': cart_bancaire.id}) }}">show    /</a>
-                        <a href="{{ path('cart_bancaire_edit', {'id': cart_bancaire.id}) }}">edit</a>
+                        <a class="btn btn-primary" href="{{ path('cart_bancaire_show', {'id': cart_bancaire.id}) }}">show    </a>
+                        <a class="btn btn-primary" href="{{ path('cart_bancaire_edit', {'id': cart_bancaire.id}) }}">edit</a>
                     </td>
                 </tr>
             {% else %}

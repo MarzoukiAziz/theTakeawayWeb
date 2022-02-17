@@ -21,6 +21,7 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, GuardAuthenticatorHandler $guardHandler, ClientAuthenticationAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new Client();
+        $user->setDateCurent(new \DateTime('now'));
         $user->setPoints(0);
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
