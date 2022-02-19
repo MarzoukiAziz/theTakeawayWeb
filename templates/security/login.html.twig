@@ -20,7 +20,17 @@ S'authentifier
                 You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
             </div>
         {% endif %}
-
+        <section class="Loginopt" style="display: flex ; justify-content: space-between; padding-inline-end: 5px;" >
+        <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" class="btn btn-primary facebook" >
+            <span >Login with Facebook</span>
+            <i class="fa fa-facebook"></i>
+        </a>
+        <br>
+        <a href="{{ path('hwi_oauth_service_redirect', {'service': 'github' }) }}" class="btn btn-primary github">
+            <span>Login with Github</span>
+            <i class="fa fa-github"></i>
+        </a>
+        </section>
         <h1 class="h3 mb-3 font-weight-normal mt-2">Ouvrez une session</h1>
         <label for="inputEmail">Email</label>
         <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
@@ -36,6 +46,7 @@ S'authentifier
         <button class="btn btn-lg btn-primary " style="float: right;margin-top: 30px" type="submit">
             Connecter
         </button>
+
     </form>
 </div>
 {% endblock %}

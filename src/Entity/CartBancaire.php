@@ -44,7 +44,7 @@ class CartBancaire
     /**
      * @ORM\Column(type="integer", length=255)
      * @Assert\Type("integer")
-     * @Assert\Range(min = 100, max = 999, notInRangeMessage = "Cvv must content 3 Numbers")
+     * @Assert\Range(min = 001, max = 999, notInRangeMessage = "Cvv must content 3 Numbers")
      *
      */
     private $cvv;

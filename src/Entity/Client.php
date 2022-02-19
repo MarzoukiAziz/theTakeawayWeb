@@ -17,7 +17,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ *
+ *
  */
 class Client implements UserInterface
 {
@@ -29,8 +30,8 @@ class Client implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
+     * @ORM\Column(type="string", length=180, nullable=true)
+     *@Assert\NotBlank
      */
     private $email;
 
@@ -38,13 +39,13 @@ class Client implements UserInterface
 
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json", nullable=true)
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=240, nullable=true)
      */
     private $password;
  
@@ -58,13 +59,14 @@ class Client implements UserInterface
 
     /**
      *
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100 , nullable=true)
      * @Assert\Type("String")
      */
     private $prenom;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
+     * @Assert\NotBlank
      * @Assert\Range(min = 1000000, max = 99999999, notInRangeMessage = "Phone must content 8 Numbers")
      * @Assert\Type("integer")
      */
@@ -72,7 +74,7 @@ class Client implements UserInterface
     
  
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @Assert\Type("integer")
      *
      */
@@ -84,9 +86,35 @@ class Client implements UserInterface
     private $restaurant;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime" , nullable=true)
      */
     private $Date_curent;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $facebookID;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $facebookAccessToken;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $githubID;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $githubAccessToken;
+
+    /**
+     * @ORM\Column(type="boolean", length=255, nullable=true)
+     */
+    private $IsVerified;
+
+
 
 
 
@@ -119,7 +147,7 @@ class Client implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->nom;
     }
 
     /**
@@ -260,5 +288,85 @@ class Client implements UserInterface
         $this->num_tel = $num_tel;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFacebookAccessToken()
+    {
+        return $this->facebookAccessToken;
+    }
+
+    /**
+     * @param mixed $facebookAccessToken
+     */
+    public function setFacebookAccessToken($facebookAccessToken): void
+    {
+        $this->facebookAccessToken = $facebookAccessToken;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFacebookID()
+    {
+        return $this->facebookID;
+    }
+
+    /**
+     * @param mixed $facebookID
+     */
+    public function setFacebookID($facebookID): void
+    {
+        $this->facebookID = $facebookID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGithubID()
+    {
+        return $this->githubID;
+    }
+
+    /**
+     * @param mixed $githubID
+     */
+    public function setGithubID($githubID): void
+    {
+        $this->githubID = $githubID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGithubAccessToken()
+    {
+        return $this->githubAccessToken;
+    }
+
+    /**
+     * @param mixed $githubAccessToken
+     */
+    public function setGithubAccessToken($githubAccessToken): void
+    {
+        $this->githubAccessToken = $githubAccessToken;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsVerified()
+    {
+        return $this->IsVerified;
+    }
+
+    /**
+     * @param mixed $IsVerified
+     */
+    public function setIsVerified($IsVerified): void
+    {
+        $this->IsVerified = $IsVerified;
     }
 }
