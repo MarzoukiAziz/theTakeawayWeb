@@ -38,15 +38,7 @@ class Reponse
      */
     private $reclamation;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Client::class)
-     */
-    private $client;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Admin::class)
-     */
-    private $admin;
 
     public function getId(): ?int
     {
@@ -101,27 +93,4 @@ class Reponse
         return $this;
     }
 
-    public function getClient(): ?Client
-    {
-        return $this->client;
-    }
-
-    public function setClient(?Client $client): self
-    {
-        $this->client = $client;
-
-        return $this;
-    }
-
-    public function getAdmin(): ?Admin
-    {
-        return $this->admin;
-    }
-
-    public function setAdmin(?Admin $admin): self
-    {
-        $this->admin = $admin;
-
-        return $this;
-    }
 }

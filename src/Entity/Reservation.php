@@ -56,7 +56,7 @@ class Reservation
     private $clientId;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Admin::class)
+     * @ORM\ManyToOne(targetEntity=Client::class)
      */
     private $adminCharge;
 
@@ -166,12 +166,12 @@ class Reservation
         return $this;
     }
 
-    public function getAdminCharge(): ?Admin
+    public function getAdminCharge(): ?Client
     {
         return $this->adminCharge;
     }
 
-    public function setAdminCharge(?Admin $adminCharge): self
+    public function setAdminCharge(?Client $adminCharge): self
     {
         $this->adminCharge = $adminCharge;
 

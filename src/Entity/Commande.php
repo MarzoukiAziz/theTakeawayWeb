@@ -49,7 +49,7 @@ class Commande
     private $clientId;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Employe::class)
+     * @ORM\ManyToOne(targetEntity=Client::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $employeCharge;
@@ -151,12 +151,12 @@ class Commande
         return $this;
     }
 
-    public function getEmployeCharge(): ?Employe
+    public function getEmployeCharge(): ?Client
     {
         return $this->employeCharge;
     }
 
-    public function setEmployeCharge(?Employe $employeCharge): self
+    public function setEmployeCharge(?Client $employeCharge): self
     {
         $this->employeCharge = $employeCharge;
 

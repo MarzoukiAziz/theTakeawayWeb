@@ -45,7 +45,7 @@ class Article
     private $banner;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Admin::class, inversedBy="articles")
+     * @ORM\ManyToOne(targetEntity=client::class, inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;
@@ -126,12 +126,12 @@ class Article
         return $this;
     }
 
-    public function getAuthor(): ?Admin
+    public function getAuthor(): ?Client
     {
         return $this->author;
     }
 
-    public function setAuthor(?Admin $author): self
+    public function setAuthor(?Client $author): self
     {
         $this->author = $author;
 
