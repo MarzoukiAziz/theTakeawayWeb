@@ -1,0 +1,27 @@
+{% extends 'back-office.html.twig' %}
+
+
+{% block links %} <title>Menu</title>{% endblock %}
+
+
+{% block contenu %}
+
+{% block title %}<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="#">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Edit Menu</li>
+</ol>{% endblock %}
+
+{% block body %}
+
+
+    <a class="btn_1 gray approve" href="{{ path('menu_index') }}"> <i class="fa fa-fw fa-reply"></i> back to list</a>
+
+    {{ include('menu/_form.html.twig', {'button_label': 'Update'}) }}
+
+
+
+
+{% endblock %}
+{% endblock %}

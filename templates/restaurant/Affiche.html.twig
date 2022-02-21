@@ -1,0 +1,49 @@
+{% extends 'back-office.html.twig' %}
+
+
+{% block links %} <title>Restaurants</title>{% endblock %}
+
+
+{% block contenu %}
+
+
+
+
+
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+
+            <th scope="col">ID</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Adresse</th>
+            <th scope="col">Description</th>
+            <th scope="col">Heure_ouverture</th>
+            <th scope="col">Heure_fermeture</th>
+            <th scope="col">Architecture</th>
+            <th scope="col">Telephone</th>
+            <th scope="col">Mise a jour </th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr {% for r in restaurant %}>
+
+            <td>{{ r.id }}</td>
+            <td>{{ r.nom }}</td>
+            <td>{{ r.adresse }}</td>
+            <td>{{ r.description }}</td>
+            <td>{{ r.heureOuverture |date }}</td>
+            <td>{{ r.heureFermeture |date}}</td>
+            <td>{{ r.architecture }}</td>
+            <td>{{ r.telephone }}</td>
+            <td><a  href="{{ path('del',{'id':r.id}) }}" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o">DELETE</a></td>
+
+        </tr{% endfor %}>
+        </tbody>
+    </table>
+
+
+{% endblock %}

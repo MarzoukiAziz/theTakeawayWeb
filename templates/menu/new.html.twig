@@ -1,0 +1,25 @@
+{% extends 'back-office.html.twig' %}
+
+
+{% block links %} <title>Menu</title>{% endblock %}
+
+
+{% block contenu %}
+
+{% block title %}<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="#">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Ajouter Menu</li>
+</ol>{% endblock %}
+
+{% block body %}
+    <h1>Create new MenuElement</h1>
+
+    {{ include('menu/_form.html.twig') }}
+
+    <a href="{{ path('menu_index') }}">back to list</a>
+{% endblock %}
+
+
+{% endblock %}

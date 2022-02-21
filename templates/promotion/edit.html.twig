@@ -1,0 +1,28 @@
+{% extends 'back-office.html.twig' %}
+
+
+{% block links %} <title>Restaurants</title>{% endblock %}
+
+
+{% block contenu %}
+
+{% block title %}<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="#">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Promotion</li>
+</ol>{% endblock %}
+
+{% block body %}
+    <h1>Edit Promotion</h1>
+    {{ include('promotion/_form.html.twig', {'button_label': 'Update'}) }}
+<table>
+<tr>
+
+   <th><a href="{{ path('promotion_index') }}">back to list</a></th>
+<th> {{ include('promotion/_delete_form.html.twig') }} </th>
+</tr>
+</table>
+
+{% endblock %}
+{% endblock %}

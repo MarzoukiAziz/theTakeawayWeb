@@ -1,0 +1,60 @@
+{% extends 'back-office.html.twig' %}
+
+
+{% block links %} <title>Menu</title>{% endblock %}
+
+
+{% block contenu %}
+
+    {% block title %} <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active"> Menu</li>
+    </ol>{% endblock %}
+
+
+
+{% block body %}
+
+
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Description</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Categorie</th>
+                <th scope="col">Image</th>
+                <th scope="col">Options</th>
+                <th scope="col">Mise a jour</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for menu_element in menu_elements %}
+            <tr>
+                <td>{{ menu_element.id }}</td>
+                <td>{{ menu_element.nom }}</td>
+                <td>{{ menu_element.description }}</td>
+                <td>{{ menu_element.prix }}</td>
+                <td>{{ menu_element.categorie }}</td>
+                <td>{{ menu_element.image }}</td>
+                <td>{{ menu_element.options ? menu_element.options|join(', ') : '' }}</td>
+                <td>
+                    <a class="btn_1 gray" href="{{ path('menu_show', {'id': menu_element.id}) }}"><i class="fa fa-fw fa-eye"></i>show</a>
+
+                    <a class="btn_1 gray approve" href="{{ path('menu_edit', {'id': menu_element.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn_1 gray approve" href="{{ path('menu_new') }}">Ajouter</a>
+{% endblock %}
+{% endblock %}
