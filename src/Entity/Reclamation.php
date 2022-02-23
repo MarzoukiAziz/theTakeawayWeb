@@ -6,6 +6,8 @@ use App\Repository\ReclamationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=ReclamationRepository::class)
@@ -21,26 +23,43 @@ class Reclamation
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 50,
+     *      minMessage = "Le sujet doit comporter au moins 5 caractères",
+     *      maxMessage = "Le sujet ne peut pas dépasser 50 caractères"
+     * )
      */
     private $sujet;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(
+     *      min = 25,
+     *      max = 1000,
+     *      minMessage = "Le contenu doit comporter au moins 25 caractères",
+     *      maxMessage = "Le sujet ne peut pas dépasser 1000 caractères"
+     * )
      */
     private $contenu;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Choice({"Ouvert", "Fermé"})
      */
     private $statut;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Date
+     * @var string A "Y-m-d" formatted value
      */
     private $date;
 
     /**
      * @ORM\Column(type="time")
+     * @Assert\Time
+     * @var string A "H:i" formatted value
      */
     private $heure;
 

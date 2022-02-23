@@ -5,10 +5,13 @@
 {% endblock %}
 
 {% block contenu %}
+
     <div style="display: flex;justify-content: center;margin: 30px;height: 500px;color: whitesmoke">
         <div style="background-image: url({{ asset("assets/reclamation-bg.jpg") }});" class="fit-bg"></div>
 
         <div class="card-body">
+
+
             <h1>NOUVELLE RECLAMATION</h1>
             {{ form_start(f) }}
 
@@ -29,6 +32,10 @@
                 {{ form_end(f) }}
 
             </form>
+            <div style="    margin-top: 50px;text-align: center;background-color: rgba(0,0,0,0.5);font-size: 20px">
+                <a href="/reclamations">&lt;&lt;Retourner à vos réclamations</a>
+            </div>
+
         </div>
     </div>
 

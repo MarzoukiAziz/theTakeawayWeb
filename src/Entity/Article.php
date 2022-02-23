@@ -29,10 +29,7 @@ class Article
      */
     private $date;
 
-    /**
-     * @ORM\Column(type="time")
-     */
-    private $heure;
+
 
     /**
      * @ORM\Column(type="text")
@@ -92,17 +89,6 @@ class Article
         return $this;
     }
 
-    public function getHeure(): ?\DateTimeInterface
-    {
-        return $this->heure;
-    }
-
-    public function setHeure(\DateTimeInterface $heure): self
-    {
-        $this->heure = $heure;
-
-        return $this;
-    }
 
     public function getContenu(): ?string
     {

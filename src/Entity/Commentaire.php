@@ -27,10 +27,6 @@ class Commentaire
      */
     private $contenu;
 
-    /**
-     * @ORM\Column(type="time")
-     */
-    private $heure;
 
     /**
      * @ORM\ManyToOne(targetEntity=Client::class)
@@ -78,17 +74,7 @@ class Commentaire
         return $this;
     }
 
-    public function getHeure(): ?\DateTimeInterface
-    {
-        return $this->heure;
-    }
 
-    public function setHeure(\DateTimeInterface $heure): self
-    {
-        $this->heure = $heure;
-
-        return $this;
-    }
 
     public function getAuthor(): ?Client
     {

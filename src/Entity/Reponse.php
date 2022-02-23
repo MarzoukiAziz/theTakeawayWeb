@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReponseRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ReponseRepository::class)
@@ -19,16 +20,24 @@ class Reponse
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 250,
+     *      minMessage = "Le contenu doit comporter au moins 25 caractères",
+     *      maxMessage = "Le sujet ne peut pas dépasser 250 caractères"
+     * )
      */
     private $contenu;
 
     /**
      * @ORM\Column(type="date")
+     * @var string A "Y-m-d" formatted value
      */
     private $date;
 
     /**
      * @ORM\Column(type="time")
+     * @var string A "H:i:s" formatted value
      */
     private $heure;
 
@@ -41,6 +50,7 @@ class Reponse
     /**
      * @ORM\ManyToOne(targetEntity=Client::class)
      * @ORM\JoinColumn(nullable=false)
+     *
      */
     private $author;
 

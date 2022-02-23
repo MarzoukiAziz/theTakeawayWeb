@@ -4,6 +4,9 @@
     <title>Détails de Votre Reclamation</title>
 {% endblock %}
 {% block contenu %}
+    <div style=" font-size: 18px">
+        <a href="/admin/reclamations">&lt;&lt;Retourner aux réclamations</a>
+    </div>
     <div style="display: flex;justify-content: center;margin: 30px;">
 
         <div class="card-body">
@@ -72,7 +75,7 @@
                         <hr>
                         <div style="display: flex" class=" flex-row comment-row">
 
-                            {% if("Client" in reponse.author.roles) %}
+                            {% if("ROLE_CLIENT" in reponse.author.roles) %}
                                 <div style="margin: 20px" class="p-2"><span class="round"><img
                                                 src="{{ asset("assets/client.png") }}" alt="user"
                                                 width="50"></span></div>
@@ -83,7 +86,7 @@
 
                             {% endif %}
                             <div class="comment-text w-100">
-                                <h5>{% if("Client" in reponse.author.roles) %}
+                                <h5>{% if("ROLE_CLIENT" in reponse.author.roles) %}
                                         You
                                     {% else %}
                                         Admin

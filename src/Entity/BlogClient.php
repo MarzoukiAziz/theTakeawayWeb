@@ -34,10 +34,7 @@ class BlogClient
      */
     private $date;
 
-    /**
-     * @ORM\Column(type="time")
-     */
-    private $heure;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -54,6 +51,11 @@ class BlogClient
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="blogClient")
      */
     private $commentaires;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $imageBlog;
 
 
     public function __construct()
@@ -102,17 +104,7 @@ class BlogClient
         return $this;
     }
 
-    public function getHeure(): ?\DateTimeInterface
-    {
-        return $this->heure;
-    }
 
-    public function setHeure(\DateTimeInterface $heure): self
-    {
-        $this->heure = $heure;
-
-        return $this;
-    }
 
     public function getStatut(): ?string
     {
@@ -164,6 +156,18 @@ class BlogClient
                 $commentaire->setBlogClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImageBlog(): ?string
+    {
+        return $this->imageBlog;
+    }
+
+    public function setImageBlog(string $imageBlog): self
+    {
+        $this->imageBlog = $imageBlog;
 
         return $this;
     }

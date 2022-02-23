@@ -29,9 +29,13 @@ class ReclamationController extends AbstractController
      */
     public function showReclamationsToAdmin(Request $request, PaginatorInterface $paginator, ReclamationRepository $reclamationRepository): Response
     {
-        //warning find by client id
+        $reclamations = $this->getDoctrine()->getRepository(Reclamation::class)
+            ->createQueryBuilder('r')
+            ->orderBy('r.date', 'DESC')
+            ->getQuery()
+            ->getResult();
         $reclamations = $paginator->paginate(
-            $reclamationRepository->findAll(),
+            $reclamations,
             $request->query->getInt('page', 1),
             10
         );
@@ -59,11 +63,7 @@ class ReclamationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->getRepository(Reponse::class);
-            ///Warning
-            /// change this later
-
-            $author = $this->getDoctrine()->getRepository(Client::class)->find("2");
-            $reponse->setAuthor($author);
+            $reponse->setAuthor($this->getUser());
             $date = new \DateTime();
             $reponse->setDate($date);
             $reponse->setHeure($date);
@@ -134,16 +134,17 @@ class ReclamationController extends AbstractController
     /**
      * @Route("/reclamations", name="reclamation_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $client = $this->getDoctrine()->getRepository(Client::class)->find(1);
+        $clientId=$this->getUser()->getId();
+        $client = $this->getDoctrine()->getRepository(Client::class)->find($clientId);
         $reclamations = $this->getDoctrine()->getRepository(Reclamation::class)
             ->createQueryBuilder('r')
             ->andWhere('r.clientId=?1')
             ->setParameter(1, $client->getId())
+            ->orderBy('r.date', 'DESC')
             ->getQuery()
             ->getResult();
-
         return $this->render('reclamation/index.html.twig', [
             'reclamations' => $reclamations
         ]);
@@ -160,17 +161,14 @@ class ReclamationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $reclamation->setStatut("Ouvert");
-            ///Warning
-            /// change this later
-
-            $client = $this->getDoctrine()->getRepository(Client::class)->find("1");
+            $clientId=$this->getUser()->getId();
+            $client = $this->getDoctrine()->getRepository(Client::class)->find($clientId);
             $reclamation->setClientId($client);
             $date = new \DateTime();
             $reclamation->setDate($date);
             $reclamation->setHeure($date);
             $entityManager->persist($reclamation);
             $entityManager->flush();
-
             return $this->redirectToRoute('reclamation_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -194,14 +192,10 @@ class ReclamationController extends AbstractController
             ->setParameter(1, $reclamation)
             ->getQuery()
             ->getResult();
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->getRepository(Reponse::class);
-            ///Warning
-            /// change this later
-
-            $client = $this->getDoctrine()->getRepository(Client::class)->find("1");
+            $client = $this->getDoctrine()->getRepository(Client::class)->find($this->getUser()->getId());
             $reponse->setAuthor($client);
             $date = new \DateTime();
             $reponse->setDate($date);
@@ -209,7 +203,6 @@ class ReclamationController extends AbstractController
             $reponse->setReclamation($reclamation);
             $em->persist($reponse);
             $em->flush();
-
             return $this->redirectToRoute('reclamation_show', ['id' => $reclamation->getId()], Response::HTTP_SEE_OTHER);
         }
         return $this->render('reclamation/show.html.twig', [
@@ -224,7 +217,7 @@ class ReclamationController extends AbstractController
     /**
      * @Route("/reclamations/{id}/delete", name="reclamation_delete", methods={"POST"})
      */
-    public function delete(Request $request, $id, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, $id, EntityManagerInterface $em): Response
     {
         $em = $this->getDoctrine()->getManager();
         $rec = $em->getRepository(Reclamation::class)->find($id);

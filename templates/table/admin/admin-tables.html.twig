@@ -14,7 +14,7 @@
         <div class="card-header" >
 
             <div style="position: relative;
-  text-align: center;width: 1000px">
+  text-align: center;width: 700px">
                 <img src="{{ asset(res.architecture) }}" style="width:100%;">
                 {% for table in tables %}
                 <div style="position: absolute;top: {{ table.posY }}px;left: {{ table.posX }}px;background-color: green;color: white;border-radius: 10px;padding:2px 11px;">{{ table.numero }}</div>
@@ -33,7 +33,6 @@
                         <th>Position Horizontale</th>
                         <th>Position Verticale</th>
                         <th>Nombre de Place</th>
-                        <th>Prochaine Réservation</th>
                         <th>Mettre à Jour</th>
                     </tr>
                     </thead>
@@ -46,7 +45,6 @@
                             <td>{{ t.posY}}</td>
                             <td>{{ t.nbPalces}}</td>
 
-                            <td></td>
                             <td>
                                 <a href="/admin/tables/{{ res.id }}/{{ t.id }}/update"><button type="button" class="btn btn-warning  ">Modifier</button></a>
                                <a href="/admin/tables/{{ res.id }}/{{ t.id }}/delete"><button type="button" class="btn btn-danger ml-5 ">Supprimer</button></a>

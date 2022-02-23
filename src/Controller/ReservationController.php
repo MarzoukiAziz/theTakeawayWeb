@@ -55,6 +55,7 @@ class ReservationController extends AbstractController
             ->createQueryBuilder('r')
             ->where('r.restaurant=?1')
             ->setParameter(1, $rid)
+            ->orderBy('r.date', 'DESC')
             ->getQuery()
             ->getResult();
         //paginating the reservations by 10 per page
@@ -77,17 +78,11 @@ class ReservationController extends AbstractController
     {
         $rep = $this->getDoctrine()->getRepository(Reservation::class);
         $reservation = $rep->find($id);
-        ///important
-        ///change this with the current admin  id;
-        $adminId = 1;
-        $rep2 = $this->getDoctrine()->getRepository(Client::class);
-        $admin = $rep2->find($adminId);
-        //check if the parameters are correct
-        if (!($s == "Accepté" or $s == "Réfusé" or $s = "Annulé") or $admin == null or $reservation == null) {
+        if (!($s == "Accepté" or $s == "Réfusé" or $s = "Annulé")  or $reservation == null) {
             return $this->redirectToRoute("erreur-back");
         }
         $reservation->setStatut($s);
-        $reservation->setAdminCharge($admin);
+        $reservation->setAdminCharge($this->getUser());
         $this->getDoctrine()->getManager()->flush();
         return $this->redirectToRoute('admin-reservations-restaurant', ['rid' => $rid]);
     }
@@ -215,10 +210,12 @@ class ReservationController extends AbstractController
             //finding the unavailable tables which already have a reservation at the given time //work with ids
             $ut = array();
             foreach ($currentReservations as $cr) {
-                if (($cr->getHeureDepart() >= $data["heureArrive"] and $cr->getHeureArrive() <= $data["heureArrive"])
-                    or ($cr->getHeureArrive() >= $heureDepart and $cr->getHeureDepart() <= $heureDepart)) {
-                    foreach ($cr->getTables() as $tab) {
-                        array_push($ut, $tab->getId());
+                if($cr->getStatut()=="Accepté" or $cr->getStatut()=="En Attente"){
+                    if (($cr->getHeureDepart() >= $data["heureArrive"] and $cr->getHeureArrive() <= $data["heureArrive"])
+                        or ($cr->getHeureArrive() >= $heureDepart and $cr->getHeureDepart() <= $heureDepart)) {
+                        foreach ($cr->getTables() as $tab) {
+                            array_push($ut, $tab->getId());
+                        }
                     }
                 }
             }
@@ -268,18 +265,15 @@ class ReservationController extends AbstractController
     {
         $rep = $this->getDoctrine()->getRepository(Restaurant::class);
         $res = $rep->find($rid);
-        //// important
-        /// change this test client with the real one
-        $exampleClient = $this->getDoctrine()->getRepository(Client::class)->find('1');
         $data = $request->request;
-        if($res == null or $exampleClient ==null){
+        if($res == null){
             return $this->redirectToRoute("erreur-front");
         }
         //setting the data of the new reservation object
         $newRev = new Reservation();
         $newRev->setRestaurant($res);
         $newRev->setDate(date_create($data->get('date')));
-        $newRev->setClientId($exampleClient);//will be changed later
+        $newRev->setClientId($this->getUser());
         $newRev->setHeureArrive(date_create($data->get('ha')));
         $newRev->setHeureDepart(date_create($data->get('hd')));
         $newRev->setNbPersonne($data->getInt('nb'));
@@ -291,12 +285,14 @@ class ReservationController extends AbstractController
                 $newRev->addTable($t);
             }
         }
+        if($newRev->getTables()->count()==0){
+            return $this->redirectToRoute("reserve",['rid'=>$rid]);
+        }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($newRev);
         $em->flush();
-        $this->addFlash('message', "Reservation crée avec succés");
-        return $this->redirectToRoute("main");
+        return $this->redirectToRoute("reservations");
     }
 
     /**
@@ -305,18 +301,11 @@ class ReservationController extends AbstractController
     //show the client reservations
     public function showClientReservations(Request $request, PaginatorInterface $paginator): Response
     {
-        $rep = $this->getDoctrine()->getRepository(Client::class);
-        //important change it later
-        $client = $rep->find("1");
-        //checking the client
-        if ($client == null) {
-            return $this->redirectToRoute("erreur-back");
-        }
         //getting the reservations by client id
         $rev = $this->getDoctrine()->getRepository(Reservation::class)
             ->createQueryBuilder('r')
             ->where('r.clientId=?1')
-            ->setParameter(1, $client->getId())
+            ->setParameter(1, $this->getUser()->getId())
             ->getQuery()
             ->getResult();
         //paginating the reservations by 10 per page
@@ -327,7 +316,6 @@ class ReservationController extends AbstractController
         );
         return $this->render('reservation/reservations-client.html.twig', [
             'rev' => $rev,
-            'client' => $client,
         ]);
 
     }
@@ -343,15 +331,8 @@ class ReservationController extends AbstractController
         if ($reservation == null) {
             return $this->redirectToRoute("erreur-back");
         }
-
-        ///important
-        ///change this with the current user  id;
-        ///
-
-        $rep2 = $this->getDoctrine()->getRepository(Client::class);
-        $client = $rep2->find('1');
         //check if this reservation belongs to the current user
-        if ($client !=$reservation->getClientId()){
+        if ($this->getUser() !=$reservation->getClientId()){
             return $this->redirectToRoute("erreur-front");
         }
 
