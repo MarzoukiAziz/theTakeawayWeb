@@ -1,0 +1,62 @@
+{%  extends "front-office.html.twig" %}
+{% block links %}
+    <title>Reserver Maintenant</title>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+
+    </script>
+{% endblock %}
+{% block contenu %}
+
+    <div style="display: table;margin:30px auto;color: whitesmoke;">
+        <div style="background-image: url({{ asset("assets/front-office/images/res.jpg") }});" class="fixed-bg"></div>
+
+
+        <div class="">
+            <h1 class="h3 mb-3 font-weight-normal mt-2 text-center">Réserver Votre Table Maintenant </h1>
+            <div style="margin: 30px 10px">
+                <img style="" src="{{ asset("assets/front-office/images/1dis.png") }}" height="70px">
+                <img style="float: right" src="{{ asset("assets/front-office/images/2.png") }}" height="70px">
+
+            </div>
+            <div style="display: flex;justify-content: space-between">
+                <div>
+                    <h2>{{ rev.date | date("d M Y") }}</h2>
+                    <h3>{{ rev.heureArrive | date('H:i')}}   -   {{ rev.heureDepart| date('H:i') }}</h3>
+                </div>
+                <div>
+                    <h2>{{ rev.restaurant.nom }}</h2>
+                    <hr style="border: 3px white solid">
+                </div>
+            </div>
+            <form method="post" action="/restaurant/{{ rev.restaurant.id }}/reserver/confirmed/">
+                <input type="hidden" name="date" value="{{ rev.date | date("d M Y")}}">
+                <input type="hidden" name="ha" value="{{ rev.heureArrive | date('H:i')}}">
+                <input type="hidden" name="hd" value="{{ rev.heureDepart | date('H:i')}}">
+                <input type="hidden" name="rid" value="{{ rev.restaurant.id}}">
+                <input type="hidden" name="nb" value="{{ rev.nbPersonne}}">
+
+            <div style="position: relative;
+  text-align: center;width: 1000px">
+                <img src="{{ asset(rev.restaurant.architecture) }}" style="width:100%;background-color:rgba(0,0,0, 0.63);border: 3px white solid">
+                {% for table in freeTables%}
+                   <div style="position: absolute;top: {{ table.posY }}px;left: {{ table.posX }}px;background-color: green;color: white;border-radius: 10px;padding: 5px 3px 0px 5px;">
+                       <label for="{{ table.id }}">{{ table.numero }}</label>
+                       <input type="checkbox" id="{{ table.id }}" name="{{ table.id }}" value="{{ table.id }}">
+                   </div>
+                {% endfor %}
+                {% for table in unavailableTables%}
+                    <div style="position: absolute;top: {{ table.posY }}px;font-weight:bold;left: {{ table.posX }}px;background-color: red;color: white;border-radius: 10px;padding:2px 11px;">{{ table.numero }}</div>
+                {% endfor %}
+            </div>
+                <br>
+                                <button class="btn btn-success" style="float: right;font-size: 25px">Réserver !</button>
+            </form>
+        </div>
+
+    </div>
+
+
+{% endblock %}

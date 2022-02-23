@@ -40,9 +40,14 @@ class Commentaire
 
     /**
      * @ORM\ManyToOne(targetEntity=BlogClient::class, inversedBy="commentaires")
-     * @ORM\JoinColumn(nullable=false)
      */
-    private $no;
+    private $blogClient;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="comments")
+     */
+    private $article;
+
 
     public function getId(): ?int
     {
@@ -97,15 +102,28 @@ class Commentaire
         return $this;
     }
 
-    public function getNo(): ?BlogClient
+    public function getBlogClient(): ?BlogClient
     {
-        return $this->no;
+        return $this->blogClient;
     }
 
-    public function setNo(?BlogClient $no): self
+    public function setBlogClient(?BlogClient $blogClient): self
     {
-        $this->no = $no;
+        $this->blogClient = $blogClient;
 
         return $this;
     }
+
+    public function getArticle(): ?Article
+    {
+        return $this->article;
+    }
+
+    public function setArticle(?Article $article): self
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
 }

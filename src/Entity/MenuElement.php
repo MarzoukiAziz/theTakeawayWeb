@@ -20,7 +20,7 @@ class MenuElement
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    public $nom;
 
     /**
      * @ORM\Column(type="text")
@@ -43,9 +43,14 @@ class MenuElement
     private $image;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="simple_array", nullable=true)
      */
     private $options = [];
+
+//    /**
+//     * @ORM\Column(type="array", nullable=true)
+//     */
+//    private $options = [];
 
     public function getId(): ?int
     {
@@ -111,16 +116,28 @@ class MenuElement
 
         return $this;
     }
+//
+//    public function getOptions(): ?array
+//    {
+//        return $this->options;
+//    }
+//
+//    public function setOptions(?array $options): self
+//    {
+//        $this->options = $options;
+//
+//        return $this;
+//    }
 
-    public function getOptions(): ?array
-    {
-        return $this->options;
-    }
+public function getOptions(): ?array
+{
+    return $this->options;
+}
 
-    public function setOptions(?array $options): self
-    {
-        $this->options = $options;
+public function setOptions(?array $options): self
+{
+    $this->options = $options;
 
-        return $this;
-    }
+    return $this;
+}
 }

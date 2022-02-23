@@ -22,22 +22,25 @@ class ElementDetails
      */
     private $quantite;
 
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $options = [];
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Commande::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $commandeId;
+
 
     /**
      * @ORM\ManyToOne(targetEntity=MenuElement::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $elementId;
+    public $elementId;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Commande::class, inversedBy="details")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $commande;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $options;
 
     public function getId(): ?int
     {
@@ -56,29 +59,7 @@ class ElementDetails
         return $this;
     }
 
-    public function getOptions(): ?array
-    {
-        return $this->options;
-    }
 
-    public function setOptions(array $options): self
-    {
-        $this->options = $options;
-
-        return $this;
-    }
-
-    public function getCommandeId(): ?Commande
-    {
-        return $this->commandeId;
-    }
-
-    public function setCommandeId(?Commande $commandeId): self
-    {
-        $this->commandeId = $commandeId;
-
-        return $this;
-    }
 
     public function getElementId(): ?MenuElement
     {
@@ -88,6 +69,30 @@ class ElementDetails
     public function setElementId(?MenuElement $elementId): self
     {
         $this->elementId = $elementId;
+
+        return $this;
+    }
+
+    public function getCommande(): ?Commande
+    {
+        return $this->commande;
+    }
+
+    public function setCommande(?Commande $commande): self
+    {
+        $this->commande = $commande;
+
+        return $this;
+    }
+
+    public function getOptions(): ?string
+    {
+        return $this->options;
+    }
+
+    public function setOptions(string $options): self
+    {
+        $this->options = $options;
 
         return $this;
     }

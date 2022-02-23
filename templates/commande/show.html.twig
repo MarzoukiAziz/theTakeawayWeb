@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block body %}
+    <h1>Commande</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ commande.id }}</td>
+            </tr>
+            <tr>
+                <th>PrixTotal</th>
+                <td>{{ commande.prixTotal }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ commande.statut }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ commande.date ? commande.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Methode</th>
+                <td>{{ commande.methode }}</td>
+            </tr>
+            <tr>
+                <th>PointUtilisees</th>
+                <td>{{ commande.pointUtilisees }}</td>
+            </tr>
+            <tr>
+                <th>StatutPaiement</th>
+                <td>{{ commande.statutPaiement }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    {%  if commande.statut=="En Attente" %}
+        <form mathod="POST" action="/commande/{{ commande.id }}/cancel">
+             <button  type="submit" class="btn btn-danger">Annuler
+
+                    <i class="fa fa-fw fa-trash"></i> </button>
+        </form>
+    {% endif %}
+
+
+{% endblock %}

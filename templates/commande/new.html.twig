@@ -1,0 +1,26 @@
+{% extends 'front-office.html.twig' %}
+
+{% block links %}
+    <title>New Commande</title>
+{% endblock %}
+
+{% block contenu %}
+
+    <div style="display: flex;justify-content: center;margin: 30px;height: 400px;color: whitesmoke">
+        <div style="background-image: url({{ asset("assets/commande-bg.jpg") }});" class="fit-bg"></div>
+
+        <div class="card-body">
+            <h1  style="margin-bottom: 50px" class="text-center">Create New Commandes</h1>
+
+            {{ include('commande/_form.html.twig') }}
+
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+
+

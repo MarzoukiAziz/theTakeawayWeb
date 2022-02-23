@@ -1,0 +1,93 @@
+{% extends 'back-office.html.twig' %}
+
+{% block links %}
+    <title>Commande {{ commande.id }}  </title>
+{% endblock %}
+
+{% block contenu %}
+    <h1>Commande {{ commande.id }}</h1>
+
+    <table class="table">
+        <tbody>
+
+        <tr>
+            <th>PrixTotal</th>
+            <td>{{ commande.prixTotal }}</td>
+        </tr>
+        <tr>
+            <th>Statut</th>
+            <td>{{ commande.statut }}</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{{ commande.date ? commande.date|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Methode</th>
+            <td>{{ commande.methode }}</td>
+        </tr>
+        <tr>
+            <th>PointUtilisees</th>
+            <td>{{ commande.pointUtilisees }}</td>
+        </tr>
+        <tr>
+            <th>StatutPaiement</th>
+            <td>{{ commande.statutPaiement }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <form method="post" action="{{ path("commande-update-admin",{"cid":commande.id}) }}">
+        <select name="statut">
+            <option value="En attente">En attente</option>
+            <option value="Accepté">Accepté</option>
+            <option value="Rejeté">Rejeté</option>
+            <option value="En traitement">En traitement</option>
+            <option value="Pret à ramasser">Pret à ramasser</option>
+            <option value="Complete">Complete</option>
+        </select>
+        <button type="submit" class="btn btn-secondary">Update</button>
+
+    </form>
+
+    <form method="post" action="{{ path("commande-delete-admin",{"cid":commande.id}) }}">
+        <button type="submit" class="btn btn-danger">Supprimer</button>
+    </form>
+
+    <h3>Details</h3>
+    {% for element_detail in commande.details %}
+        <table class="table">
+            <tbody>
+             <tr>
+             <th>Element<th>
+             <td>{{ element_detail.elementId.nom }}</td>
+             </tr>
+            <tr>
+                <th>Quantite</th>
+                <td>{{ element_detail.quantite }}</td>
+            </tr>
+            <tr>
+                <th>Options</th>
+                <td>{{ element_detail.options }}</td>
+            </tr>
+            </tbody>
+
+           <tr>
+               <td>Mettre à jour</td>
+               <td> <a href="{{ path("element_details_edit",{'id':element_detail.id}) }}">Mettre à jour</a>
+                   {{ include('element_details/_delete_form.html.twig') }}
+
+               </td>
+           </tr>
+        </table>
+    {% endfor %}
+
+
+
+
+    {# <a href="{{ path('commande_index') }}">back to list</a> #}
+
+    {# <a href="{{ path('commande_edit', {'id': commande.id}) }}">edit</a> #}
+
+    {# {{ include('commande/_delete_form.html.twig') }} #}
+{% endblock %}

@@ -51,9 +51,10 @@ class BlogClient
     private $author;
 
     /**
-     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="no")
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="blogClient")
      */
     private $commentaires;
+
 
     public function __construct()
     {
@@ -149,7 +150,7 @@ class BlogClient
     {
         if (!$this->commentaires->contains($commentaire)) {
             $this->commentaires[] = $commentaire;
-            $commentaire->setNo($this);
+            $commentaire->setBlogClient($this);
         }
 
         return $this;
@@ -159,11 +160,13 @@ class BlogClient
     {
         if ($this->commentaires->removeElement($commentaire)) {
             // set the owning side to null (unless already changed)
-            if ($commentaire->getNo() === $this) {
-                $commentaire->setNo(null);
+            if ($commentaire->getBlogClient() === $this) {
+                $commentaire->setBlogClient(null);
             }
         }
 
         return $this;
     }
+
+
 }
