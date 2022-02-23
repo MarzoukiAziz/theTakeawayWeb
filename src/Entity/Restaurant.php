@@ -22,7 +22,7 @@ class Restaurant
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255)

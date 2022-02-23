@@ -28,9 +28,3 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    my.oauth_aware.user_provider.service:
-        class: App\Security\MyEntityUserProvider
-        arguments:
-            - '@doctrine'
-            - 'App\Entity\Client'
-            - {facebook: facebookID , github: githubID}

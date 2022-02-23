@@ -1,0 +1,8 @@
+{% extends 'back-office.html.twig' %}
+{% block contenu %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_errors(form) }}
+    {{ form_end(form) }}
+{% endblock %}

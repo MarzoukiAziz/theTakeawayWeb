@@ -1,0 +1,34 @@
+{% extends 'back-office.html.twig' %}
+{% block contenu %}
+
+    <table class="table table-hover table-dark">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Adresse</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>   {% for f in fr %}
+            <th scope="row">{{ f.id }}</th>
+            <td>{{ f.nom }}</td>
+            <td>{{ f.adresse }}</td>
+            <td>{{ f.telephone }}</td>
+            <td>{{ f.email }}</td>
+            <td> <a href="{{ path('deletefournisseur',{'id':f.id}) }}">Delete</a>
+                <a href="{{ path('updatefournisseur',{'id':f.id}) }}">Update</a>
+
+
+            </td>
+
+
+
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\CommandeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,20 +32,24 @@ class Commande
      */
     private $date;
 
+    /**
+     * @ORM\Column(type="time")
+     */
+    private $heure;
 
     /**
      * @ORM\ManyToOne(targetEntity=Restaurant::class)
      */
-    private $restaurant;
+    private $restaurantId;
 
     /**
      * @ORM\ManyToOne(targetEntity=Client::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $client;
+    private $clientId;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Client::class)
+     * @ORM\ManyToOne(targetEntity=Employe::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $employeCharge;
@@ -63,30 +65,14 @@ class Commande
     private $pointUtilisees;
 
     /**
-     * @ORM\ManyToOne(targetEntity=CartBancaire::class)
+     * @ORM\ManyToOne(targetEntity=CarteBancaire::class)
      */
-    private $carte;
+    private $carteId;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $statutPaiement;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="commande")
-     */
-    private $reservation;
-
-    /**
-     * @ORM\OneToMany(targetEntity=ElementDetails::class, mappedBy="commande", orphanRemoval=true)
-     */
-    private $details;
-
-    public function __construct()
-    {
-        $this->reservation = new ArrayCollection();
-        $this->details = new ArrayCollection();
-    }
     public function getId(): ?int
     {
 
@@ -129,38 +115,48 @@ class Commande
         return $this;
     }
 
-
-
-    public function getRestaurant(): ?Restaurant
+    public function getHeure(): ?\DateTimeInterface
     {
-        return $this->restaurant;
+        return $this->heure;
     }
 
-    public function setRestaurant(?Restaurant $restaurantId): self
+    public function setHeure(\DateTimeInterface $heure): self
     {
-        $this->restaurant = $restaurantId;
+        $this->heure = $heure;
 
         return $this;
     }
 
-    public function getClient(): ?Client
+    public function getRestaurantId(): ?Restaurant
     {
-        return $this->client;
+        return $this->restaurantId;
+    }
+
+    public function setRestaurantId(?Restaurant $restaurantId): self
+    {
+        $this->restaurantId = $restaurantId;
+
+        return $this;
+    }
+
+    public function getClientId(): ?Client
+    {
+        return $this->clientId;
     }
 
     public function setClientId(?Client $clientId): self
     {
-        $this->client = $clientId;
+        $this->clientId = $clientId;
 
         return $this;
     }
 
-    public function getEmployeCharge(): ?Client
+    public function getEmployeCharge(): ?Employe
     {
         return $this->employeCharge;
     }
 
-    public function setEmployeCharge(?Client $employeCharge): self
+    public function setEmployeCharge(?Employe $employeCharge): self
     {
         $this->employeCharge = $employeCharge;
 
@@ -191,14 +187,14 @@ class Commande
         return $this;
     }
 
-    public function getCarte(): ?CarteBancaire
+    public function getCarteId(): ?CarteBancaire
     {
-        return $this->carte;
+        return $this->carteId;
     }
 
-    public function setCarte(?CarteBancaire $carteId): self
+    public function setCarteId(?CarteBancaire $carteId): self
     {
-        $this->carte = $carteId;
+        $this->carteId = $carteId;
 
         return $this;
     }
@@ -211,66 +207,6 @@ class Commande
     public function setStatutPaiement(string $statutPaiement): self
     {
         $this->statutPaiement = $statutPaiement;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Reservation[]
-     */
-    public function getReservation(): Collection
-    {
-        return $this->reservation;
-    }
-
-    public function addReservation(Reservation $reservation): self
-    {
-        if (!$this->reservation->contains($reservation)) {
-            $this->reservation[] = $reservation;
-            $reservation->setCommande($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReservation(Reservation $reservation): self
-    {
-        if ($this->reservation->removeElement($reservation)) {
-            // set the owning side to null (unless already changed)
-            if ($reservation->getCommande() === $this) {
-                $reservation->setCommande(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ElementDetails[]
-     */
-    public function getDetails(): Collection
-    {
-        return $this->details;
-    }
-
-    public function addDetail(ElementDetails $detail): self
-    {
-        if (!$this->details->contains($detail)) {
-            $this->details[] = $detail;
-            $detail->setCommande($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDetail(ElementDetails $detail): self
-    {
-        if ($this->details->removeElement($detail)) {
-            // set the owning side to null (unless already changed)
-            if ($detail->getCommande() === $this) {
-                $detail->setCommande(null);
-            }
-        }
 
         return $this;
     }

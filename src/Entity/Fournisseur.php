@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FournisseurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,8 @@ class Fournisseur
      * @ORM\Column(type="string", length=255)
      */
     private $email;
+
+
 
     public function getId(): ?int
     {
@@ -89,4 +93,7 @@ class Fournisseur
 
         return $this;
     }
+
+
+
 }

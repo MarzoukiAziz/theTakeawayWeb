@@ -20,7 +20,7 @@ class Promotion
     /**
      * @ORM\Column(type="date")
      */
-    private $dateDebut;
+    private $db;
 
     /**
      * @ORM\Column(type="date")
@@ -47,11 +47,6 @@ class Promotion
      * @ORM\JoinColumn(nullable=false)
      */
     private $element;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $prixPromo;
 
     public function getId(): ?int
     {
@@ -126,18 +121,6 @@ class Promotion
     public function setElement(?MenuElement $element): self
     {
         $this->element = $element;
-
-        return $this;
-    }
-
-    public function getPrixPromo(): ?float
-    {
-        return $this->prixPromo;
-    }
-
-    public function setPrixPromo(float $prixPromo): self
-    {
-        $this->prixPromo = $prixPromo;
 
         return $this;
     }

@@ -6,21 +6,11 @@ use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
-
-
-
-
-
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
- *
- *
  */
-class Client implements UserInterface
+class Client
 {
     /**
      * @ORM\Id
@@ -30,97 +20,49 @@ class Client implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, nullable=true)
-     *@Assert\NotBlank
+     * @ORM\Column(type="string", length=8)
+     */
+    private $telephone;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $motDePasse;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $email;
 
-
-
-
     /**
-     * @ORM\Column(type="json", nullable=true)
-     */
-    private $roles = [];
-
-    /**
-     * @var string The hashed password
-     * @ORM\Column(type="string", length=240, nullable=true)
-     */
-    private $password;
- 
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     *@Assert\Type("String")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $nom;
- 
 
     /**
-     *
-     * @ORM\Column(type="string", length=100 , nullable=true)
-     * @Assert\Type("String")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $prenom;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Assert\NotBlank
-     * @Assert\Range(min = 1000000, max = 99999999, notInRangeMessage = "Phone must content 8 Numbers")
-     * @Assert\Type("integer")
-     */
-    private $num_tel;
-    
- 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Assert\Type("integer")
-     *
+     * @ORM\Column(type="integer")
      */
     private $points;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Restaurant::class)
+     * @ORM\ManyToMany(targetEntity=MenuElement::class)
      */
-    private $restaurant;
+    private $wishlist;
 
     /**
-     * @ORM\Column(type="datetime" , nullable=true)
+     * @ORM\OneToMany(targetEntity=BlogClient::class, mappedBy="author", orphanRemoval=true)
      */
-    private $Date_curent;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $facebookID;
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $facebookAccessToken;
-
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $githubID;
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $githubAccessToken;
-
-    /**
-     * @ORM\Column(type="boolean", length=255, nullable=true)
-     */
-    private $IsVerified;
-
-
-
-
+    private $blogs;
 
     public function __construct()
     {
-        $this->restaurant = new ArrayCollection();
+        $this->wishlist = new ArrayCollection();
+        $this->blogs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -128,80 +70,40 @@ class Client implements UserInterface
         return $this->id;
     }
 
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(string $telephone): self
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getMotDePasse(): ?string
+    {
+        return $this->motDePasse;
+    }
+
+    public function setMotDePasse(string $motDePasse): self
+    {
+        $this->motDePasse = $motDePasse;
+
+        return $this;
+    }
+
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
         return $this;
-    }
-
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUsername(): string
-    {
-        return (string) $this->nom;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Returning a salt is only needed, if you are not using a modern
-     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
-     *
-     * @see UserInterface
-     */
-    public function getSalt(): ?string
-    {
-        return null;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials()
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
     }
 
     public function getNom(): ?string
@@ -228,9 +130,6 @@ class Client implements UserInterface
         return $this;
     }
 
-    
-
-
     public function getPoints(): ?int
     {
         return $this->points;
@@ -244,129 +143,65 @@ class Client implements UserInterface
     }
 
     /**
-     * @return Collection|Restaurant[]
+     * @return Collection|MenuElement[]
      */
-    public function getRestaurant(): Collection
+    public function getWishlist(): Collection
     {
-        return $this->restaurant;
+        return $this->wishlist;
     }
 
-    public function addRestaurant(Restaurant $restaurant): self
+    public function addWishlist(MenuElement $wishlist): self
     {
-        if (!$this->restaurant->contains($restaurant)) {
-            $this->restaurant[] = $restaurant;
+        if (!$this->wishlist->contains($wishlist)) {
+            $this->wishlist[] = $wishlist;
         }
 
         return $this;
     }
 
-    public function removeRestaurant(Restaurant $restaurant): self
+    public function removeWishlist(MenuElement $wishlist): self
     {
-        $this->restaurant->removeElement($restaurant);
+        $this->wishlist->removeElement($wishlist);
+
+        return $this;
+    }
+    public function isWishlist(MenuElement $wishlist)
+    {
+        $isWishlist = false;
+        if ($this->wishlist->contains($wishlist)) {
+            $isWishlist=true;
+        }
+
+        return $isWishlist;
+    }
+
+    /**
+     * @return Collection|BlogClient[]
+     */
+    public function getBlogs(): Collection
+    {
+        return $this->blogs;
+    }
+
+    public function addBlog(BlogClient $blog): self
+    {
+        if (!$this->blogs->contains($blog)) {
+            $this->blogs[] = $blog;
+            $blog->setAuthor($this);
+        }
 
         return $this;
     }
 
-    public function getDateCurent(): ?\DateTimeInterface
+    public function removeBlog(BlogClient $blog): self
     {
-        return $this->Date_curent;
-    }
-
-    public function setDateCurent(\DateTimeInterface $Date_curent): self
-    {
-        $this->Date_curent = $Date_curent;
-
-        return $this;
-    }
-    public function getNumTel(): ?int
-    {
-        return $this->num_tel;
-    }
-
-    public function setNumTel(int $num_tel): self
-    {
-        $this->num_tel = $num_tel;
+        if ($this->blogs->removeElement($blog)) {
+            // set the owning side to null (unless already changed)
+            if ($blog->getAuthor() === $this) {
+                $blog->setAuthor(null);
+            }
+        }
 
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFacebookAccessToken()
-    {
-        return $this->facebookAccessToken;
-    }
-
-    /**
-     * @param mixed $facebookAccessToken
-     */
-    public function setFacebookAccessToken($facebookAccessToken): void
-    {
-        $this->facebookAccessToken = $facebookAccessToken;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFacebookID()
-    {
-        return $this->facebookID;
-    }
-
-    /**
-     * @param mixed $facebookID
-     */
-    public function setFacebookID($facebookID): void
-    {
-        $this->facebookID = $facebookID;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getGithubID()
-    {
-        return $this->githubID;
-    }
-
-    /**
-     * @param mixed $githubID
-     */
-    public function setGithubID($githubID): void
-    {
-        $this->githubID = $githubID;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getGithubAccessToken()
-    {
-        return $this->githubAccessToken;
-    }
-
-    /**
-     * @param mixed $githubAccessToken
-     */
-    public function setGithubAccessToken($githubAccessToken): void
-    {
-        $this->githubAccessToken = $githubAccessToken;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIsVerified()
-    {
-        return $this->IsVerified;
-    }
-
-    /**
-     * @param mixed $IsVerified
-     */
-    public function setIsVerified($IsVerified): void
-    {
-        $this->IsVerified = $IsVerified;
     }
 }

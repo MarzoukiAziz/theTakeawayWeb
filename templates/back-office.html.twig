@@ -44,11 +44,26 @@
                     <span class="nav-link-text">Tableau de Board</span>
                 </a>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
-                <a class="nav-link" href="messages.html">
+
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My listings">
+                <a href="#collapseMylistings" class="nav-link nav-link-collapse collapsed" data-toggle="collapse"  data-parent="#mylistings">
+
                     <img src={{asset("assets/back-office/img/stock.png") }} height="20px">
                     <span class="nav-link-text">Stock</span>
                 </a>
+
+                    <ul class="sidenav-second-level collapse" id="collapseMylistings">
+                        <li>
+                            <a href="{{ path('listfournisseur') }}">Fournisseur</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('listingrediant') }}">Ingrediant </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('listfacture') }}">Facture </a>
+                        </li>
+                    </ul>
+
             </li>
 
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Bookings">
@@ -101,7 +116,7 @@
                 </a>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
-                <a class="nav-link" href="/admin/reclamations">
+                <a class="nav-link" href="messages.html">
                     <img src={{ asset("assets/back-office/img/complain.png") }} height="20px">
                     <span class="nav-link-text">Réclamations</span>
                 </a>
@@ -181,7 +196,9 @@
 <!-- Custom scripts for all pages-->
 <script src={{asset("assets/back-office/js/admin.js")}}></script>
 <!-- Custom scripts for this page-->
-{% block scripts %}{% endblock %}
+{% block javascripts %}{% endblock %}
+{%  block stylesheets %}{% endblock %}
+
 </body>
 
 </html>

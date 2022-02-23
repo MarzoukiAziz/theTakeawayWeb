@@ -27,6 +27,10 @@ class Commentaire
      */
     private $contenu;
 
+    /**
+     * @ORM\Column(type="time")
+     */
+    private $heure;
 
     /**
      * @ORM\ManyToOne(targetEntity=Client::class)
@@ -36,14 +40,9 @@ class Commentaire
 
     /**
      * @ORM\ManyToOne(targetEntity=BlogClient::class, inversedBy="commentaires")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $blogClient;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="comments")
-     */
-    private $article;
-
+    private $no;
 
     public function getId(): ?int
     {
@@ -74,7 +73,17 @@ class Commentaire
         return $this;
     }
 
+    public function getHeure(): ?\DateTimeInterface
+    {
+        return $this->heure;
+    }
 
+    public function setHeure(\DateTimeInterface $heure): self
+    {
+        $this->heure = $heure;
+
+        return $this;
+    }
 
     public function getAuthor(): ?Client
     {
@@ -88,28 +97,15 @@ class Commentaire
         return $this;
     }
 
-    public function getBlogClient(): ?BlogClient
+    public function getNo(): ?BlogClient
     {
-        return $this->blogClient;
+        return $this->no;
     }
 
-    public function setBlogClient(?BlogClient $blogClient): self
+    public function setNo(?BlogClient $no): self
     {
-        $this->blogClient = $blogClient;
+        $this->no = $no;
 
         return $this;
     }
-
-    public function getArticle(): ?Article
-    {
-        return $this->article;
-    }
-
-    public function setArticle(?Article $article): self
-    {
-        $this->article = $article;
-
-        return $this;
-    }
-
 }

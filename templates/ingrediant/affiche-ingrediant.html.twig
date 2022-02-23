@@ -1,0 +1,35 @@
+{% extends 'back-office.html.twig' %}
+{% block contenu %}
+
+    <table class="table table-hover table-dark">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">nom</th>
+            <th scope="col">quantité</th>
+            <th scope="col">Restaurent</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr>   {% for f in fr %}
+            <th scope="row">{{ f.id }}</th>
+            <td>{{ f.nom }}</td>
+            <td>{{ f.quantite}}</td>
+            {#  <td><a href="{{ path("admin-reservations-client",{'id': f.restaurantId.nom}) }}">#}
+
+
+            <td> <a href="{{ path('deleteingrediant',{'id':f.id}) }}">Delete</a>
+                <a href="{{ path('updateingrediant',{'id':f.id}) }}">Update</a>
+
+
+            </td>
+
+
+
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

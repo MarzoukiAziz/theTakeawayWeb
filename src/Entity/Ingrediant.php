@@ -31,7 +31,7 @@ class Ingrediant
      * @ORM\ManyToOne(targetEntity=Restaurant::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $restaurant;
+    private $restaurantId;
 
     public function getId(): ?int
     {
@@ -62,12 +62,12 @@ class Ingrediant
         return $this;
     }
 
-    public function getRestaurant(): ?Restaurant
+    public function getRestaurantId(): ?Restaurant
     {
         return $this->restaurantId;
     }
 
-    public function setRestaurant(?Restaurant $restaurantId): self
+    public function setRestaurantId(?Restaurant $restaurantId): self
     {
         $this->restaurantId = $restaurantId;
 

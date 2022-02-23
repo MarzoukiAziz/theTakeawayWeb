@@ -40,13 +40,13 @@ class Facture
     /**
      * @ORM\ManyToOne(targetEntity=Fournisseur::class)
      */
-    private $fournisseur;
+    private $fournisseurId;
 
     /**
      * @ORM\ManyToOne(targetEntity=Ingrediant::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $ingrediant;
+    private $ingrediantId;
 
     public function getId(): ?int
     {
@@ -101,26 +101,26 @@ class Facture
         return $this;
     }
 
-    public function getFournisseur(): ?Fournisseur
+    public function getFournisseurId(): ?Fournisseur
     {
-        return $this->fournisseur;
+        return $this->fournisseurId;
     }
 
-    public function setFournisseur(?Fournisseur $fournisseurId): self
+    public function setFournisseurId(?Fournisseur $fournisseurId): self
     {
-        $this->fournisseur = $fournisseurId;
+        $this->fournisseurId = $fournisseurId;
 
         return $this;
     }
 
-    public function getIngrediant(): ?Ingrediant
+    public function getIngrediantId(): ?Ingrediant
     {
-        return $this->ingrediant;
+        return $this->ingrediantId;
     }
 
-    public function setIngrediant(?Ingrediant $ingrediantId): self
+    public function setIngrediantId(?Ingrediant $ingrediantId): self
     {
-        $this->ingrediant = $ingrediantId;
+        $this->ingrediantId = $ingrediantId;
 
         return $this;
     }

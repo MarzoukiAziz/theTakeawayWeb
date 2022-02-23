@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\ReponseRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ReponseRepository::class)
@@ -20,24 +19,16 @@ class Reponse
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\Length(
-     *      min = 10,
-     *      max = 250,
-     *      minMessage = "Le contenu doit comporter au moins 25 caractères",
-     *      maxMessage = "Le sujet ne peut pas dépasser 250 caractères"
-     * )
      */
     private $contenu;
 
     /**
      * @ORM\Column(type="date")
-     * @var string A "Y-m-d" formatted value
      */
     private $date;
 
     /**
      * @ORM\Column(type="time")
-     * @var string A "H:i:s" formatted value
      */
     private $heure;
 
@@ -49,12 +40,13 @@ class Reponse
 
     /**
      * @ORM\ManyToOne(targetEntity=Client::class)
-     * @ORM\JoinColumn(nullable=false)
-     *
      */
-    private $author;
+    private $client;
 
-
+    /**
+     * @ORM\ManyToOne(targetEntity=Admin::class)
+     */
+    private $admin;
 
     public function getId(): ?int
     {
@@ -109,16 +101,27 @@ class Reponse
         return $this;
     }
 
-    public function getAuthor(): ?Client
+    public function getClient(): ?Client
     {
-        return $this->author;
+        return $this->client;
     }
 
-    public function setAuthor(?Client $author): self
+    public function setClient(?Client $client): self
     {
-        $this->author = $author;
+        $this->client = $client;
 
         return $this;
     }
 
+    public function getAdmin(): ?Admin
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(?Admin $admin): self
+    {
+        $this->admin = $admin;
+
+        return $this;
+    }
 }

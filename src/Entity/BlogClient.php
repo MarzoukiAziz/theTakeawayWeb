@@ -34,7 +34,10 @@ class BlogClient
      */
     private $date;
 
-
+    /**
+     * @ORM\Column(type="time")
+     */
+    private $heure;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -48,15 +51,9 @@ class BlogClient
     private $author;
 
     /**
-     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="blogClient")
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="no")
      */
     private $commentaires;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $imageBlog;
-
 
     public function __construct()
     {
@@ -104,7 +101,17 @@ class BlogClient
         return $this;
     }
 
+    public function getHeure(): ?\DateTimeInterface
+    {
+        return $this->heure;
+    }
 
+    public function setHeure(\DateTimeInterface $heure): self
+    {
+        $this->heure = $heure;
+
+        return $this;
+    }
 
     public function getStatut(): ?string
     {
@@ -142,7 +149,7 @@ class BlogClient
     {
         if (!$this->commentaires->contains($commentaire)) {
             $this->commentaires[] = $commentaire;
-            $commentaire->setBlogClient($this);
+            $commentaire->setNo($this);
         }
 
         return $this;
@@ -152,25 +159,11 @@ class BlogClient
     {
         if ($this->commentaires->removeElement($commentaire)) {
             // set the owning side to null (unless already changed)
-            if ($commentaire->getBlogClient() === $this) {
-                $commentaire->setBlogClient(null);
+            if ($commentaire->getNo() === $this) {
+                $commentaire->setNo(null);
             }
         }
 
         return $this;
     }
-
-    public function getImageBlog(): ?string
-    {
-        return $this->imageBlog;
-    }
-
-    public function setImageBlog(string $imageBlog): self
-    {
-        $this->imageBlog = $imageBlog;
-
-        return $this;
-    }
-
-
 }
