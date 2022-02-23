@@ -26,41 +26,6 @@ class ElementDetailsController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="element_details_new", methods={"GET", "POST"})
-     */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $elementDetail = new ElementDetails();
-        $form = $this->createForm(ElementDetailsType::class, $elementDetail);
-        $form->handleRequest($request);
-
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            //for test only
-            $elementDetail->setElementId("1");
-            $elementDetail->setCommande("1");
-            $entityManager->persist($elementDetail);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('element_details_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('element_details/new.html.twig', [
-            'element_detail' => $elementDetail,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="element_details_show", methods={"GET"})
-     */
-    public function show(ElementDetails $elementDetail): Response
-    {
-        return $this->render('element_details/show.html.twig', [
-            'element_detail' => $elementDetail,
-        ]);
-    }
 
     /**
      * @Route("/{id}/edit", name="element_details_edit", methods={"GET", "POST"})

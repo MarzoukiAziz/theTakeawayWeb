@@ -1,15 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'front-office.html.twig' %}
 
 {% block title %}Commande{% endblock %}
 
-{% block body %}
-    <h1>Commande</h1>
+{% block contenu %}
 
+     <div style="background-image: url({{ asset("assets/commande-bg.jpg") }});" class="fixed-bg"></div>
+<div style="display: table;margin:30px auto;color: whitesmoke;">
+    <div class="">
+        <h1 class="h3 mb-3 font-weight-normal mt-2 text-center"> Votre Commande </h1>
+        <div style="margin: 30px 10px">
     <table class="table">
         <tbody>
             <tr>
+                <div class="form-group" >
                 <th>Id</th>
                 <td>{{ commande.id }}</td>
+                    </div>
             </tr>
             <tr>
                 <th>PrixTotal</th>
@@ -35,17 +41,24 @@
                 <th>StatutPaiement</th>
                 <td>{{ commande.statutPaiement }}</td>
             </tr>
+            <tr>
+                <th></th>
+                <th>
+                    {%  if commande.statut=="En Attente" %}
+                        <form mathod="POST" action="/commande/{{ commande.id }}/cancel">
+                            <button  type="submit" class="btn btn-danger">Annuler
+
+                                <i class="fa fa-fw fa-trash"></i> </button>
+                        </form>
+                    {% endif %}
+                </th>
+            </tr>
         </tbody>
     </table>
+    </div>
+</div>
 
-
-    {%  if commande.statut=="En Attente" %}
-        <form mathod="POST" action="/commande/{{ commande.id }}/cancel">
-             <button  type="submit" class="btn btn-danger">Annuler
-
-                    <i class="fa fa-fw fa-trash"></i> </button>
-        </form>
-    {% endif %}
+</div>
 
 
 {% endblock %}
