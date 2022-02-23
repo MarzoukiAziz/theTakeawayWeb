@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TableRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TableRepository::class)
@@ -20,22 +21,43 @@ class Table
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 700,
+     *      notInRangeMessage = "PosX entre 0 et 700",
+     * )
      */
     private $posX;
 
     /**
      * @ORM\Column(type="integer")
+     *      * @Assert\Range(
+     *      min = 0,
+     *      max = 450,
+     *      notInRangeMessage = "PosY entre 0 et 450",
+     * )
      */
     private $posY;
 
 
     /**
      * @ORM\Column(type="integer")
+     *@Assert\Range(
+     *      min = 1,
+     *      max = 20,
+     *      notInRangeMessage = "Nombre de places entre 1 et 20",
+     * )
+     *
      */
     private $nbPalces;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 50,
+     *      notInRangeMessage = "Nombre de places entre 1 et 20",
+     * )
      */
     private $numero;
 

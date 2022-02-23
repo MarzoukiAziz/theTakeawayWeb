@@ -9,7 +9,7 @@
 
 
     <div class="card mb-3" >
-        <div class="card-header" style="font-size: 22px;font-weight: bold">
+        <div class="card-header " style="font-size: 22px;font-weight: bold;">
             <i class="fa fa-table"></i> Réservations
 
         <span style="float: right">{{ res.nom }}</span>
@@ -41,23 +41,23 @@
                             <td>{{ r.nbPersonne }} Peronne(s)</td>
                             <td>
                                 {% for t in r.tables %}
-                                    {{ t.id  }} ({{ t.nbPalces }}) <br>
+                                    {{ t.numero  }} ({{ t.nbPalces }}) <br>
                                 {% endfor %}
                             </td>
                             <td>{{ r.statut }}</td>
                             <td>
                                 <ul class="buttons" style="margin: 0px">
                                     {%  if r.statut=="Accepté"  %}
-                                        <li><a href="{{ path('admin-change-reservation-statut', {'rid': res.id,'id':r.id,"s":"Annulé","adminId":"1"}) }}" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i> Annuler</a></li>
+                                        <li><a href="{{ path('admin-change-reservation-statut', {'rid': res.id,'id':r.id,"s":"Annulé"}) }}" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i> Annuler</a></li>
                                     {% endif %}
                                     {%  if r.statut=="En Attente" %}
-                                        <li><a  href="{{ path('admin-change-reservation-statut', {'rid': res.id,'id':r.id,"s":"Accepté","adminId":"1"}) }}" class="btn_1 gray approve"><i class="fa fa-fw fa-check-circle-o"></i> Accepter</a></li>
-                                        <li><a  href="{{ path('admin-change-reservation-statut', {'rid': res.id,'id':r.id,"s":"Réfusé","adminId":"1"}) }}" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i> Réfuser</a></li>
+                                        <li><a  href="{{ path('admin-change-reservation-statut', {'rid': res.id,'id':r.id,"s":"Accepté"}) }}" class="btn_1 gray approve"><i class="fa fa-fw fa-check-circle-o"></i> Accepter</a></li>
+                                        <li><a  href="{{ path('admin-change-reservation-statut', {'rid': res.id,'id':r.id,"s":"Réfusé"}) }}" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o"></i> Réfuser</a></li>
                                     {% endif %}
                                 </ul>
                             </td>
                             <td>
-                                {% if r.statut != "En Attente" %}
+                                {% if r.adminCharge != null %}
                                     {{ r.adminCharge.nom}} {{ r.adminCharge.prenom}}
                                 {% endif %}
                             </td>

@@ -4,13 +4,12 @@
 {% endblock %}
 {% block contenu %}
     <section>
-        <div class="block">
-            <div class="error-page-wrapper text-center mt-5">
-                <div style="background-image: url({{ asset("assets/front-office/images/topbg.jpg") }});" class="fixed-bg"></div>
+            <div class="error-page-wrapper text-center" style="height: 500px">
+                <div style="background-image: url({{ asset("assets/front-office/images/topbg.jpg") }});" class="fit-bg"></div>
 
-                <h1 style="color: whitesmoke">Bienvenue</h1>
+                <h1 style="color: whitesmoke;font-size: 80px">Bienvenue</h1>
+                <img src="{{ asset('/assets/front-office/images/logo2.png') }}">
             </div><!-- Error Page Wrapper -->
-        </div>
     </section>
 
 {%  endblock %}

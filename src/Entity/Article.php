@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,10 +29,7 @@ class Article
      */
     private $date;
 
-    /**
-     * @ORM\Column(type="time")
-     */
-    private $heure;
+
 
     /**
      * @ORM\Column(type="text")
@@ -44,15 +42,22 @@ class Article
     private $banner;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Admin::class, inversedBy="articles")
+     * @ORM\ManyToOne(targetEntity=client::class, inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;
 
+
     /**
-     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="no")
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="article")
      */
-    private $commentaires;
+    private $comments;
+
+    public function __construct()
+    {
+        $this->commentaires = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -84,17 +89,6 @@ class Article
         return $this;
     }
 
-    public function getHeure(): ?\DateTimeInterface
-    {
-        return $this->heure;
-    }
-
-    public function setHeure(\DateTimeInterface $heure): self
-    {
-        $this->heure = $heure;
-
-        return $this;
-    }
 
     public function getContenu(): ?string
     {
@@ -120,42 +114,43 @@ class Article
         return $this;
     }
 
-    public function getAuthor(): ?Admin
+    public function getAuthor(): ?Client
     {
         return $this->author;
     }
 
-    public function setAuthor(?Admin $author): self
+    public function setAuthor(?Client $author): self
     {
         $this->author = $author;
 
         return $this;
     }
 
+
     /**
      * @return Collection|Commentaire[]
      */
-    public function getCommentaires(): Collection
+    public function getComments(): Collection
     {
-        return $this->commentaires;
+        return $this->comments;
     }
 
-    public function addCommentaire(Commentaire $commentaire): self
+    public function addComment(Commentaire $comment): self
     {
-        if (!$this->commentaires->contains($commentaire)) {
-            $this->commentaires[] = $commentaire;
-            $commentaire->setNo($this);
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setArticle($this);
         }
 
         return $this;
     }
 
-    public function removeCommentaire(Commentaire $commentaire): self
+    public function removeComment(Commentaire $comment): self
     {
-        if ($this->commentaires->removeElement($commentaire)) {
+        if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($commentaire->getNo() === $this) {
-                $commentaire->setNo(null);
+            if ($comment->getArticle() === $this) {
+                $comment->setArticle(null);
             }
         }
 
