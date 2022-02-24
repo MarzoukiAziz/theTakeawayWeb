@@ -1,0 +1,120 @@
+{% extends 'front-office.html.twig' %}
+
+{% block contenu %}
+
+
+    {% block body %}
+<section>
+    <div class="block">
+        <div class="fixed-bg" style="background-image: url(assets/front-office/images/topbg.jpg);"></div>
+        <div class="page-title-wrapper text-center">
+            <div class="col-md-12 col-sm-12 col-lg-12">
+                <div class="page-title-inner">
+                    <h1 itemprop="headline">Blog </h1>
+                    <span>SHARE WITH YOUR FRIENDS</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="bread-crumbs-wrapper">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#" title="" itemprop="url">Home</a></li>
+            <li class="breadcrumb-item active">LISTE DES BLOGS</li>
+        </ol>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="card-body">
+
+
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+    </head>
+</div>
+
+
+
+            <body>
+
+
+
+
+                    <div class="container">
+                        <div class="row g-3">
+                {% for blog_client in blog_clients %}
+
+                <div class="row">
+
+                <div class="block less-spacing gray-bg top-padd30">
+                    <div class="sec-box">
+
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+
+
+
+                            <div class="card">
+                                            <div class="col-md-4 col-sm-6 col-lg-4">
+                                                <div class="news-box wow fadeIn" data-wow-delay="0.1s">
+
+                                                    <div class="news-thumb">
+                                                        <a class="brd-rd2" href="blog-detail-right-sidebar.html" title="" itemprop="url"><img src="{{ asset('couverture/'~blog_client.image) }}" class="card-img-top" ></a>
+                                                        <div class="news-btns">
+                                                            <a class="post-date red-bg" href="#" title="" itemprop="url">{{ blog_client.date ? blog_client.date|date('m-d') : '' }}</a>
+                                                            <a class="read-more" href="{{ path('blog_client_show', {'id': blog_client.id}) }}"" itemprop="url">READ MORE</a>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                            </div>
+                                            <div class="news-info">
+                                                <h4 itemprop="headline"><a href="blog-detail-right-sidebar.html" title="" itemprop="url">{{ blog_client.title }}</a></h4>
+                                                <p itemprop="description">{{ blog_client.contenu }}</p>
+
+                                            </div>
+                            <a> {{ include('blog_client/_delete_form.html.twig') }}</a>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    {% else %}
+
+                        <p >no records found</p>
+                    {% endfor %}
+
+                </div>
+
+                </div>
+
+                </div>
+
+
+
+            </body>
+                                <a  href="{{ path('blog_client_new') }}"><button  class="btn btn-success float-right">create new blog</button></a>
+
+    {% endblock %}
+{% endblock %}

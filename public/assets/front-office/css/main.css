@@ -7112,5 +7112,54 @@ a.thanks-close:focus {color: #333;}
 
 
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@600&display=swap');
+
+body{
+  margin: 10px 80px;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+
+.articles{
+  margin-top: 30px;
+}
+.articles .article{
+  display: flex;
+  flex-wrap:wrap;
+  margin-bottom: 30px;
+}
+.articles .article .left img{
+  height: 300px;
+  width: 500px;
+}
+.articles .article .right {
+  margin-left: 40px;
+  max-width: 50%;
+}
+.articles .article .right p.date{
+  color: #7f7e7e;
+}
+.articles .article .right p.description{
+  color: #2d2d2d;
+}
+
+
+
+@media screen and (max-width: 640px){
+  body{
+    margin: 10px 20px;
+  }
+
+  .articles .article .left img{
+    height: 100%;
+    width:100%;
+  }
+  .articles .article .right{
+    margin: 0px;
+    max-width: 100%;
+  }
+
+}
 
 

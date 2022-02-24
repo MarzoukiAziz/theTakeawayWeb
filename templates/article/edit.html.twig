@@ -1,0 +1,15 @@
+{% extends 'back-office.html.twig' %}
+
+{% block contenu %}
+
+
+
+    <h1>Edit Article</h1>
+
+    {{ include('article/_form.html.twig', {'button_label': 'Update'}) }}
+
+
+    <a href="{{ path('article_index') }}"><button class="btn btn-primary">back to list</button></a>
+
+
+{% endblock %}

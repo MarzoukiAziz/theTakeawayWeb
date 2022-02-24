@@ -1,0 +1,59 @@
+{% extends 'front-office.html.twig' %}
+
+{% block contenu %}
+
+
+    {% block body %}
+        <div class="bread-crumbs-wrapper">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#" title="" itemprop="url">Home</a></li>
+                    <li class="breadcrumb-item active">Blog Grid</li>
+                </ol>
+            </div>
+        </div>
+
+
+        <section>
+            <div class="block less-spacing gray-bg top-padd30">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="sec-box">
+                                <div class="col-md-12 col-sm-12 col-lg-12">
+                                    <div class="blog-detail-wrapper">
+                                        <div class="blog-detail-thumb wow fadeIn" data-wow-delay="0.2s">
+                                            <td><img src="{{ asset('couverture/'~ article.banner) }}" style="width: px;height: px"  ></td>
+
+                                        </div>
+                                        <div class="blog-detail-info">
+                                            <span class="post-detail-date red-clr"><i class="fa fa-clock-o"></i>{{ article.date ? article.date|date('Y-m-d') : '' }}</span>
+                                            <div class="post-meta">
+                                            </div>
+                                        </div>
+                                        <tr>
+                                            <h1 itemprop="headline" >{{ article.title }}</h1>
+                                            <h3 itemprop="description">{{ article.contenu }}</h3>
+                                        </tr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+        <a href="{{ path('article_client_index') }}"><button class="btn btn-primary">back to list</button></a>
+
+
+
+
+    {% endblock %}
+{% endblock %}

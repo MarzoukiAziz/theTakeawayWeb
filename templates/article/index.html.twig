@@ -1,0 +1,73 @@
+{% extends 'back-office.html.twig' %}
+
+{% block contenu %}
+
+
+    {% block body %}
+
+
+        <div class="card-body">
+
+            <h1  style="margin-bottom: 50px" class="text-center">Article</h1>
+
+
+
+
+            <head>
+                <!-- Required meta tags -->
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+
+                <!-- Bootstrap CSS -->
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+            </head>
+            <body>
+
+
+            <div class="container">
+                <div class="row g-3">
+                    {% for article in articles %}
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card">
+                                <img src="{{ asset('couverture/'~article.banner) }}" class="card-img-top" >
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ article.title }}</h5>
+                                    <small><p>{{ article.date ? article.date|date('Y-m-d') : '' }}</p></small><br>
+                                    <p class="card-text"><b>{{ article.contenu }}</b></p><br>
+                                    <a href="{{ path('article_show', {'id': article.id}) }}"><button class="btn btn-primary">show details</button></a>
+                                    <a href="{{ path('article_edit', {'id': article.id}) }}"><button class="btn btn-primary">edit</button></a>
+                                    <a> {{ include('article/_delete_form.html.twig') }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+
+                        <p >no records found</p>
+                    {% endfor %}
+
+                </div>
+
+                <div class="card-body">
+            </div>
+
+
+
+
+
+            <!-- Optional JavaScript; choose one of the two! -->
+
+            <!-- Option 1: Bootstrap Bundle with Popper -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+            <!-- Option 2: Separate Popper and Bootstrap JS -->
+            <!--
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+            -->
+            </body>
+            <a  href="{{ path('article_new') }}"><button  class="btn btn-success float-md-left">create new article</button></a>
+        </div>
+    {% endblock %}
+{% endblock %}

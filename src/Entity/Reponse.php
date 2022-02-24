@@ -40,13 +40,11 @@ class Reponse
 
     /**
      * @ORM\ManyToOne(targetEntity=Client::class)
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $client;
+    private $author;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Admin::class)
-     */
-    private $admin;
+
 
     public function getId(): ?int
     {
@@ -101,27 +99,16 @@ class Reponse
         return $this;
     }
 
-    public function getClient(): ?Client
+    public function getAuthor(): ?Client
     {
-        return $this->client;
+        return $this->author;
     }
 
-    public function setClient(?Client $client): self
+    public function setAuthor(?Client $author): self
     {
-        $this->client = $client;
+        $this->author = $author;
 
         return $this;
     }
 
-    public function getAdmin(): ?Admin
-    {
-        return $this->admin;
-    }
-
-    public function setAdmin(?Admin $admin): self
-    {
-        $this->admin = $admin;
-
-        return $this;
-    }
 }

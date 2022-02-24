@@ -1,0 +1,62 @@
+{%  extends "front-office.html.twig" %}
+{% block links %}
+<title>Reserver Maintenant</title>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(function() {
+            $( "#date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+        });
+    </script>
+{% endblock %}
+{% block contenu %}
+
+    <div style="display: table;margin:30px auto;color: whitesmoke;">
+        <div style="background-image: url({{ asset("assets/front-office/images/res.jpg") }});" class="fixed-bg"></div>
+
+
+        <div class="">
+            <h1 class="h3 mb-3 font-weight-normal mt-2 text-center">Réserver Votre Table Maintenant </h1>
+           <div style="margin: 30px 10px">
+               <img style="" src="{{ asset("assets/front-office/images/1.png") }}" height="70px">
+               <img style="float: right" src="{{ asset("assets/front-office/images/2dis.png") }}" height="70px">
+
+           </div>
+
+
+
+                {{ form_start(f)}}
+                <div class="form-group" >
+                    <label class="form-label ">Date</label>
+                    {{ form_widget(f.date ,
+                        {'attr': {'class': '','style':'display:flex;' , 'placeholder' : 'Date'}} ) }}
+                    {{ form_errors(f.date) }}
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Heure Arrivé</label>
+                    {{ form_widget(f.heureArrive , {'attr': {'class': '','style':'display:flex;' , 'placeholder' : 'Heure d\'arrivée'}} ) }}
+                    {{ form_errors(f.heureArrive) }}
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Départ dans</label>
+                    {{ form_widget(f.Duree , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Durée'}} ) }}
+                    {{ form_errors(f.Duree) }}
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nombre de Personnes</label>
+                    {{ form_widget(f.nbPersonne , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Nombre de presonnes'}} ) }}
+                    {{ form_errors(f.nbPersonne) }}
+                </div>
+                {{ form_widget(f.save, { 'label': 'Continuer','attr': {'class': 'form-control form-control-user btn btn-success' , 'placeholder' : 'Nombre de presonnes'} }) }}
+
+
+                {{ form_end(f) }}
+
+
+        </div>
+
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'back-office.html.twig' %}
+
+{% block contenu %}
+
+
+    <h1>BlogClient</h1>
+
+
+    <table class="table">
+        <tbody>
+
+        <tr>
+            <th>Id</th>
+            <td>{{ blog_client.id }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+
+            <td>{{ blog_client.title }}</td>
+        </tr>
+        <tr>
+            <th>Contenu</th>
+            <td>{{ blog_client.contenu }}</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{{ blog_client.date ? blog_client.date|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Statut</th>
+            <td>{{ blog_client.statut }}</td>
+        </tr>
+        <tr>
+            <th>Image</th>
+            <<td><img src="{{ asset('couverture/'~ blog_client.image) }}" style="width: 400px;height: 400px"  ></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('blog_admin_index') }}"><button class="btn btn-primary">back to list</button></a>
+    <a> {{ include('blog_client/admin/delete.html.twig') }}</a>
+
+{% endblock %}

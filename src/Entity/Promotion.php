@@ -48,6 +48,11 @@ class Promotion
      */
     private $element;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $prixPromo;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +126,18 @@ class Promotion
     public function setElement(?MenuElement $element): self
     {
         $this->element = $element;
+
+        return $this;
+    }
+
+    public function getPrixPromo(): ?float
+    {
+        return $this->prixPromo;
+    }
+
+    public function setPrixPromo(float $prixPromo): self
+    {
+        $this->prixPromo = $prixPromo;
 
         return $this;
     }

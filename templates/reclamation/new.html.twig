@@ -1,0 +1,35 @@
+{% extends 'front-office.html.twig' %}
+
+{% block links %}
+    <title>Nouvelle Réclamation</title>
+{% endblock %}
+
+{% block contenu %}
+    <div style="display: flex;justify-content: center;margin: 30px;height: 500px;color: whitesmoke">
+        <div style="background-image: url({{ asset("assets/reclamation-bg.jpg") }});" class="fit-bg"></div>
+
+        <div class="card-body">
+            <h1>NOUVELLE RECLAMATION</h1>
+            {{ form_start(f) }}
+
+            <form>
+                <div class="form-group">
+                    {{ form_label(f.sujet, 'Sujet',{'attr': {'class': 'form-label'}} ) }}
+                    {{ form_widget(f.sujet , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Sujet'}} ) }}
+                    {{ form_errors(f.sujet) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(f.contenu, 'Le contenu de votre réclamation',{'attr': {'class': 'form-label'}} ) }}
+                    {{ form_widget(f.contenu , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Le contenu de votre réclamation','rows':'8'}} ) }}
+                    {{ form_errors(f.contenu) }}
+                </div>
+                <button type="submit" style="float: right" class="btn btn-success">Confirmer</button>
+                <button type="reset" class="btn btn-warning">Recommencer</button>
+
+                {{ form_end(f) }}
+
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

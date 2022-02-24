@@ -56,9 +56,20 @@ class Reservation
     private $clientId;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Admin::class)
+     * @ORM\ManyToOne(targetEntity=Client::class)
      */
     private $adminCharge;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Commande::class, inversedBy="reservation")
+     */
+    private $commande;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Restaurant::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $restaurant;
 
     public function __construct()
     {
@@ -166,14 +177,38 @@ class Reservation
         return $this;
     }
 
-    public function getAdminCharge(): ?Admin
+    public function getAdminCharge(): ?Client
     {
         return $this->adminCharge;
     }
 
-    public function setAdminCharge(?Admin $adminCharge): self
+    public function setAdminCharge(?Client $adminCharge): self
     {
         $this->adminCharge = $adminCharge;
+
+        return $this;
+    }
+
+    public function getCommande(): ?Commande
+    {
+        return $this->commande;
+    }
+
+    public function setCommande(?Commande $commande): self
+    {
+        $this->commande = $commande;
+
+        return $this;
+    }
+
+    public function getRestaurant(): ?Restaurant
+    {
+        return $this->restaurant;
+    }
+
+    public function setRestaurant(?Restaurant $restaurant): self
+    {
+        $this->restaurant = $restaurant;
 
         return $this;
     }

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-    <link rel="shortcut icon" href="assets/front-office/images/logo2.svg" type="image/x-icon">
+    <link rel="shortcut icon" href={{ asset("assets/front-office/images/logo2.svg")}} type="image/x-icon">
 
     {% block links %}{% endblock %}
 
@@ -42,15 +42,18 @@
     <header class="stick">
         <div class="topbar">
             <div class="container">
-                <div class="topbar-register">
-                    <a class="log-popup-btn" href="#" title="Login" itemprop="url">S'authentifier</a> / <a class="sign-popup-btn" href="#" title="Register" itemprop="url">S'inscrire</a>
-                </div>
-                <!-- si l'utlistateur est connecté -->
-                <!--
-                <div class="topbar-register">
-                    <a class="log-popup-btn" href="#" title="Login" itemprop="url">Mon Compte</a> / <a class="sign-popup-btn" href="#" title="Register" itemprop="url">Déconnexion</a>
-                </div>
-                -->
+                {% if app.user %}
+                    <div class="topbar-register">
+                        <a href="/dashboard">Mon Compte</a> /
+                        <a href="/logout">Déconnexion</a>
+                    </div>
+                {% else %}
+                    <div class="topbar-register">
+                        <a  href="/login" >S'authentifier</a>
+                        / <a  href="/register" >S'inscrire</a>
+                    </div>
+
+                {% endif %}
 
                 <div class="social1">
                     <a href="#" title="Facebook" itemprop="url" target="_blank"><i class="fa fa-facebook-square"></i></a>
@@ -63,7 +66,7 @@
             <div class="container">
                 <div class="logo"><h1 itemprop="headline">
                         <a href="/" title="Home" itemprop="url">
-                            <img src="assets/front-office/images/logo.png" alt="logo.png" itemprop="image" height="80px">
+                            <img src="{{ asset("assets/front-office/images/logo.png") }}" alt="logo.png" itemprop="image" height="80px">
                         </a></h1></div>
                 <nav>
                     <div class="menu-sec">
@@ -71,7 +74,13 @@
                             <li><a href="/"  itemprop="url"><span class="red-clr">&nbsp;</span>Acceuil</a></li>
                             <li><a href="/"  itemprop="url"><span class="red-clr">Decouvrez Nos</span>Restaurants</a></li>
                             <li><a href="/"  itemprop="url"><span class="red-clr">Hot <i class="fa fa-fire"></i></span>Promotions</a></li>
-                            <li><a href="/"  itemprop="url"><span class="red-clr">&nbsp; </span>Blog</a></li>
+                            <li class="menu-item-has-children"><a href="#" title="media" itemprop="url"><span class="red-clr">decouvrir</span>MEDIA</a>
+                                <ul class="sub-dropdown">
+                                    <li><a href="blog" title="BLOG" itemprop="url">BLOG</a></li>
+                                    <li><a href="articleclient" title="ARTICLE" itemprop="url">ARTICLE </a></li>
+
+                                </ul>
+                            </li>
                             <li><a href="/"  itemprop="url"><span class="red-clr"> &nbsp;</span>A propos de nous</a></li>
                             <li><a href="/"  itemprop="url"><span class="red-clr"> &nbsp;</span>Contact</a></li>
                            </ul>
@@ -85,7 +94,7 @@
 
         <div class="responsive-logomenu">
             <div class="logo"><h1 itemprop="headline"><a href="index-2.html" title="Home" itemprop="url">
-                        <img src="assets/front-office/images/logo2.svg" alt="logo2.png" itemprop="image"></a></h1></div>
+                        <img src={{ asset("assets/front-office/images/logo2.png")}} alt="logo2.png" itemprop="image"></a></h1></div>
             <span class="menu-btn yellow-bg brd-rd4"><i class="fa fa-align-justify"></i></span>
         </div>
         <div class="responsive-menu">
@@ -101,14 +110,20 @@
                     <li><a href="/"  itemprop="url"><span class="red-clr"> &nbsp;</span>Contact</a></li>
                 </ul>
             </div>
-            <div class="topbar-register">
-                <a class="log-popup-btn" href="#" title="Login" itemprop="url">S'authentifier</a> / <a class="sign-popup-btn" href="#" title="Register" itemprop="url">S'inscrire</a>
-            </div>
-            <!--
-            <div class="topbar-register">
-                <a class="log-popup-btn" href="#" title="Login" itemprop="url">Mon Compte</a> / <a class="sign-popup-btn" href="#" title="Register" itemprop="url">Déconnexion</a>
-            </div>
-            -->
+
+            {% if app.user %}
+                <div class="topbar-register">
+                    <a href="/dashboard">Mon Compte</a> /
+                    <a href="/logout">Déconnexion</a>
+                </div>
+            {% else %}
+                <div class="topbar-register">
+                    <a  href="/login" >S'authentifier</a>
+                    / <a  href="/register" >S'inscrire</a>
+                </div>
+
+            {% endif %}
+
             <div class="social1">
                 <a href="#" title="Facebook" itemprop="url" target="_blank"><i class="fa fa-facebook-square"></i></a>
                 <a href="#" title="Instagram    " itemprop="url" target="_blank"><i class="fa fa-instagram"></i></a>
@@ -117,7 +132,8 @@
     </div><!-- Responsive Header -->
 
 
-    {% block contenu %}{% endblock %}
+    {% block contenu %}
+    {% endblock %}
 
 
     <footer>
@@ -176,83 +192,13 @@
         </div>
     </footer>
 
-    <div class="log-popup text-center">
-        <div class="sign-popup-wrapper brd-rd5">
-            <div class="sign-popup-inner brd-rd5">
-                <a class="log-close-btn" href="#" title="" itemprop="url"><i class="fa fa-close"></i></a>
-                <div class="sign-popup-title text-center">
-                    <h4 itemprop="headline">SIGN IN</h4>
-                    <span>with your social network</span>
-                </div>
-                <div class="popup-social text-center">
-                    <a class="facebook brd-rd3" href="#" title="Facebook" itemprop="url" target="_blank"><i class="fa fa-facebook"></i> Facebook</a>
-                    <a class="google brd-rd3" href="#" title="Google Plus" itemprop="url" target="_blank"><i class="fa fa-google-plus"></i> Google</a>
-                    <a class="twitter brd-rd3" href="#" title="Twitter" itemprop="url" target="_blank"><i class="fa fa-twitter"></i> Twitter</a>
-                </div>
-                <span class="popup-seprator text-center"><i class="brd-rd50">or</i></span>
-                <form class="sign-form">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 col-lg-12">
-                            <input class="brd-rd3" type="text" placeholder="Username or Email">
-                        </div>
-                        <div class="col-md-12 col-sm-12 col-lg-12">
-                            <input class="brd-rd3" type="password" placeholder="Password">
-                        </div>
-                        <div class="col-md-12 col-sm-12 col-lg-12">
-                            <button class="red-bg brd-rd3" type="submit">SIGN IN</button>
-                        </div>
-                        <div class="col-md-12 col-sm-12 col-lg-12">
-                            <a class="sign-btn" href="#" title="" itemprop="url">Not a member? Sign up</a>
-                            <a class="recover-btn" href="#" title="" itemprop="ur   l">Recover my password</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
-    <div class="sign-popup text-center">
-        <div class="sign-popup-wrapper brd-rd5">
-            <div class="sign-popup-inner brd-rd5">
-                <a class="sign-close-btn" href="#" title="" itemprop="url"><i class="fa fa-close"></i></a>
-                <div class="sign-popup-title text-center">
-                    <h4 itemprop="headline">S'authentifier</h4>
-                    <span>Avec vos réseaux sociaux</span>
-                </div>
-                <div class="popup-social text-center">
-                    <a class="facebook brd-rd3" href="#" title="Facebook" itemprop="url" target="_blank"><i class="fa fa-facebook"></i> Facebook</a>
-                    <a class="google brd-rd3" href="#" title="Google Plus" itemprop="url" target="_blank"><i class="fa fa-google-plus"></i> Google</a>
-                </div>
-                <span class="popup-seprator text-center"><i class="brd-rd50">OU</i></span>
-                <form class="sign-form">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 col-lg-12">
-                            <input class="brd-rd3" type="text" placeholder="Numéro De Téléphone">
-                        </div>
-                        <div class="col-md-12 col-sm-12 col-lg-12">
-                            <input class="brd-rd3" type="email" placeholder="Email">
-                        </div>
-                        <div class="col-md-12 col-sm-12 col-lg-12">
-                            <input class="brd-rd3" type="password" placeholder="Mot De Passe">
-                        </div>
-                        <div class="col-md-12 col-sm-12 col-lg-12">
-                            <button class="red-bg brd-rd3" type="submit">S'inscrire Maintenant</button>
-                        </div>
-                        <div class="col-md-12 col-sm-12 col-lg-12">
-                            <a class="sign-btn" href="#" title="" itemprop="url">Déja Inscrit? S'authentifier</a>
-                            <a class="recover-btn" href="#" title="" itemprop="url">Mot de passe oublié ?</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </main><!-- Main Wrapper -->
 
-<script src="assets/front-office/js/jquery.min.js"></script>
-<script src="assets/front-office/js/bootstrap.min.js"></script>
-<script src="assets/front-office/js/plugins.js"></script>
-<script src="assets/front-office/js/main.js"></script>
+<script src="{{ asset("assets/front-office/js/jquery.min.js") }}"></script>
+<script src="{{ asset("assets/front-office/js/bootstrap.min.js") }}"></script>
+<script src="{{ asset("assets/front-office/js/plugins.js") }}"></script>
+<script src="{{ asset("assets/front-office/js/main.js") }}"></script>
 {% block scripts %}{% endblock %}
 
 </body>
