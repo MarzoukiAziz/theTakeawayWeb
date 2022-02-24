@@ -2,7 +2,6 @@
 
 {% block contenu %}
 
-{% block body %}
 
     <div class="bread-crumbs-wrapper">
         <div class="container">
@@ -37,20 +36,23 @@
                                 <h3 itemprop="description">{{ blog_client.contenu }}</h3>
     </tr>
                             </div>
+
+
+                            <a href="{{ path('blog_client_index') }}"><button class="btn btn-warning ">back to list</button></a>
+
+                            <a> {{ include('blog_client/_delete_form.html.twig') }}</a>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     </section>
 
 
 
 
 
-
-    <a href="{{ path('blog_client_index') }}"><button class="btn btn-primary">back to list</button></a>
-   <a> {{ include('blog_client/_delete_form.html.twig') }}</a>
-{% endblock %}
 {% endblock %}

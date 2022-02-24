@@ -5,6 +5,11 @@
 {% block contenu %}
 
 
+    <div class="card mb-3" >
+        <div class="card-header " style="font-size: 22px;font-weight: bold;">
+            <i class="fa fa-table"></i> LES BLOG
+
+        </div>
 
 
 
@@ -17,7 +22,7 @@
                 {% for blog_client in blog_clients %}
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="card">
-                            <img src="{{ asset('couverture/'~blog_client.image) }}" class="card-img-top" >
+                            <img src="{{ asset('couverture/'~blog_client.image) }}"alt="image" width="200" height="200" class="card-img-top" >
                             <div class="card-body">
                                 <h5 class="card-title">{{ blog_client.title }}</h5>
 

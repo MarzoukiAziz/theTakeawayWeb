@@ -65,6 +65,8 @@ class BlogClientController extends AbstractController
             }
             $date = new \DateTime();
             $blogClient->setDate($date);
+            $blogClient->setAuthor($this->getUser());
+            $blogClient->setStatut("En Attente");
             $entityManager->persist($blogClient);
             $entityManager->flush();
 
@@ -73,7 +75,7 @@ class BlogClientController extends AbstractController
 
         return $this->render('blog_client/new.html.twig', [
             'blog_client' => $blogClient,
-            'form' => $form->createView(),
+            'f' => $form->createView(),
         ]);
     }
 

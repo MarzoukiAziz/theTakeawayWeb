@@ -41,10 +41,11 @@
                             <div class="card">
                                 <img src="{{ asset('couverture/'~article.banner) }}" class="card-img-top" >
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ article.title }}</h5>
-                                    <small><p>{{ article.date ? article.date|date('Y-m-d') : '' }}</p></small><br>
+                                    <h1 class="card-title">{{ article.title }}</h1>
+
                                     <p class="card-text"><b>{{ article.contenu }}</b></p><br>
-                                    <a href="{{ path('article_client_show', {'id': article.id}) }}"><button class="btn btn-primary">show details</button></a>
+                                    <small><p>{{ article.date ? article.date|date('Y-m-d') : '' }}</p></small><br>
+                                    <a href="{{ path('article_client_show', {'id': article.id}) }}"><button class="btn btn-warning ">show details</button></a>
                                 </div>
                             </div>
                         </div>

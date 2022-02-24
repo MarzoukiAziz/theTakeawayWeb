@@ -6,9 +6,13 @@
     {% block body %}
 
 
-        <div class="card-body">
 
-            <h1  style="margin-bottom: 50px" class="text-center">Article</h1>
+        <div class="card mb-3" >
+            <div class="card-header " style="font-size: 22px;font-weight: bold;">
+                <i class="fa fa-table"></i> LES ARTICLES
+
+            </div>
+
 
 
 
@@ -33,8 +37,8 @@
                             <div class="card">
                                 <img src="{{ asset('couverture/'~article.banner) }}" class="card-img-top" >
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ article.title }}</h5>
                                     <small><p>{{ article.date ? article.date|date('Y-m-d') : '' }}</p></small><br>
+                                    <h5 class="card-title">{{ article.title }}</h5>
                                     <p class="card-text"><b>{{ article.contenu }}</b></p><br>
                                     <a href="{{ path('article_show', {'id': article.id}) }}"><button class="btn btn-primary">show details</button></a>
                                     <a href="{{ path('article_edit', {'id': article.id}) }}"><button class="btn btn-primary">edit</button></a>

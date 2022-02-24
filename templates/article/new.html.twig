@@ -1,14 +1,47 @@
 {% extends 'back-office.html.twig' %}
 {% block contenu %}
 
-{% block title %}New Article{% endblock %}
+
+    <div class="card mb-3" >
+    <div class="card-header " style="font-size: 22px;font-weight: bold;">
+        <i class="fa fa-table"></i> NEW ARTICLE
+
+    </div>
+
 
 {% block body %}
-    <h1>Create new Article</h1>
+    <form>
+        <div class="form-group">
+            {#        {{ form_widget(form) }}#}
+
+            {{ form_label(form.title, 'titre',{'attr': {'class': 'form-label'}} ) }}
+            {{ form_widget(form.title , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'saisie le titre '}} ) }}
+            {{ form_errors(form.title) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.contenu, 'contenu',{'attr': {'class': 'form-label'}} ) }}
+            {{ form_widget(form.contenu , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'saisie le contenu'}} ) }}
+            {{ form_errors(form.contenu) }}
+        </div>
+        <div class="form-group">
+            {#        {{ form_widget(form) }}#}
+
+            {{ form_label(form.date, 'date',{'attr': {'class': 'form-label'}} ) }}
+            {{ form_widget(form.date , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'date'}} ) }}
+            {{ form_errors(form.date) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.banner, 'image',{'attr': {'class': 'form-label'}} ) }}
+            {{ form_widget(form.banner , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'saisie le contenu'}} ) }}
+            {{ form_errors(form.banner) }}
+        </div>
+        <button class="btn btn-success" type="submit">Mettre a jour</button>
+        {{ form_end(form) }}
+    </form>
 
     {{ include('article/_form.html.twig') }}
 
-    <a href="{{ path('article_index') }}">back to list</a>
+    <a href="{{ path('article_index') }}"><button class="btn btn-outline-primary ">back to list</button></a>
 
 {% endblock %}
 {% endblock %}
