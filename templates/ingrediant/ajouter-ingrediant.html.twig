@@ -16,19 +16,15 @@
             <form >
                 <div class="form-group">
                     <label class="form-label">Nom</label>
-                    {{ form_widget(f.nom , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Numéro'}} ) }}
+                    {{ form_widget(f.nom , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Nom'}} ) }}
                     {{ form_errors(f.nom) }}
                 </div>
                 <div class="form-group">
                     <label class="form-label">Quantite</label>
-                    {{ form_widget(f.quantite , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Position Horizontale'}} ) }}
+                    {{ form_widget(f.quantite , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Quantite'}} ) }}
                     {{ form_errors(f.quantite) }}
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Restaurant :</label>
-                    {{ form_widget(f.restaurantId , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Positinn Verticale'}} ) }}
-                    {{ form_errors(f.restaurantId) }}
-                </div>
+
                 <div class="form-group mb-0">
                     <div class="checkbox checkbox-secondary" style="float: right">
                         {{ form_widget(f) }}

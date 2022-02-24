@@ -9,8 +9,8 @@
             <th scope="col">date</th>
             <th scope="col">heure</th>
             <th scope="col">prix </th>
-         <th scope="col">Fournisseur </th>
-        <th scope="col">Produit </th>
+         <th scope="col">Produit </th>
+        <th scope="col">Fournisseur </th>
         </tr>
         </thead>
         <tbody>
@@ -18,20 +18,16 @@
             {% for f in fr %}
             <th scope="row">{{ f.id }}</th>
             <td>{{ f.quantite }}</td>
-            <td>{{ f.date|date('d/m/Y') }}</td>
-            <td>{{ f.heure|date('d/m/Y') }}</td>
+            <td>{{ f.date ? f.date|date('Y-m-d') : '' }}</td>
+            <td>{{ f.heure ? f.heure|date('H:i:s') : '' }}</td>
             <td>{{ f.prixUnitaire }}</td>
 
 
             <td>
-                {% for fourn in f.getFournisseurId() %}
-                    {{ fourn.nom }}
-                {% endfor %}
+                {{ f.ingrediantId.nom }}
             </td>
             <td>
-                {% for ing in f.getIngrediantId() %}
-                    {{ ing.nom }}
-                {% endfor %}
+                {{ f.fournisseurId.nom }}
             </td>
 
             <td> <a href="{{ path('deletefacture',{'id':f.id}) }}">Delete</a>
@@ -46,5 +42,6 @@
         {% endfor %}
         </tbody>
     </table>
+    <a  href="{{ path('choixFournisseur') }}" class="btn btn-secondary btn-lg btn-block">Ajouter Nouvelle Facture</a>
 
 {% endblock %}

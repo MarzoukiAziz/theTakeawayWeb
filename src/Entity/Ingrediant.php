@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\IngrediantRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\MinLength;
 
 /**
  * @ORM\Entity(repositoryClass=IngrediantRepository::class)
@@ -19,11 +21,13 @@ class Ingrediant
 
     /**
      * @ORM\Column(type="string", length=255)
+
      */
     private $nom;
 
     /**
      * @ORM\Column(type="integer")
+     *  @Assert\Positive
      */
     private $quantite;
 

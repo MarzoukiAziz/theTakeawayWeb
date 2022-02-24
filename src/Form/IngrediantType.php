@@ -15,15 +15,9 @@ class IngrediantType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('quantite')
+            ->add('quantite') ;
 
-            ->add('restaurantId',EntityType::class,[
-                'class'=>Restaurant::class,
-                'choice_label'=>'nom',
-                'expanded'=>true,
-                'multiple'=>false
-            ])
-        ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

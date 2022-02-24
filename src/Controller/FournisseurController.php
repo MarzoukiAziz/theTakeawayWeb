@@ -31,7 +31,7 @@ class FournisseurController extends AbstractController
         $form = $this->createForm(FournisseurType::class,$fr);
 
         $form->handleRequest($request);
-       if ($form->isSubmitted() ) {
+       if ($form->isSubmitted() && $form->isValid() ) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($fr);
             $em->flush();
@@ -71,14 +71,13 @@ class FournisseurController extends AbstractController
     {
         $fr = $this->getDoctrine()->getRepository(Fournisseur::class)->find($id);
         $form = $this->createForm(FournisseurType::class, $fr);
-        $form->add('modifier',SubmitType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             return $this->redirectToRoute('listfournisseur');
         }
-        return $this->render("fournisseur/update-fournisseur.html.twig",array('form'=>$form->createView()));
+        return $this->render("fournisseur/update-fournisseur.html.twig",array('f'=>$form->createView()));
     }
 
     /**

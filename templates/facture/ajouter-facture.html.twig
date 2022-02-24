@@ -17,34 +17,17 @@
             <form >
                 <div class="form-group">
                     <label class="form-label">quantite</label>
-                    {{ form_widget(f.quantite , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Numéro'}} ) }}
+                    {{ form_widget(f.quantite , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Quantite'}} ) }}
                     {{ form_errors(f.quantite) }}
                 </div>
-                <div class="form-group">
-                    <label class="form-label">date</label>
-                    {{ form_widget(f.date , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Position Horizontale'}} ) }}
-                    {{ form_errors(f.date) }}
-                </div>
-                <div class="form-group">
-                    <label class="form-label">heure :</label>
-                    {{ form_widget(f.heure , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Positinn Verticale'}} ) }}
-                    {{ form_errors(f.heure) }}
-                </div>
+
                 <div class="form-group">
                     <label class="form-label">prixUnitaire :</label>
-                    {{ form_widget(f.prixUnitaire , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Positinn Verticale'}} ) }}
+                    {{ form_widget(f.prixUnitaire , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Prix'}} ) }}
                     {{ form_errors(f.prixUnitaire) }}
                 </div>
-                <div class="form-group">
-                    <label class="form-label">ingrediant :</label>
-                    {{ form_widget(f.ingrediantId , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Positinn Verticale'}} ) }}
-                    {{ form_errors(f.ingrediantId) }}
-                </div>
-                <div class="form-group">
-                    <label class="form-label">fournisseur:</label>
-                    {{ form_widget(f.fournisseurId , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Positinn Verticale'}} ) }}
-                    {{ form_errors(f.fournisseurId) }}
-                </div>
+
+
                 <div class="form-group mb-0">
                     <div class="checkbox checkbox-secondary" style="float: right">
                         {{ form_widget(f) }}

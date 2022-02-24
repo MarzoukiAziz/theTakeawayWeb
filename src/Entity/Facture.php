@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\FactureRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=FactureRepository::class)
@@ -19,6 +20,8 @@ class Facture
 
     /**
      * @ORM\Column(type="integer")
+     *  @Assert\Positive
+
      */
     private $quantite;
 
@@ -34,6 +37,8 @@ class Facture
 
     /**
      * @ORM\Column(type="float")
+     *   @Assert\Positive
+
      */
     private $prixUnitaire;
 

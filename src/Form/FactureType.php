@@ -20,18 +20,10 @@ class FactureType extends AbstractType
 
         $builder
             ->add('quantite',TextType::class,['label' => 'Quantité'])
-            ->add('date')
-            ->add('heure')
             ->add('prixUnitaire',TextType::class,['label' => 'Prix : '])
 
 
 
-            ->add('fournisseurId',EntityType::class,[
-                'class'=>Fournisseur::class,
-                'choice_label'=>'nom',
-                'expanded'=>true,
-                'multiple'=>false
-            ])
 
 
 
@@ -47,4 +39,5 @@ class FactureType extends AbstractType
             'data_class' => Facture::class,
         ]);
     }
+
 }

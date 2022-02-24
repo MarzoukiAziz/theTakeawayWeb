@@ -1,0 +1,52 @@
+{% extends "back-office.html.twig" %}
+
+{% block contenu %}
+    <h1 class="margin-bottom-20">Liste des factures de la ligne </h1>
+
+    <table class="table table-bordered">
+        <tr>
+            <td style="width: 210px">
+                <b>Débit</b>
+            </td>
+
+            <td style="width: 210px">
+                <b>Crédit</b>
+            </td>
+
+        </tr>
+    </table>
+
+    <table class="table table-stripped table-hover">
+        <thead>
+        <tr>
+            <th>quantite</th>
+            <th>date</th>
+            <th>prix</th>
+            <th width="70"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for facture in factures %}
+            <tr>
+                <td>{{ facture.quantite }}</td>
+                <td>{{ facture.date|date("d/m/Y") }}</td>
+                <td>{{ facture.prixUnitaire}}</td>
+                <td>
+                    <div class="btn-group">
+                        <a class="btn btn-small" href="{{ path('facture_detail', {'ligne_id': ligne.id, 'id': facture.id}) }}" title="D&eacute;tail"><i class="icon-eye-open icon-large"></i></a>
+
+
+                            <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="icon-print"></i>
+                                <span class="caret"></span>
+                            </a>
+
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

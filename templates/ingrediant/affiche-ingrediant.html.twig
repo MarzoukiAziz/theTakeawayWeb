@@ -4,19 +4,19 @@
     <table class="table table-hover table-dark">
         <thead>
         <tr>
-            <th scope="col">Id</th>
+
             <th scope="col">nom</th>
             <th scope="col">quantité</th>
-            <th scope="col">Restaurent</th>
+            <th scope="col">Options</th>
 
         </tr>
         </thead>
         <tbody>
         <tr>   {% for f in fr %}
-            <th scope="row">{{ f.id }}</th>
+
             <td>{{ f.nom }}</td>
             <td>{{ f.quantite}}</td>
-            {#  <td><a href="{{ path("admin-reservations-client",{'id': f.restaurantId.nom}) }}">#}
+
 
 
             <td> <a href="{{ path('deleteingrediant',{'id':f.id}) }}">Delete</a>
@@ -31,5 +31,6 @@
         {% endfor %}
         </tbody>
     </table>
+     <a  href="{{ path('choix') }}" class="btn btn-secondary btn-lg btn-block">Ajouter Nouveau Ingrediant</a>
 
 {% endblock %}
