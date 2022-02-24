@@ -1,0 +1,61 @@
+{% extends 'front-office.html.twig' %}
+
+
+{% block links %} <title>Restaurants</title>{% endblock %}
+
+
+{% block contenu %}
+
+
+
+
+
+    <div class="col-md-9 col-sm-12 col-lg-9">
+        <div class="title2-wrapper">
+            <h3 class="marginb-0" itemprop="headline"><i class="fa fa-fw fa-eye"></i>Nos Restaurants</h3>
+        </div>
+
+        {% for r in restaurant %}
+        <div class="remove-ext"  >
+
+            <div class="row"  >
+
+                <div class="col-md-6 col-sm-6 col-lg-6">
+
+
+                    <div class="featured-restaurant-box with-bg style2 brd-rd12 wow fadeIn" data-wow-delay="0.1s">
+
+
+                        <div class="featured-restaurant-thumb">
+
+                            <a href="restaurant-detail.html" title="" itemprop="url"><img src="assets/front-office/images/logo2.png" alt="most-popular-img1.png" itemprop="image"></a>
+                        </div>
+
+                        <div class="featured-restaurant-info" >
+
+                            <span class="red-clr">{{ r.adresse }}</span>
+                            <h4 itemprop="headline"><a href="{{ path('restaurant_showC', {'id': r.id}) }}" itemprop="url">{{ r.nom }}</a></h4>
+                            <span class="food-types">Type of food: <a href="#" title="" itemprop="url">Apple Juice</a>, <a href="#" title="" itemprop="url">BB.Q</a></span>
+                            <ul class="post-meta">
+                                <li><i class="fa fa-check-circle-o"></i> Enjoy</li>
+                                <li><i class="flaticon-money"></i> Accepts cash & online payments</li>
+                            </ul>
+                            <span class="post-rate yellow-bg brd-rd2"><i class="fa fa-star-o"></i> 4.25</span>
+                            <span class="post-likes style2 red-clr"><i class="fa fa-heart-o"></i> 6</span>
+                            <a class="brd-rd30" href="restaurant-detail.html" title="Order Online"><i class="fa fa-angle-double-right"></i> Order Online</a>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div >
+        </div >
+
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

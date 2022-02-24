@@ -6,24 +6,26 @@
 
 {% block contenu %}
 
+    {% block title %}<ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Restaurant</li>
+    </ol>{% endblock %}
 
 
 
 
 
-    <table class="table">
-        <thead class="thead-dark">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead >
         <tr>
 
             <th scope="col">ID</th>
             <th scope="col">Nom</th>
             <th scope="col">Adresse</th>
-            <th scope="col">Description</th>
-            <th scope="col">Heure_ouverture</th>
-            <th scope="col">Heure_fermeture</th>
-            <th scope="col">Architecture</th>
-            <th scope="col">Telephone</th>
-            <th scope="col">Mise a jour </th>
+            <th scope="col">Mise a jours </th>
+
 
 
         </tr>
@@ -34,16 +36,23 @@
             <td>{{ r.id }}</td>
             <td>{{ r.nom }}</td>
             <td>{{ r.adresse }}</td>
-            <td>{{ r.description }}</td>
-            <td>{{ r.heureOuverture |date }}</td>
-            <td>{{ r.heureFermeture |date}}</td>
-            <td>{{ r.architecture }}</td>
-            <td>{{ r.telephone }}</td>
-            <td><a  href="{{ path('del',{'id':r.id}) }}" class="btn_1 gray delete"><i class="fa fa-fw fa-times-circle-o">DELETE</a></td>
 
-        </tr{% endfor %}>
+
+
+
+            <td> <a class="btn_1 gray" href="{{ path('restaurant_show', {'id': r.id}) }}"><i class="fa fa-fw fa-eye"></i>show</a>
+                <a class="btn_1 gray approve" href="{{ path('update', {'id': r.id}) }}">EDIT</a> </td>
+
+        </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
         </tbody>
+
     </table>
+    <a class="btn_1 gray approve" href="{{ path('restaurant_add') }}">Ajouter</a>
 
 
 {% endblock %}
