@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PromotionRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=PromotionRepository::class)
  */
@@ -19,11 +19,15 @@ class Promotion
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Type("\DateTime")
+     * @Assert\GreaterThan("today")
      */
     private $dateDebut;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Type("\DateTime")
+     * @Assert\GreaterThan("today")
      */
     private $dateFin;
 
@@ -50,6 +54,7 @@ class Promotion
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Positive
      */
     private $prixPromo;
 

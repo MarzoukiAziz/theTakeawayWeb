@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\MenuElementRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=MenuElementRepository::class)
  */
@@ -19,16 +19,19 @@ class MenuElement
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Nom is required")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Description is required")
      */
     private $description;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Positive
      */
     private $prix;
 

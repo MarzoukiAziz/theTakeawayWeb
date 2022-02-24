@@ -1,14 +1,20 @@
-{% extends 'back-office.html.twig' %}
-
-
-{% block links %} <title>Restaurants</title>{% endblock %}
-
-
-{% block contenu %}
 
 
 
-{{ form_start(form) }}
+
+
+    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+    {{ form_row(form.dateDebut, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_row(form.dateFin, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_row(form.heureDebut, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_row(form.heureFin, { 'attr': {'class': 'form-control'} }) }}
+
+    {{ form_row(form.prixPromo, { 'attr': {'class': 'form-control'} }) }}
+     {{ form_row(form.banner, { 'attr': {'class': 'form-control'} }) }}
+
+      {{ form_row(form.element, { 'attr': {'class': 'form-control'} }) }}
+
+
     {{ form_widget(form) }}
     <button class="btn_1 gray approve">{{ button_label|default('Save') }}</button>
 
@@ -18,4 +24,3 @@
 
 
 
-{% endblock %}

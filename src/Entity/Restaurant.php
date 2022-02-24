@@ -6,6 +6,8 @@ use App\Repository\RestaurantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=RestaurantRepository::class)
@@ -21,16 +23,19 @@ class Restaurant
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  * @Assert\NotBlank(message="Nom is required")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  * @Assert\NotBlank(message="Adresse is required")
      */
     private $adresse;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  * @Assert\NotBlank(message="description is required")
      */
     private $description;
 
@@ -51,6 +56,12 @@ class Restaurant
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 8,
+     *      minMessage = "le numero est invalide verifer la longeur",
+     *      maxMessage = "le numero est invalide verifer la longeur"
+     * )
      */
     private $telephone;
 

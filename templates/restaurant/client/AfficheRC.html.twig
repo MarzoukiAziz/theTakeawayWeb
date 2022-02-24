@@ -42,16 +42,16 @@
                                                 <div class="restaurant-detail-thumb">
                                                     <ul class="restaurant-detail-img-carousel">
                                                         {% for img in restaurant.images %}
-                                                        <li><img  src="{{ asset('couvertures/'~ img) }}" style="width: 600px;height: 400px">
+                                                            <li><img  src="{{ asset('couvertures/'~ img) }}" style="width: 600px;height: 400px">
                                                             </li>
 
                                                         {% endfor %}
                                                     </ul>
                                                     <ul class="restaurant-detail-thumb-carousel">
                                                         {% for img in restaurant.images %}
-                                                        <li><img class="brd-rd3"
-                                                                 src="{{ asset('couvertures/'~ img) }}" style="width: 100px;height: 100px"
-                                                                 itemprop="image"></li>
+                                                            <li><img class="brd-rd3"
+                                                                     src="{{ asset('couvertures/'~ img) }}" style="width: 100px;height: 100px"
+                                                                     itemprop="image"></li>
 
                                                         {% endfor %}
                                                     </ul>
