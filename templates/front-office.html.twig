@@ -18,30 +18,93 @@
     <link rel="stylesheet" href={{ asset("assets/front-office/css/responsive.css") }}>
 </head>
 <body itemscope>
-<main>
-    <!-- Preloader-->
-    <div class="preloader">
-        <div id="cooking">
-            <div class="bubble"></div>
-            <div class="bubble"></div>
-            <div class="bubble"></div>
-            <div class="bubble"></div>
-            <div class="bubble"></div>
-            <div id="area">
-                <div id="sides">
-                    <div id="pan"></div>
-                    <div id="handle"></div>
-                </div>
-                <div id="pancake">
-                    <div id="pastry"></div>
+    <main>
+        <!-- Preloader-->
+        <div class="preloader">
+            <div id="cooking">
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div id="area">
+                    <div id="sides">
+                        <div id="pan"></div>
+                        <div id="handle"></div>
+                    </div>
+                    <div id="pancake">
+                        <div id="pastry"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <header class="stick">
-        <div class="topbar">
-            <div class="container">
+        <header class="stick">
+            <div class="topbar">
+                <div class="container">
+                    {% if app.user %}
+                        <div class="topbar-register">
+                            <a href="/dashboard">Mon Compte</a> /
+                            <a href="/logout">Déconnexion</a>
+                        </div>
+                    {% else %}
+                        <div class="topbar-register">
+                            <a  href="/login" >S'authentifier</a>
+                            / <a  href="/register" >S'inscrire</a>
+                        </div>
+
+                    {% endif %}
+
+                    <div class="social1">
+                        <a href="#" title="Facebook" itemprop="url" target="_blank"><i class="fa fa-facebook-square"></i></a>
+                        <a href="#" title="Instagram" itemprop="url" target="_blank"><i class="fa fa-instagram"></i></a>
+                    </div>
+
+                </div>
+            </div><!-- Topbar -->
+            <div class="logo-menu-sec">
+                <div class="container">
+                    <div class="logo"><h1 itemprop="headline">
+                            <a href="/" title="Home" itemprop="url">
+                                <img src="{{ asset("assets/front-office/images/logo.png") }}" alt="logo.png" itemprop="image" height="80px">
+                            </a></h1></div>
+                    <nav>
+                        <div class="menu-sec">
+                            <ul>
+                                <li><a href="/"  itemprop="url"><span class="red-clr">&nbsp;</span>Acceuil</a></li>
+                                <li><a href="/"  itemprop="url"><span class="red-clr">Decouvrez Nos</span>Restaurants</a></li>
+                                <li><a href="/"  itemprop="url"><span class="red-clr">Hot <i class="fa fa-fire"></i></span>Promotions</a></li>
+                                <li><a href="/"  itemprop="url"><span class="red-clr">&nbsp; </span>Blog</a></li>
+                                <li><a href="/"  itemprop="url"><span class="red-clr"> &nbsp;</span>A propos de nous</a></li>
+                                <li><a href="/"  itemprop="url"><span class="red-clr"> &nbsp;</span>Contact</a></li>
+                               </ul>
+                        </div>
+                    </nav><!-- Navigation -->
+                </div>
+            </div><!-- Logo Menu Section -->
+        </header><!-- Header -->
+
+        <div class="responsive-header">
+
+            <div class="responsive-logomenu">
+                <div class="logo"><h1 itemprop="headline"><a href="index-2.html" title="Home" itemprop="url">
+                            <img  alt="logo2.png" itemprop="image"></a></h1></div>
+                <span class="menu-btn yellow-bg brd-rd4"><i class="fa fa-align-justify"></i></span>
+            </div>
+            <div class="responsive-menu">
+                <span class="menu-close red-bg brd-rd3"><i class="fa fa-close"></i></span>
+                <div class="menu-lst">
+                    <ul>
+
+                        <li><a href="/"  itemprop="url"><span class="red-clr">&nbsp;</span>Acceuil</a></li>
+                        <li><a href="/"  itemprop="url"><span class="red-clr">Decouvrez Nos</span>Restaurants</a></li>
+                        <li><a href="/"  itemprop="url"><span class="red-clr">Hot <i class="fa fa-fire"></i></span>Promotions</a></li>
+                        <li><a href="/"  itemprop="url"><span class="red-clr">&nbsp; </span>Blog</a></li>
+                        <li><a href="/"  itemprop="url"><span class="red-clr"> &nbsp;</span>A propos de nous</a></li>
+                        <li><a href="/"  itemprop="url"><span class="red-clr"> &nbsp;</span>Contact</a></li>
+                    </ul>
+                </div>
+
                 {% if app.user %}
                     <div class="topbar-register">
                         <a href="/dashboard">Mon Compte</a> /
@@ -57,134 +120,71 @@
 
                 <div class="social1">
                     <a href="#" title="Facebook" itemprop="url" target="_blank"><i class="fa fa-facebook-square"></i></a>
-                    <a href="#" title="Instagram" itemprop="url" target="_blank"><i class="fa fa-instagram"></i></a>
+                    <a href="#" title="Instagram    " itemprop="url" target="_blank"><i class="fa fa-instagram"></i></a>
                 </div>
-
-            </div>
-        </div><!-- Topbar -->
-        <div class="logo-menu-sec">
-            <div class="container">
-                <div class="logo"><h1 itemprop="headline">
-                        <a href="/" title="Home" itemprop="url">
-                            <img src="{{ asset("assets/front-office/images/logo.png") }}" alt="logo.png" itemprop="image" height="80px">
-                        </a></h1></div>
-                <nav>
-                    <div class="menu-sec">
-                        <ul>
-                            <li><a href="/"  itemprop="url"><span class="red-clr">&nbsp;</span>Acceuil</a></li>
-                            <li><a href="/"  itemprop="url"><span class="red-clr">Decouvrez Nos</span>Restaurants</a></li>
-                            <li><a href="/"  itemprop="url"><span class="red-clr">Hot <i class="fa fa-fire"></i></span>Promotions</a></li>
-                            <li><a href="/"  itemprop="url"><span class="red-clr">&nbsp; </span>Blog</a></li>
-                            <li><a href="/"  itemprop="url"><span class="red-clr"> &nbsp;</span>A propos de nous</a></li>
-                            <li><a href="/"  itemprop="url"><span class="red-clr"> &nbsp;</span>Contact</a></li>
-                           </ul>
-                    </div>
-                </nav><!-- Navigation -->
-            </div>
-        </div><!-- Logo Menu Section -->
-    </header><!-- Header -->
-
-    <div class="responsive-header">
-
-        <div class="responsive-logomenu">
-            <div class="logo"><h1 itemprop="headline"><a href="index-2.html" title="Home" itemprop="url">
-                        <img src={{ asset("assets/front-office/images/logo2.png")}} alt="logo2.png" itemprop="image"></a></h1></div>
-            <span class="menu-btn yellow-bg brd-rd4"><i class="fa fa-align-justify"></i></span>
-        </div>
-        <div class="responsive-menu">
-            <span class="menu-close red-bg brd-rd3"><i class="fa fa-close"></i></span>
-            <div class="menu-lst">
-                <ul>
-
-                    <li><a href="/"  itemprop="url"><span class="red-clr">&nbsp;</span>Acceuil</a></li>
-                    <li><a href="/"  itemprop="url"><span class="red-clr">Decouvrez Nos</span>Restaurants</a></li>
-                    <li><a href="/"  itemprop="url"><span class="red-clr">Hot <i class="fa fa-fire"></i></span>Promotions</a></li>
-                    <li><a href="/"  itemprop="url"><span class="red-clr">&nbsp; </span>Blog</a></li>
-                    <li><a href="/"  itemprop="url"><span class="red-clr"> &nbsp;</span>A propos de nous</a></li>
-                    <li><a href="/"  itemprop="url"><span class="red-clr"> &nbsp;</span>Contact</a></li>
-                </ul>
-            </div>
-
-            {% if app.user %}
-                <div class="topbar-register">
-                    <a href="/dashboard">Mon Compte</a> /
-                    <a href="/logout">Déconnexion</a>
-                </div>
-            {% else %}
-                <div class="topbar-register">
-                    <a  href="/login" >S'authentifier</a>
-                    / <a  href="/register" >S'inscrire</a>
-                </div>
-
-            {% endif %}
-
-            <div class="social1">
-                <a href="#" title="Facebook" itemprop="url" target="_blank"><i class="fa fa-facebook-square"></i></a>
-                <a href="#" title="Instagram    " itemprop="url" target="_blank"><i class="fa fa-instagram"></i></a>
-            </div>
-        </div><!-- Responsive Menu -->
-    </div><!-- Responsive Header -->
+            </div><!-- Responsive Menu -->
+        </div><!-- Responsive Header -->
 
 
-    {% block contenu %}
-    {% endblock %}
+        {% block contenu %}
+        {% endblock %}
 
 
-    <footer>
-        <div class="block top-padd80 bottom-padd80 dark-bg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-lg-12">
-                        <div class="footer-data">
-                            <div class="row">
-                                <div class="col-md-3 col-sm-6 col-lg-3">
-                                    <div class="widget about_widget wow fadeIn" data-wow-delay="0.1s">
-                                        <div class="logo"><h1 itemprop="headline"><a href="#" title="Home" itemprop="url"><img src={{ asset("assets/front-office/images/logo2.png")}} alt="logo2.png" height="70px" itemprop="image"></a></h1></div>
-                                        <p itemprop="description">Découvrez nos restaurants sur toute la tunisie!</p>
-                                        <div class="social2">
-                                            <a class="brd-rd50" href="#" title="Facebook" itemprop="url" target="_blank"><i class="fa fa-facebook"></i></a>
-                                            <a class="brd-rd50" href="#" title="Instagram" itemprop="url" target="_blank"><i class="fa fa-instagram"></i></a>
+        <footer>
+            <div class="block top-padd80 bottom-padd80 dark-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+                            <div class="footer-data">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-6 col-lg-3">
+                                        <div class="widget about_widget wow fadeIn" data-wow-delay="0.1s">
+                                            <div class="logo"><h1 itemprop="headline"><a href="#" title="Home" itemprop="url"><img src={{ asset("assets/front-office/images/logo2.png")}} alt="logo2.png" height="70px" itemprop="image"></a></h1></div>
+                                            <p itemprop="description">Découvrez nos restaurants sur toute la tunisie!</p>
+                                            <div class="social2">
+                                                <a class="brd-rd50" href="#" title="Facebook" itemprop="url" target="_blank"><i class="fa fa-facebook"></i></a>
+                                                <a class="brd-rd50" href="#" title="Instagram" itemprop="url" target="_blank"><i class="fa fa-instagram"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-lg-3">
+                                        <div class="widget information_links wow fadeIn" data-wow-delay="0.2s">
+                                            <h4 class="widget-title" itemprop="headline">Informations</h4>
+                                            <ul>
+                                                <li><a href="#" title="" itemprop="url">FAQ</a></li>
+                                                <li><a href="#" title="" itemprop="url">A propos de nous</a></li>
+                                                <li><a href="#" title="" itemprop="url">Nos Restaurants</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-lg-3">
+                                        <div class="widget customer_care wow fadeIn" data-wow-delay="0.3s">
+                                            <h4 class="widget-title" itemprop="headline">Produits</h4>
+                                            <ul>
+                                                <li><a href="#" title="" itemprop="url">Promotins</a></li>
+                                                <li><a href="#" title="" itemprop="url">Nouveaux produits</a></li>
+                                                <li><a href="#" title="" itemprop="url">Meilleures ventes</a></li>
+                                                <li><a href="#" title="" itemprop="url">Nous contacter</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-lg-3">
+                                        <div class="widget get_in_touch wow fadeIn" data-wow-delay="0.4s">
+                                            <h4 class="widget-title" itemprop="headline">GET IN TOUCH</h4>
+                                            <ul>
+                                                <li><i class="fa fa-map-marker"></i>24, Rue Mohamed Ali, Rades, Ben Arous, Tunisie </li>
+                                                <li><i class="fa fa-phone"></i> (216) 54136336</li>
+                                                <li><i class="fa fa-envelope"></i> <a href="#" title="" itemprop="url">contact@thetakeaway.com.tn</a></li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-sm-6 col-lg-3">
-                                    <div class="widget information_links wow fadeIn" data-wow-delay="0.2s">
-                                        <h4 class="widget-title" itemprop="headline">Informations</h4>
-                                        <ul>
-                                            <li><a href="#" title="" itemprop="url">FAQ</a></li>
-                                            <li><a href="#" title="" itemprop="url">A propos de nous</a></li>
-                                            <li><a href="#" title="" itemprop="url">Nos Restaurants</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-sm-6 col-lg-3">
-                                    <div class="widget customer_care wow fadeIn" data-wow-delay="0.3s">
-                                        <h4 class="widget-title" itemprop="headline">Produits</h4>
-                                        <ul>
-                                            <li><a href="#" title="" itemprop="url">Promotins</a></li>
-                                            <li><a href="#" title="" itemprop="url">Nouveaux produits</a></li>
-                                            <li><a href="#" title="" itemprop="url">Meilleures ventes</a></li>
-                                            <li><a href="#" title="" itemprop="url">Nous contacter</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-sm-6 col-lg-3">
-                                    <div class="widget get_in_touch wow fadeIn" data-wow-delay="0.4s">
-                                        <h4 class="widget-title" itemprop="headline">GET IN TOUCH</h4>
-                                        <ul>
-                                            <li><i class="fa fa-map-marker"></i>24, Rue Mohamed Ali, Rades, Ben Arous, Tunisie </li>
-                                            <li><i class="fa fa-phone"></i> (216) 54136336</li>
-                                            <li><i class="fa fa-envelope"></i> <a href="#" title="" itemprop="url">contact@thetakeaway.com.tn</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- Footer Data -->
+                            </div><!-- Footer Data -->
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 
 
 </main><!-- Main Wrapper -->

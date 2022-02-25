@@ -21,8 +21,9 @@ class CartBancaire
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank
+     * @Assert\Range(min = 1000000, max = 99999999, notInRangeMessage = "Phone must content 8 Numbers")
      * @Assert\Type("integer")
-     *
      */
     private $numero;
 

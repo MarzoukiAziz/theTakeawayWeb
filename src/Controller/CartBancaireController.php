@@ -42,12 +42,12 @@ class CartBancaireController extends AbstractController
 
         return $this->render('cart_bancaire/new.html.twig', [
             'cart_bancaire' => $cartBancaire,
-            'form' => $form->createView(),
+            'f' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("cart/{id}", name="cart_bancaire_show", methods={"GET"})
+     * @Route("cart/{id }", name="cart_bancaire_show", methods={"GET"})
      */
     public function show(CartBancaire $cartBancaire): Response
     {
@@ -72,7 +72,7 @@ class CartBancaireController extends AbstractController
 
         return $this->render('cart_bancaire/edit.html.twig', [
             'cart_bancaire' => $cartBancaire,
-            'form' => $form->createView(),
+            'f' => $form->createView(),
         ]);
     }
 

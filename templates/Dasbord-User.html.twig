@@ -2,275 +2,256 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Ansonika">
-
-    <link rel="stylesheet" href={{ asset("assets/front-office/css/icons.min.css") }}>
-    <link rel="shortcut icon" href={{ asset("assets/back-office/img/favicon.ico") }} type="image/x-icon">
-    <link rel="apple-touch-icon" type="image/x-icon" href={{ asset("assets/back-office/img/apple-touch-icon-57x57-precomposed.png") }} >
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href={{ asset("assets/back-office/img/apple-touch-icon-72x72-precomposed.png") }} >
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href={{ asset("assets/back-office/img/apple-touch-icon-114x114-precomposed.png") }} >
-    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href={{ asset("assets/back-office/img/apple-touch-icon-144x144-precomposed.png") }} >
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="shortcut icon" href={{ asset("assets/front-office/images/logo2.svg")}} type="image/x-icon">
 
     {% block links %}{% endblock %}
 
-
-    <link href={{ asset("assets/back-office/vendor/bootstrap/css/bootstrap.min.css") }} rel="stylesheet">
-    <link  href={{ asset("assets/back-office/css/admin.css") }} rel="stylesheet">
-    <link  href={{ asset("assets/back-office/vendor/font-awesome/css/font-awesome.min.css") }} rel="stylesheet" type="text/css">
-    <link  href={{ asset("assets/back-office/vendor/datatables/dataTables.bootstrap4.css") }}rel="stylesheet">
-    <link   href={{ asset("assets/back-office/css/custom.css") }} rel="stylesheet">
-
+    <link rel="stylesheet" href={{ asset("assets/front-office/css/icons.min.css") }}>
+    <link rel="stylesheet" href={{ asset("assets/front-office/css/bootstrap.min.css") }}>
+    <link rel="stylesheet" href={{ asset("assets/front-office/css/main.css") }}>
+    <link rel="stylesheet" href={{ asset("assets/front-office/css/red-color.css") }}>
+    <link rel="stylesheet" href={{ asset("assets/front-office/css/yellow-color.css") }}>
+    <link rel="stylesheet" href={{ asset("assets/front-office/css/responsive.css") }}>
 </head>
-
-<body class="fixed-nav sticky-footer" id="page-top">
-<!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-default fixed-top" id="mainNav">
-    <a class="navbar-brand" href="/dashboard">
-            <img src="{{ asset('assets/front-office/images/logo2.svg')}}" data-retina="true" alt="" width="142"
-                                                   height="36">
-</a>
-
-    <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                <a class="nav-link" href="/dashboard">
-                    <i class="fa fa-fw fa-dashboard"></i>
-                    <span class="nav-link-text">Tableau de Board</span>
-                </a>
-            </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
-                <a class="nav-link" href="/cart">
-                    <i class="fa fa-fw fa-cubes"></i>
-                    <span class="nav-link-text">Mes Carte</span>
-                </a>
-            </li>
-
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Bookings">
-                <a class="nav-link" href="#l">
-                    <i class="fa fa-fw fa-user"></i>
-                    <span class="nav-link-text">clients </span>
-                </a>
-            </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Bookings">
-                <a class="nav-link" href="#">
-                    <i class="fa fa-fw fa-calendar-check-o"></i>
-                    <span class="nav-link-text">Réservations <span class="badge badge-pill badge-primary">6 New</span></span>
-                </a>
-            </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My listings">
-                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMylistings"
-                   data-parent="#mylistings">
-                    <i class="fa fa-fw fa-shopping-basket"></i>
-                    <span class="nav-link-text">Commandes</span>
-                </a>
-                <ul class="sidenav-second-level collapse" id="collapseMylistings">
-                    <li>
-                        <a href="listings.html">Sur place <span class="badge badge-pill badge-primary">6</span></a>
-                    </li>
-                    <li>
-                        <a href="listings.html">takeaway <span class="badge badge-pill badge-success">6</span></a>
-                    </li>
-
-                </ul>
-            </li>
-
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bookmarks">
-                <a class="nav-link" href="bookmarks.html">
-                    <i class="fa fa-fw fa-utensils"></i>
-                    <span class="nav-link-text">Restaurants</span>
-                </a>
-            </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
-                <a class="nav-link" href="reviews.html">
-                    <i class="fa fa-fw fa-drumbstick-bite"></i>
-                    <span class="nav-link-text">Plats</span>
-                </a>
-            </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add listing">
-                <a class="nav-link" href="add-listing.html">
-                    <i class="fa fa-fw  fa-newspaper"></i>
-                    <span class="nav-link-text">Articles</span>
-                </a>
-            </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="My profile">
-                <a class="nav-link" href="user-profile.html">
-                    <i class="fa fa-fw  fa-blog"></i>
-                    <span class="nav-link-text">Blog</span>
-                </a>
-            </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
-                <a class="nav-link" href="messages.html">
-                    <i class="fa fa-fw fa-exclamation"></i>
-                    <span class="nav-link-text">Réclamations</span>
-                </a>
-            </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents"
-                   data-parent="#Components">
-                    <i class="fa fa-fw fa-tags"></i>
-                    <span class="nav-link-text">Réduction </span>
-                </a>
-                <ul class="sidenav-second-level collapse" id="collapseComponents">
-                    <li>
-                        <a href="charts.html">Promotions </a>
-                    </li>
-                    <li>
-                        <a href="tables.html">Coupons</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <ul class="navbar-nav sidenav-toggler">
-            <li class="nav-item">
-                <a class="nav-link text-center" id="sidenavToggler">
-                    <i class="fa fa-fw fa-angle-left"></i>
-                </a>
-            </li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-
-                <div class="dropdown-menu" aria-labelledby="messagesDropdown">
-                    <h6 class="dropdown-header">New Messages:</h6>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">
-                        <strong>David Miller</strong>
-                        <span class="small float-right text-muted">11:21 AM</span>
-                        <div class="dropdown-message small">Hey there! This new version of SB Admin is pretty awesome! These
-                            messages clip off when they reach the end of the box so they don't overflow over to the sides!</div>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">
-                        <strong>Jane Smith</strong>
-                        <span class="small float-right text-muted">11:21 AM</span>
-                        <div class="dropdown-message small">I was wondering if you could meet for an appointment at 3:00 instead
-                            of 4:00. Thanks!</div>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">
-                        <strong>John Doe</strong>
-                        <span class="small float-right text-muted">11:21 AM</span>
-                        <div class="dropdown-message small">I've sent the final files over to you for review. When you're able to
-                            sign off of them let me know and we can discuss distribution.</div>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item small" href="#">View all messages</a>
+<body itemscope>
+<main>
+    <!-- Preloader-->
+    <div class="preloader">
+        <div id="cooking">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div id="area">
+                <div id="sides">
+                    <div id="pan"></div>
+                    <div id="handle"></div>
                 </div>
-            </li>
-            <li class="nav-item dropdown">
-
-                <div class="dropdown-menu" aria-labelledby="alertsDropdown">
-                    <h6 class="dropdown-header">New Alerts:</h6>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">
-              <span class="text-success">
-                <strong>
-                  <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
-              </span>
-                        <span class="small float-right text-muted">11:21 AM</span>
-                        <div class="dropdown-message small">This is an automated server response message. All systems are online.
-                        </div>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">
-              <span class="text-danger">
-                <strong>
-                  <i class="fa fa-long-arrow-down fa-fw"></i>Status Update</strong>
-              </span>
-                        <span class="small float-right text-muted">11:21 AM</span>
-                        <div class="dropdown-message small">This is an automated server response message. All systems are online.
-                        </div>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">
-              <span class="text-success">
-                <strong>
-                  <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
-              </span>
-                        <span class="small float-right text-muted">11:21 AM</span>
-                        <div class="dropdown-message small">This is an automated server response message. All systems are online.
-                        </div>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item small" href="#">View all alerts</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <form class="form-inline my-2 my-lg-0 mr-lg-2">
-                    <div class="input-group">
-
-
-                    </div>
-                </form>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="modal" data-target="#exampleModal" >
-                    <i class="fa fa-fw fa-sign-out"></i>Logout</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-<!-- /Navigation-->
-
-
-
-
-        {% block contenu %}
-
-        {% endblock %}
-
-
-        <!-- /.container-wrapper-->
-        <footer class="sticky-footer">
-            <div class="container">
-                <div class="text-center">
-                    <small>Copyright © FOOGRA 2019</small>
+                <div id="pancake">
+                    <div id="pastry"></div>
                 </div>
             </div>
-        </footer>
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fa fa-angle-up"></i>
-        </a>
-        <!-- Logout Modal-->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
+        </div>
+    </div>
+
+    <header class="stick">
+        <div class="topbar">
+            <div class="container">
+                {% if app.user %}
+                    <div class="topbar-register">
+                        <a href="/dashboard">Mon Compte</a> /
+                        <a href="/logout">Déconnexion</a>
                     </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="/logout">Logout</a>
+                {% else %}
+                    <div class="topbar-register">
+                        <a  href="/login" >S'authentifier</a>
+                        / <a  href="/register" >S'inscrire</a>
+                    </div>
+
+                {% endif %}
+
+                <div class="social1">
+                    <a href="#" title="Facebook" itemprop="url" target="_blank"><i class="fa fa-facebook-square"></i></a>
+                    <a href="#" title="Instagram" itemprop="url" target="_blank"><i class="fa fa-instagram"></i></a>
+                </div>
+
+            </div>
+        </div><!-- Topbar -->
+        <div class="logo-menu-sec">
+            <div class="container">
+                <div class="logo"><h1 itemprop="headline">
+                        <a href="/" title="Home" itemprop="url">
+                            <img src="{{ asset("assets/front-office/images/logo.png") }}" alt="logo.png" itemprop="image" height="80px">
+                        </a></h1></div>
+                <nav>
+                    <div class="menu-sec">
+                        <ul>
+                            <li><a href="/"  itemprop="url"><span class="red-clr">&nbsp;</span>Acceuil</a></li>
+                            <li><a href="/"  itemprop="url"><span class="red-clr">Decouvrez Nos</span>Restaurants</a></li>
+                            <li><a href="/"  itemprop="url"><span class="red-clr">Hot <i class="fa fa-fire"></i></span>Promotions</a></li>
+                            <li><a href="/"  itemprop="url"><span class="red-clr">&nbsp; </span>Blog</a></li>
+                            <li><a href="/"  itemprop="url"><span class="red-clr"> &nbsp;</span>A propos de nous</a></li>
+                            <li><a href="/"  itemprop="url"><span class="red-clr"> &nbsp;</span>Contact</a></li>
+                        </ul>
+                    </div>
+                </nav><!-- Navigation -->
+            </div>
+        </div><!-- Logo Menu Section -->
+    </header><!-- Header -->
+
+    <div class="responsive-header">
+
+        <div class="responsive-logomenu">
+            <div class="logo"><h1 itemprop="headline"><a href="index-2.html" title="Home" itemprop="url">
+                        <img src={{ asset("assets/front-office/images/logo2.png")}} alt="logo2.png" itemprop="image"></a></h1></div>
+            <span class="menu-btn yellow-bg brd-rd4"><i class="fa fa-align-justify"></i></span>
+        </div>
+        <div class="responsive-menu">
+            <span class="menu-close red-bg brd-rd3"><i class="fa fa-close"></i></span>
+            <div class="menu-lst">
+                <ul>
+
+                    <li><a href="/"  itemprop="url"><span class="red-clr">&nbsp;</span>Acceuil</a></li>
+                    <li><a href="/"  itemprop="url"><span class="red-clr">Decouvrez Nos</span>Restaurants</a></li>
+                    <li><a href="/"  itemprop="url"><span class="red-clr">Hot <i class="fa fa-fire"></i></span>Promotions</a></li>
+                    <li><a href="/"  itemprop="url"><span class="red-clr">&nbsp; </span>Blog</a></li>
+                    <li><a href="/"  itemprop="url"><span class="red-clr"> &nbsp;</span>A propos de nous</a></li>
+                    <li><a href="/"  itemprop="url"><span class="red-clr"> &nbsp;</span>Contact</a></li>
+                </ul>
+            </div>
+
+            {% if app.user %}
+                <div class="topbar-register">
+                    <a href="/dashboard">Mon Compte</a> /
+                    <a href="/logout">Déconnexion</a>
+                </div>
+            {% else %}
+                <div class="topbar-register">
+                    <a  href="/login" >S'authentifier</a>
+                    / <a  href="/register" >S'inscrire</a>
+                </div>
+
+            {% endif %}
+
+            <div class="social1">
+                <a href="#" title="Facebook" itemprop="url" target="_blank"><i class="fa fa-facebook-square"></i></a>
+                <a href="#" title="Instagram    " itemprop="url" target="_blank"><i class="fa fa-instagram"></i></a>
+            </div>
+        </div><!-- Responsive Menu -->
+    </div><!-- Responsive Header -->
+
+
+
+
+        <section>
+            <div class="block less-spacing gray-bg top-padd30">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+                            <div class="sec-box">
+                                <div class="dashboard-tabs-wrapper">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12 col-lg-4">
+                                            <div class="profile-sidebar brd-rd5 wow fadeIn" data-wow-delay="0.2s">
+                                                <div class="profile-sidebar-inner brd-rd5">
+                                                    <div class="user-info red-bg">
+
+                                                        <img class="brd-rd50" src="{{ asset("assets/front-office/images/resource/user-avatar.jpg") }}" alt="user-avatar.jpg" itemprop="image">
+                                                        <div class="user-info-inner">
+                                                            <h5 itemprop="headline"><a href="#" title="" itemprop="url">{{ app.user.prenom }}
+                                                                    <br>
+                                                                    {{ app.user.nom }}</a></h5>
+                                                            <span><a href="#" title="" itemprop="url"> {{ app.user.email }}</a></span>
+                                                            <a class="brd-rd3 sign-out-btn yellow-bg" href="/logout" title="" itemprop="url"><i class="fa fa-sign-out"></i> SIGN OUT</a>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="nav nav-tabs">
+                                                        <li ><a href="/dashboard" ><i class="fa fa-dashboard"></i> DASHBOARD</a></li>
+                                                        <li><a href="/cart"><i class="fa fa-id-card"></i> MES CARTES </a></li>
+
+
+                                                        <li><a  href="{{ path('users_profil_modifier') }}"><i class="fa fa-cog"></i> ACCOUNT SETTINGS</a></li>
+                                                        <!--
+                                                        <li><a href="#my-bookings" ><i class="fa fa-file-text"></i> MY BOOKINGS</a></li>
+
+                                                        <li><a href="#my-orders" ><i class="fa fa-shopping-basket"></i> MY ORDERS</a></li>
+                                                        <li><a href="#shortlists" ><i class="fa fa-heart"></i> SHORTLISTS</a></li>
+                                                        <li><a href="#statement" ><i class="fa fa-wpforms"></i> STATEMENT</a></li>
+
+                                                        -->
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 col-sm-12 col-lg-8">
+                                            <div class="tab-content">
+                                                {% block contenu %}
+
+                                                {% endblock %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- Section Box -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+    <footer>
+        <div class="block top-padd80 bottom-padd80 dark-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <div class="footer-data">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-6 col-lg-3">
+                                    <div class="widget about_widget wow fadeIn" data-wow-delay="0.1s">
+                                        <div class="logo"><h1 itemprop="headline"><a href="#" title="Home" itemprop="url">
+
+                                                    <img  src="{{ asset("assets/front-office/images/logo2.png") }}" alt="logo2.png" height="70px" itemprop="image"></a></h1></div>
+                                        <p itemprop="description">Découvrez nos restaurants sur toute la tunisie!</p>
+                                        <div class="social2">
+                                            <a class="brd-rd50" href="#" title="Facebook" itemprop="url" target="_blank"><i class="fa fa-facebook"></i></a>
+                                            <a class="brd-rd50" href="#" title="Instagram" itemprop="url" target="_blank"><i class="fa fa-instagram"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-lg-3">
+                                    <div class="widget information_links wow fadeIn" data-wow-delay="0.2s">
+                                        <h4 class="widget-title" itemprop="headline">Informations</h4>
+                                        <ul>
+                                            <li><a href="#" title="" itemprop="url">FAQ</a></li>
+                                            <li><a href="#" title="" itemprop="url">A propos de nous</a></li>
+                                            <li><a href="#" title="" itemprop="url">Nos Restaurants</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-lg-3">
+                                    <div class="widget customer_care wow fadeIn" data-wow-delay="0.3s">
+                                        <h4 class="widget-title" itemprop="headline">Produits</h4>
+                                        <ul>
+                                            <li><a href="#" title="" itemprop="url">Promotins</a></li>
+                                            <li><a href="#" title="" itemprop="url">Nouveaux produits</a></li>
+                                            <li><a href="#" title="" itemprop="url">Meilleures ventes</a></li>
+                                            <li><a href="#" title="" itemprop="url">Nous contacter</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-lg-3">
+                                    <div class="widget get_in_touch wow fadeIn" data-wow-delay="0.4s">
+                                        <h4 class="widget-title" itemprop="headline">GET IN TOUCH</h4>
+                                        <ul>
+                                            <li><i class="fa fa-map-marker"></i>24, Rue Mohamed Ali, Rades, Ben Arous, Tunisie </li>
+                                            <li><i class="fa fa-phone"></i> (216) 54136336</li>
+                                            <li><i class="fa fa-envelope"></i> <a href="#" title="" itemprop="url">contact@thetakeaway.com.tn</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- Footer Data -->
                     </div>
                 </div>
             </div>
         </div>
+    </footer>
 
 
-        <script src="assets/back-office/vendor/jquery/jquery.min.js"></script>
-        <script src="assets/back-office/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="assets/back-office/vendor/jquery-easing/jquery.easing.min.js"></script>
-        <script src="assets/back-office/vendor/chart.js/Chart.js"></script>
-        <script src="assets/back-office/vendor/datatables/jquery.dataTables.js"></script>
-        <script src="assets/back-office/vendor/datatables/dataTables.bootstrap4.js"></script>
-        <script src="assets/back-office/vendor/jquery.selectbox-0.2.js"></script>
-        <script src="assets/back-office/vendor/retina-replace.min.js"></script>
-        <script src="assets/back-office/vendor/jquery.magnific-popup.min.js"></script>
-        <script src="assets/back-office/js/admin.js"></script>
-        <script src="assets/back-office/js/admin-charts.js"></script>
-        {% block scripts %}{% endblock %}
+</main><!-- Main Wrapper -->
+
+<script src="{{ asset("assets/front-office/js/jquery.min.js") }}"></script>
+<script src="{{ asset("assets/front-office/js/bootstrap.min.js") }}"></script>
+<script src="{{ asset("assets/front-office/js/plugins.js") }}"></script>
+<script src="{{ asset("assets/front-office/js/main.js") }}"></script>
+{% block scripts %}{% endblock %}
 
 </body>
 

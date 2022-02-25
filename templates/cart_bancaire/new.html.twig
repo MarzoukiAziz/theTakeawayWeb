@@ -6,16 +6,16 @@
 
 {% block contenu %}
     <div class="content-wrapper">
-    <div class="container-fluid">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="#">Dashboard</a>
-        </li>
-        <li class="breadcrumb-item active">My Dashboard</li>
-    </ol>
-    {{ include('cart_bancaire/_form.html.twig') }}
+        <div class="container-fluid">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">My Dashboard</li>
+            </ol>
+            {{ include('cart_bancaire/_form.html.twig') }}
 
-    <a class="btn btn-primary" href="{{ path('cart_bancaire_index') }}">back to list</a>
-</div>
-    </div> 
+            <a class="btn btn-primary" href="{{ path('cart_bancaire_index') }}">back to list</a>
+        </div>
+    </div>
 {% endblock %}
