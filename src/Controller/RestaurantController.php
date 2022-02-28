@@ -25,31 +25,6 @@ class RestaurantController extends AbstractController
             'controller_name' => 'RestaurantController',
         ]);
     }
-    /**
-     * @param RestaurantRepository $repository
-     * @return Response
-     * @Route ("/Affiche",name="Affiche")
-
-     */
-
-
-    public function Affiche(RestaurantRepository $repository){
-        // $repo=$this->getDoctrine()->getRepository(Restaurant::Res)
-        $restaurant=$repository->findAll();
-        return $this->render('restaurant/Affiche.html.twig',
-            ['restaurant'=>$restaurant]);
-
-    }
-
-    /**
-     * @Route("/{id}", name="restaurant_show" , methods={"GET"})
-     */
-    public function show(Restaurant $restaurant): Response
-    {
-        return $this->render('restaurant/show.html.twig', [
-            'restaurant' => $restaurant,
-        ]);
-    }
 
     /**
      * @param RestaurantRepository $repository
@@ -67,6 +42,19 @@ class RestaurantController extends AbstractController
     }
 
     /**
+     * @param RestaurantRepository $repository
+     * @return Response
+     * @Route ("/Affiche",name="AfficheR")
+     */
+    public function Affiche(RestaurantRepository $repository){
+        // $repo=$this->getDoctrine()->getRepository(Restaurant::Res)
+        $restaurant=$repository->findAll();
+        return $this->render('restaurant/Affiche.html.twig',
+            ['restaurant'=>$restaurant]);
+
+    }
+
+    /**
      * @Route("/{id}", name="restaurant_showC", methods={"GET"})
      */
     public function showclient(Restaurant $restaurant): Response
@@ -75,6 +63,18 @@ class RestaurantController extends AbstractController
             'restaurant' => $restaurant,
         ]);
     }
+
+
+    /**
+     * @Route("/admin/{id}", name="restaurant_show" , methods={"GET"})
+     */
+    public function show(Restaurant $restaurant): Response
+    {
+        return $this->render('restaurant/show.html.twig', [
+            'restaurant' => $restaurant,
+        ]);
+    }
+
 
 
 
