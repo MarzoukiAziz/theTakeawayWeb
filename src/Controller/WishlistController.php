@@ -14,14 +14,5 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class WishlistController extends AbstractController
 {
-    /**
-     * @Route("/wishlist", name="wishlist")
-     */
-    public function index(): Response
-    {
-        return $this->render('wishlist/index.html.twig', [
-            'controller_name' => 'WishlistController',
-        ]);
-    }
 
 }

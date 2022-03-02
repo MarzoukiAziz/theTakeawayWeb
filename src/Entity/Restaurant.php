@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Entity;
-
+use App\Entity\Client;
 use App\Repository\RestaurantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
 
 /**
  * @ORM\Entity(repositoryClass=RestaurantRepository::class)
@@ -35,27 +36,27 @@ class Restaurant
     private $description;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="string" , nullable=true)
      */
     private $heureOuverture;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="string" , nullable=true)
      */
     private $heureFermeture;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255 , nullable=true)
      */
     private $architecture;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=10 , nullable=true)
      */
     private $telephone;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="array" , nullable=true)
      */
     private $images = [];
 
@@ -64,9 +65,15 @@ class Restaurant
      */
     private $tables;
 
+    /**
+     * @ORM\OneToMany(targetEntity=RestaurantFavoris::class, mappedBy="Restaurant")
+     */
+    private $favoris;
+
     public function __construct()
     {
         $this->tables = new ArrayCollection();
+        $this->favoris = new ArrayCollection();
     }
 
 
@@ -112,24 +119,24 @@ class Restaurant
         return $this;
     }
 
-    public function getHeureOuverture(): ?\DateTimeInterface
+    public function getHeureOuverture():  ?string
     {
         return $this->heureOuverture;
     }
 
-    public function setHeureOuverture(\DateTimeInterface $heureOuverture): self
+    public function setHeureOuverture(string $heureOuverture): self
     {
         $this->heureOuverture = $heureOuverture;
 
         return $this;
     }
 
-    public function getHeureFermeture(): ?\DateTimeInterface
+    public function getHeureFermeture(): ?string
     {
         return $this->heureFermeture;
     }
 
-    public function setHeureFermeture(\DateTimeInterface $heureFermeture): self
+    public function setHeureFermeture(string $heureFermeture): self
     {
         $this->heureFermeture = $heureFermeture;
 
@@ -200,6 +207,51 @@ class Restaurant
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, RestaurantFavoris>
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
+
+    public function addFavori(RestaurantFavoris $favori): self
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris[] = $favori;
+            $favori->setRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(RestaurantFavoris $favori): self
+    {
+        if ($this->favoris->removeElement($favori)) {
+            // set the owning side to null (unless already changed)
+            if ($favori->getRestaurant() === $this) {
+                $favori->setRestaurant(null);
+            }
+        }
+
+        return $this;
+    }
+    /**
+     * @param Client $client
+     * @return boolean
+     *
+     */
+
+    public function isLikedByUser(Client $client) : bool
+    {
+        foreach ($this->favoris as $favoris)
+        {
+            if($favoris->getClient() == $client) return true ;
+
+        }
+        return false;
     }
 
 

@@ -47,6 +47,7 @@ class FactureController extends AbstractController
 
         $rep = $this->getDoctrine()->getRepository(Ingrediant::class);
         $res = $rep->findAll();
+
         return $this->render('Facture/choose-fournisseur.html.twig', [
             'res'=>$res,
             'idf'=>$idf,
@@ -65,8 +66,8 @@ class FactureController extends AbstractController
         if ($form->isSubmitted() && $form->isValid() ) {
             $fournisseur = $this->getDoctrine()->getRepository(Fournisseur::class)->find($id);
             $ingrediant = $this->getDoctrine()->getRepository(Ingrediant::class)->find($id2);
-            $fr->setFournisseurId($fournisseur);
-            $fr->setIngrediantId($ingrediant);
+            $fr->setFournisseur($fournisseur);
+            $fr->setIngrediant($ingrediant);
             $ingrediant->setQuantite($ingrediant->getQuantite()+$fr->getQuantite());
             $fr->setDate(new \DateTime());
             $fr->setHeure(new \DateTime());

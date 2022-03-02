@@ -43,7 +43,7 @@ public function addingrediant(Request $request,$id)
     $fr = new Ingrediant();
     $rep = $this->getDoctrine()->getRepository(Restaurant::class);
     $res = $rep->find($id);
-    $fr->setRestaurantId($res);
+    $fr->setRestaurant($res);
     $form = $this->createForm(IngrediantType::class,$fr);
 
     $form->handleRequest($request);

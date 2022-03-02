@@ -3,10 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\FournisseurRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=FournisseurRepository::class)
@@ -32,20 +29,13 @@ class Fournisseur
 
     /**
      * @ORM\Column(type="string", length=10)
-     * @Assert\Length(max=8,min=8)
-     *         minMessage = "Le Numero doit comporter 8 chiffres",
-     *      maxMessage = "Le Numero doit comporter 8 chiffres"
-
      */
     private $telephone;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Email;
      */
     private $email;
-
-
 
     public function getId(): ?int
     {
@@ -99,7 +89,4 @@ class Fournisseur
 
         return $this;
     }
-
-
-
 }

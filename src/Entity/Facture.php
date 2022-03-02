@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\FactureRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=FactureRepository::class)
@@ -20,8 +19,6 @@ class Facture
 
     /**
      * @ORM\Column(type="integer")
-     *  @Assert\Positive
-
      */
     private $quantite;
 
@@ -37,21 +34,19 @@ class Facture
 
     /**
      * @ORM\Column(type="float")
-     *   @Assert\Positive
-
      */
     private $prixUnitaire;
 
     /**
      * @ORM\ManyToOne(targetEntity=Fournisseur::class)
      */
-    private $fournisseurId;
+    private $fournisseur;
 
     /**
      * @ORM\ManyToOne(targetEntity=Ingrediant::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $ingrediantId;
+    private $ingrediant;
 
     public function getId(): ?int
     {
@@ -106,26 +101,26 @@ class Facture
         return $this;
     }
 
-    public function getFournisseurId(): ?Fournisseur
+    public function getFournisseur(): ?Fournisseur
     {
-        return $this->fournisseurId;
+        return $this->fournisseur;
     }
 
-    public function setFournisseurId(?Fournisseur $fournisseurId): self
+    public function setFournisseur(?Fournisseur $fournisseurId): self
     {
-        $this->fournisseurId = $fournisseurId;
+        $this->fournisseur = $fournisseurId;
 
         return $this;
     }
 
-    public function getIngrediantId(): ?Ingrediant
+    public function getIngrediant(): ?Ingrediant
     {
-        return $this->ingrediantId;
+        return $this->ingrediant;
     }
 
-    public function setIngrediantId(?Ingrediant $ingrediantId): self
+    public function setIngrediant(?Ingrediant $ingrediantId): self
     {
-        $this->ingrediantId = $ingrediantId;
+        $this->ingrediant = $ingrediantId;
 
         return $this;
     }

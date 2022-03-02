@@ -6,6 +6,8 @@ use App\Repository\ReservationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=ReservationRepository::class)
@@ -21,26 +23,38 @@ class Reservation
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Date
+     * @var string A "Y-m-d" formatted value
      */
     private $date;
 
     /**
      * @ORM\Column(type="time")
+     * @Assert\Time
+     * @var string A "H:i" formatted value
      */
     private $heureArrive;
 
     /**
      * @ORM\Column(type="time")
+     * @Assert\Time
+     * @var string A "H:i" formatted value
      */
     private $heureDepart;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 10,
+     *      notInRangeMessage = "Nombre de personns entre 1 et 10",
+     * )
      */
     private $nbPersonne;
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Assert\Choice({"En Attente", "Annulé", "Réfusé","Accepté"})
      */
     private $statut;
 
@@ -52,13 +66,26 @@ class Reservation
     /**
      * @ORM\ManyToOne(targetEntity=Client::class)
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull
      */
     private $clientId;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Admin::class)
+     * @ORM\ManyToOne(targetEntity=Client::class)
      */
     private $adminCharge;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Commande::class, inversedBy="reservation")
+     */
+    private $commande;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Restaurant::class)
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull
+     */
+    private $restaurant;
 
     public function __construct()
     {
@@ -166,14 +193,38 @@ class Reservation
         return $this;
     }
 
-    public function getAdminCharge(): ?Admin
+    public function getAdminCharge(): ?Client
     {
         return $this->adminCharge;
     }
 
-    public function setAdminCharge(?Admin $adminCharge): self
+    public function setAdminCharge(?Client $adminCharge): self
     {
         $this->adminCharge = $adminCharge;
+
+        return $this;
+    }
+
+    public function getCommande(): ?Commande
+    {
+        return $this->commande;
+    }
+
+    public function setCommande(?Commande $commande): self
+    {
+        $this->commande = $commande;
+
+        return $this;
+    }
+
+    public function getRestaurant(): ?Restaurant
+    {
+        return $this->restaurant;
+    }
+
+    public function setRestaurant(?Restaurant $restaurant): self
+    {
+        $this->restaurant = $restaurant;
 
         return $this;
     }

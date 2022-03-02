@@ -1,0 +1,58 @@
+{% extends 'front-office.html.twig' %}
+
+
+{% block links %} <title>Restaurants</title>{% endblock %}
+
+
+{% block contenu %}
+
+    {% block title %}<ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Restaurant</li>
+    </ol>{% endblock %}
+
+
+
+
+
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead >
+        <tr>
+
+            <th scope="col">ID</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Adresse</th>
+            <th scope="col">Mise a jours </th>
+
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr {% for r in restaurant %}>
+
+            <td>{{ r.id }}</td>
+            <td>{{ r.nom }}</td>
+            <td>{{ r.adresse }}</td>
+
+
+
+
+            <td> <a class="btn_1 gray" href="{{ path('restaurant_show', {'id': r.id}) }}"><i class="fa fa-fw fa-eye"></i>show</a>
+                <a class="btn_1 gray approve" href="{{ path('update', {'id': r.id}) }}">EDIT</a> </td>
+
+        </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+    <a class="btn_1 gray approve" href="{{ path('restaurant_add') }}">Ajouter</a>
+
+
+{% endblock %}

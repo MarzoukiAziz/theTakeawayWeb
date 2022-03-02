@@ -30,7 +30,7 @@ class MenuElement
     /**
      * @ORM\Column(type="float")
      */
-    private $prixx;
+    private $prix;
 
     /**
      * @ORM\Column(type="string", length=255)
