@@ -23,7 +23,7 @@ class EditeProfileType extends AbstractType
             ->add('prenom',TextType::class)
             ->add('email',EmailType::class)
             ->add('num_tel')
-
+            ->add('Valider',SubmitType::class)
 
         ;
     }
