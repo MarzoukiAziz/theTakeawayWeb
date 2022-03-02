@@ -1,0 +1,38 @@
+{% extends "front-office.html.twig" %}
+
+{% block links %}
+    <title>Pannier</title>
+{% endblock %}
+
+{% block contenu %}
+<table class="table">
+    <thead>
+    <tr>
+        <th>Produit</th>
+        <th>Prix</th>
+        <th>Quantité</th>
+        <th>Total</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+
+{% for element in dataPanier %}
+       <tr>
+           <td>{{ element.produit.nom }}</td>
+           <td></td>
+           <td></td>
+           <td></td>
+           <td></td>
+
+       </tr>
+    {% else %}
+        <tr>
+            <td colspan="5" class="text-center">Votre Panier est vide</td>
+        </tr>
+    {% endfor %}
+{#    {{ dump() }}#}
+{% endblock %}

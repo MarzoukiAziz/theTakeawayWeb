@@ -9,12 +9,14 @@
     <div style="background-image: url({{ asset("assets/commande-bg.jpg") }});" class="fit-bg"></div>
 
     <div class="card-body">
-        <h1  style="margin-bottom: 50px" class="text-center">Vos Commandes</h1>
+        <h1  style="margin-bottom: 50px" class="text-center">Vos Commandes </h1>
 
     <table class="table">
         <thead>
             <tr>
+
                 <th>Réference</th>
+                <th>Restaurant</th>
                 <th>PrixTotal</th>
                 <th>Statut</th>
                 <th>Date</th>
@@ -27,7 +29,9 @@
         <tbody>
         {% for commande in commandes %}
             <tr>
+
                 <td>{{ commande.id }}</td>
+                <td>{{ commande.restaurant.nom }}</td>
                 <td>{{ commande.prixTotal }} Dt</td>
                 <td>{{ commande.statut }}</td>
                 <td>{{ commande.date ? commande.date|date('Y-m-d') : '' }}</td>
@@ -36,7 +40,7 @@
                 <td>{{ commande.statutPaiement }}</td>
                 <td>
                   <a href="{{ path('commande_show', {'cid': commande.id}) }}"><button class="btn btn-primary">Détails</button></a>
-{#                    <a href="{{ path('commande_edit', {'id': commande.id}) }}">Annuler</a>#}
+                    <a href="{{ path('client-cancel-commande', {'cid': commande.id}) }}"> <button class="btn btn-danger">Annuler</button></a>
                 </td>
             </tr>
         {% else %}

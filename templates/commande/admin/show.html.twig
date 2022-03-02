@@ -7,12 +7,13 @@
 {% block contenu %}
     <h1>Commande N:{{ commande.id }}</h1>
 
+
     <table class="table">
         <tbody>
 
         <tr>
             <th>PrixTotal</th>
-            <td>{{ commande.prixTotal }}</td>
+            <td>{{ commande.prixTotal }} Dt</td>
         </tr>
         <tr>
             <th>Statut</th>
@@ -28,7 +29,7 @@
         </tr>
         <tr>
             <th>PointUtilisees</th>
-            <td>{{ commande.pointUtilisees }}</td>
+            <td>{{ commande.pointUtilisees }} Pt</td>
         </tr>
         <tr>
             <th>StatutPaiement</th>
@@ -37,7 +38,7 @@
         <tr>
             <th></th>
             <th>
-                <form method="post" action="{{ path("commande-update-admin",{"cid":commande.id}) }}">
+                <form method="post" action="{{ path("commande-update-admin",{"cid":commande.id,'rid': commande.restaurant.id}) }}">
                     <select name="statut">
                         <option value="En attente">En attente</option>
                         <option value="Accepté">Accepté</option>
@@ -48,7 +49,7 @@
                     </select>
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
-                <form method="post" action="{{ path("commande-delete-admin",{"cid":commande.id}) }}">
+                <form method="post" action="{{ path("commande-delete-admin",{"cid":commande.id,'rid': commande.restaurant.id}) }}">
                     <button type="submit" class="btn btn-danger">Supprimer</button>
                 </form>
 

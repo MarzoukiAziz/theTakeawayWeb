@@ -6,12 +6,16 @@
 
 {% block contenu %}
     <h1>Commandes</h1>
+    <form method="POST">
+        <input type="text" name="Restaurant">
+        <input type="submit" value="recherche">
+    </form>
 
     <table class="table">
         <thead>
         <tr>
-
             <th>Réference</th>
+            <th>Restaurant</th>
             <th>Client</th>
             <th>PrixTotal</th>
             <th>Statut</th>
@@ -25,16 +29,18 @@
         <tbody>
         {% for commande in cmds %}
             <tr>
+
                 <td>{{ commande.id }}</td>
+                <td>{{ commande.restaurant.nom }}</td>
                 <td>{{ commande.client.nom }} {{ commande.client.prenom }}</td>
-                <td>{{ commande.prixTotal }}</td>
+                <td>{{ commande.prixTotal }} Dt</td>
                 <td>{{ commande.statut }}</td>
                 <td>{{ commande.date ? commande.date|date('Y-m-d') : '' }}</td>
                 <td>{{ commande.methode }}</td>
-                <td>{{ commande.pointUtilisees }}</td>
+                <td>{{ commande.pointUtilisees }} Pt</td>
                 <td>{{ commande.statutPaiement }}</td>
                 <td>
-                    <a href="/admin/commandes/{{ commande.id }}"><button class="btn btn-primary">Details</button> </a>
+                    <a href="/admin/commandes/{{ res.id }}/{{ commande.id }}"><button class="btn btn-primary">Details</button> </a>
                 </td>
             </tr>
         {% else %}
@@ -43,5 +49,6 @@
             </tr>
         {% endfor %}
         </tbody>
+     <button class="btn-info">{{ knp_pagination_render(cmds) }}</button>
     </table>
 {% endblock %}

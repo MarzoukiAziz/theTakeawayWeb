@@ -37,8 +37,8 @@ class ElementDetailsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            return $this->redirectToRoute("commande-show-admin",['cid'=>$elementDetail->getCommande()->getId(),'rid'=>$elementDetail->getCommande()->getRestaurant()->getId()]);
 
-            return $this->redirectToRoute('element_details_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('element_details/edit.html.twig', [
@@ -58,6 +58,6 @@ class ElementDetailsController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('commande-show-admin', ['cid'=>$cid], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('commande-show-admin', ['cid'=>$cid ,'rid'=>$elementDetail->getCommande()->getRestaurant()->getId()], Response::HTTP_SEE_OTHER);
     }
 }

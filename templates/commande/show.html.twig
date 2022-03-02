@@ -1,58 +1,51 @@
 {% extends 'front-office.html.twig' %}
 
-{% block title %}Commande{% endblock %}
+{% block title %}ElementDetails{% endblock %}
 
 {% block contenu %}
 
      <div style="background-image: url({{ asset("assets/commande-bg.jpg") }});" class="fixed-bg"></div>
 <div style="display: table;margin:30px auto;color: whitesmoke;">
     <div class="">
-        <h1 class="h3 mb-3 font-weight-normal mt-2 text-center"> Votre Commande </h1>
+        <h1 class="h3 mb-3 font-weight-normal mt-2 text-center"> ElementDetails </h1>
         <div style="margin: 30px 10px">
     <table class="table">
         <tbody>
+        {% for element_detail in commande.details %}
             <tr>
                 <div class="form-group" >
-                <th>Id</th>
-                <td>{{ commande.id }}</td>
+                <th>nom</th>
+                <td>{{  element_detail.elementId.nom }}</td>
                     </div>
             </tr>
             <tr>
-                <th>PrixTotal</th>
-                <td>{{ commande.prixTotal }}</td>
+                <th>Quantite</th>
+                <td>{{ element_detail.quantite }}</td>
             </tr>
             <tr>
-                <th>Statut</th>
-                <td>{{ commande.statut }}</td>
+                <th>options</th>
+                <td>{{ element_detail.options  }}</td>
             </tr>
-            <tr>
-                <th>Date</th>
-                <td>{{ commande.date ? commande.date|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Methode</th>
-                <td>{{ commande.methode }}</td>
-            </tr>
-            <tr>
-                <th>PointUtilisees</th>
-                <td>{{ commande.pointUtilisees }}</td>
-            </tr>
-            <tr>
-                <th>StatutPaiement</th>
-                <td>{{ commande.statutPaiement }}</td>
-            </tr>
+
             <tr>
                 <th></th>
-                <th>
-                    {%  if commande.statut=="En Attente" %}
-                        <form mathod="POST" action="/commande/{{ commande.id }}/cancel">
-                            <button  type="submit" class="btn btn-danger">Annuler
-
-                                <i class="fa fa-fw fa-trash"></i> </button>
-                        </form>
-                    {% endif %}
-                </th>
+                <th></th>
             </tr>
+        {% endfor %}
+             <tr>
+                 <th></th>
+                 <th>
+                     {%  if commande.statut=="En Attente" %}
+                         <form mathod="POST" action="/commande/{{ commande.id }}/cancel">
+                             <button  type="submit" class="btn btn-danger">Annuler
+
+                                 <i class="fa fa-fw fa-trash"></i> </button>
+                         </form>
+                     {% endif %}
+                 </th>
+             </tr>
+
+
         </tbody>
     </table>
     </div>

@@ -5,9 +5,31 @@
 {% block contenu %}
     <h1>Edit Element Details</h1>
 
-    {{ include('element_details/_form.html.twig', {'button_label': 'Update'}) }}
-    {#   <a href="{{ path('element_details_index') }}">back to list</a>  #}
-    {#  {{ include('element_details/_delete_form.html.twig') }} #}
+    <div style="background-image: url({{ asset("assets/reclamation-bg.jpg") }});" class="fit-bg"></div>
+
+    <div class="card-body">
+    {{ form_start(form) }}
+<form>
+    <div class="form-group">
+{#        {{ form_widget(form) }}#}
+
+        {{ form_label(form.quantite, 'quantite',{'attr': {'class': 'form-label'}} ) }}
+        {{ form_widget(form.quantite , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'quantite'}} ) }}
+        {{ form_errors(form.quantite) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.options, 'Options',{'attr': {'class': 'form-label'}} ) }}
+        {{ form_widget(form.options , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'options'}} ) }}
+        {{ form_errors(form.options) }}
+    </div>
+    <button class="btn btn-success" type="submit">Mettre ajour</button>
+    {{ form_end(form) }}
+</form>
+
+        </div>
+
+
+
 
 
 {% endblock %}

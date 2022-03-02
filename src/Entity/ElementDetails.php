@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ElementDetailsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ElementDetailsRepository::class)
@@ -19,6 +20,7 @@ class ElementDetails
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Positive
      */
     private $quantite;
 

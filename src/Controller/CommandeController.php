@@ -10,6 +10,7 @@ use App\Entity\Restaurant;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -160,23 +161,61 @@ class CommandeController extends AbstractController
      * Back Office
      */
 
+    /**
+     * @Route("/admin/commandes", name="admin-commande-choose-restaurant")
+     */
+    //show restaurant list before showing the reservations list
+    public function chooseRestaurant(): Response
+    {
+        $rep = $this->getDoctrine()->getRepository(Restaurant::class);
+        $res = $rep->findAll();
+        return $this->render('commande/admin/choose-restaurant.html.twig', [
+            'res' => $res,
+        ]);
+    }
+
+
 
     /**
-     * @Route("/admin/commandes", name="commandes-admin", methods={"GET"})
+     * @Route("/admin/commandes/{rid}", name="commandes-admin", methods={"GET"})
      */
-    public function afficherCommandesAdmin(Request $request): Response
+    public function afficherCommandesAdmin(Request $request ,PaginatorInterface $paginator,$rid): Response
     {
         //warning find by client id
-        $cmds = $this->getDoctrine()->getRepository(Commande::class)->findAll();
+
+        $rep = $this->getDoctrine()->getRepository(Restaurant::class);
+        $res= $rep->find($rid);
+        //check if the restaurant id is valid
+        if ($res == null) {
+            return $this->redirectToRoute("erreur-back");
+        }
+        //getting the reservations by restaurant id
+        $cmds= $this->getDoctrine()->getRepository(Commande::class)
+            ->createQueryBuilder('r')
+            ->where('r.restaurant=?1')
+            ->setParameter(1, $rid)
+            ->getQuery()
+            ->getResult();
+        $cmds = $paginator->paginate(
+            $cmds,
+            $request->query->getInt('page',1),
+            4
+        );
+//        if ($request->isMethod("POST")){
+//            $restaurant = $request->get('restaurant');
+//            $cmds = $donnees->getRepository("CommandeController:Commande")->findBy(array('restaurant'=>restaurant));
+//        }
         return $this->render('commande/admin/index.html.twig', [
-            'cmds' => $cmds
+            'cmds' => $cmds,
+            'res' => $res,
         ]);
     }
     /**
-     * @Route("/admin/commandes/{cid}", name="commande-show-admin", methods={"GET"})
+     * @Route("/admin/commandes/{rid}/{cid}", name="commande-show-admin", methods={"GET"})
      */
-    public function afficherUneCommandeAdmin(Request $request, $cid): Response
+    public function afficherUneCommandeAdmin(Request $request, $cid ,$rid): Response
     {
+
         $commande = $this->getDoctrine()->getRepository(Commande::class)->find($cid);
 
 //        $details  = $this->getDoctrine()->getRepository(ElementDetails::class)
@@ -193,9 +232,9 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/admin/commandes/{cid}/update", name="commande-update-admin", methods={"POST"})
+     * @Route("/admin/commandes/{rid}/{cid}/update", name="commande-update-admin", methods={"POST"})
      */
-    public function updateUneCommandeAdmin(Request $request, $cid): Response
+    public function updateUneCommandeAdmin(Request $request, $cid ,$rid ): Response
     {
         $c = $this->getDoctrine()->getRepository(Commande::class)->find($cid);
         $data = $request->request;
@@ -204,21 +243,21 @@ class CommandeController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($c);
         $em->flush();
-        return $this->redirectToRoute("commande-show-admin",['cid'=>$cid]);
+        return $this->redirectToRoute("commande-show-admin",['cid'=>$cid ,'rid' => $rid, ]);
 
     }
 
     /**
-     * @Route("/admin/commandes/{cid}/delete", name="commande-delete-admin", methods={"POST"})
+     * @Route("/admin/commandes/{rid}/{cid}/delete", name="commande-delete-admin", methods={"POST"})
      */
-    public function deleteCommandeByAdmin(Request $request, $cid): Response
+    public function deleteCommandeByAdmin(Request $request, $cid ,$rid): Response
     {
         $em = $this->getDoctrine()->getManager();
         $cmd = $em->getRepository(Commande::class)->find($cid);
         $em = $this->getDoctrine()->getManager();
         $em->remove($cmd);
         $em->flush();
-        return $this->redirectToRoute('commandes-admin', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('commandes-admin', ['rid'=>$rid], Response::HTTP_SEE_OTHER);
     }
 
 
