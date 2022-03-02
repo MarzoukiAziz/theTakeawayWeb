@@ -48,14 +48,14 @@ class Client implements UserInterface
      * @ORM\Column(type="string", length=240, nullable=true)
      */
     private $password;
- 
+
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      *@Assert\Type("String")
      */
     private $nom;
- 
+
 
     /**
      *
@@ -71,8 +71,8 @@ class Client implements UserInterface
      * @Assert\Type("integer")
      */
     private $num_tel;
-    
- 
+
+
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\Type("integer")
@@ -228,7 +228,7 @@ class Client implements UserInterface
         return $this;
     }
 
-    
+
 
 
     public function getPoints(): ?int
