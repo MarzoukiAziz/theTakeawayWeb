@@ -2,16 +2,31 @@
 
 {% block links %}
     <title> Reservations</title>
-
+    <style>
+        .badge{
+            font-size: 16px!important;
+        }
+    </style>
 {% endblock %}
 
 {%  block contenu %}
 
     <div class="card mb-3" style="padding: 80px">
         <div class="card-header " style="font-size: 22px;font-weight: bold;margin-bottom: 50px">
-            <i class="fa fa-table" ></i> Réservations
-
+            <i class="fa fa-table" ></i> Réservations <sup>{{ filter }}</sup>
+            <div class="m-2 float-right">
+                <a href="{{ path('reservations') }}">
+                    <span class="badge badge-primary">Tous</span>
+                </a>
+                <a href="{{ path('reservations-date', {"date":"Aujourd'hui"}) }}">
+                    <span class="badge badge-info">Aujourd'hui</span>
+                </a>
+                <a href="{{ path('reservations-date', {"date":"Demain"}) }}">
+                    <span class="badge badge-dark">Demain</span>
+                </a>
+            </div>
         </div>
+
 
         <div class="card-body" style="text-align: center">
             <div class="table-responsive">
@@ -41,7 +56,21 @@
                                     {{ t.numero  }} ({{ t.nbPalces }}) <br>
                                 {% endfor %}
                             </td>
-                            <td>{{ r.statut }}</td>
+                            {% if r.statut== 'Accepté' %}
+                                <td><span class="badge badge-success">Accepté</span></td>
+
+                            {% endif %}
+                            {% if r.statut== 'Réfusé' %}
+                                <td><span class="badge badge-danger" >Réfusé</span></td>
+
+                            {% endif %}
+                            {% if r.statut== 'Annulé' %}
+                                <td><span class="badge badge-secondary">Annulé</span></td>
+                            {% endif %}
+                            {% if r.statut== 'En Attente' %}
+                                <td><span class="badge badge-warning" >En Attente</span></td>
+                            {% endif %}
+
                             <td>
                                     {%  if r.statut=="En Attente" %}
                                         <a  href="{{ path('client-cancel-reservation', {'rid':r.id,"s":"Annuler"}) }}" >  <button type="button" class="btn btn-danger">Annuler
@@ -55,10 +84,14 @@
 
                     </tbody>
                 </table>
+
             </div>
+
         </div>
+
     </div>
-    <div style="float: right" >
+
+    <div style="float: right">
         {{ knp_pagination_render(
             rev,
             '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig',

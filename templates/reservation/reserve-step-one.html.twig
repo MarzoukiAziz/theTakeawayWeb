@@ -4,11 +4,7 @@
 {% endblock %}
 
 {% block scripts %}
-    <script>
-        $(function() {
-            $( "#date" ).datepicker({ dateFormat: 'yy-mm-dd' });
-        });
-    </script>
+
 {% endblock %}
 {% block contenu %}
 
@@ -27,10 +23,10 @@
 
 
                 {{ form_start(f)}}
-                <div class="form-group" >
-                    <label class="form-label ">Date</label>
+                <div class="form-group" style="color:#000" >
+                    <label class="form-label" style="color: white">Date</label>
                     {{ form_widget(f.date ,
-                        {'attr': {'class': '','style':'display:flex;' , 'placeholder' : 'Date'}} ) }}
+                        {'attr': {'class': '','style':'display:flex;width: -webkit-fill-available;' , 'placeholder' : 'Date'}} ) }}
                     {{ form_errors(f.date) }}
                 </div>
                 <div class="form-group">

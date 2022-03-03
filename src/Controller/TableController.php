@@ -72,6 +72,7 @@ TableController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($table);
             $em->flush();
+            $this->addFlash("success","Table ajoutée avec succés!");
             return $this->redirectToRoute("admin-tables-restaurant",['id'=>$id]);
         }
         return $this->render("table/admin/admin-table-add.html.twig",[
@@ -91,6 +92,7 @@ TableController extends AbstractController
         if ($form->isSubmitted() && $form-> isValid ())
         {
             $em->flush();
+            $this->addFlash("success","Table changée avec succés!");
             return $this->redirectToRoute("admin-tables-restaurant",['id'=>$rid]);
         }
         return $this->render('table/admin/admin-table-update.html.twig', [
@@ -108,6 +110,7 @@ TableController extends AbstractController
         $tab= $em ->getRepository (Table::class)->find($id);
         $em-> remove ($tab);
         $em->flush();
+        $this->addFlash("success","Table supprimée avec succés!");
         return $this->redirectToRoute("admin-tables-restaurant",['id'=>$rid]);
     }
 }

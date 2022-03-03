@@ -38,11 +38,11 @@
                     <th>Statut</th>
                     {% if (reclamation.statut =="Ouvert") %}
                         <td>
-                            <span style="background-color: darkgreen;color: whitesmoke;padding:4px 8px;border-radius: 8px">Ouvert</span>
+                            <span class="bg-warning" style="padding:4px 8px;border-radius: 8px">Ouvert</span>
                         </td>
                     {% else %}
                         <td>
-                            <span style="background-color: darkred;color: whitesmoke;padding:4px 8px;border-radius: 8px">Fermé</span>
+                            <span class="bg-danger" style="color:white;padding:4px 8px;border-radius: 8px">Fermé</span>
                         </td>
                     {% endif %}
                 </tr>

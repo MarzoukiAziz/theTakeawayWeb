@@ -11,7 +11,7 @@
     {% block links %}{% endblock %}
 
     <link rel="stylesheet" href={{ asset("assets/front-office/css/icons.min.css") }}>
-    <link rel="stylesheet" href={{ asset("assets/front-office/css/bootstrap.min.css") }}>
+    <link href="{{asset("assets/back-office/vendor/bootstrap/css/bootstrap.min.css")}}" rel="stylesheet">
     <link rel="stylesheet" href={{ asset("assets/front-office/css/main.css") }}>
     <link rel="stylesheet" href={{ asset("assets/front-office/css/red-color.css") }}>
     <link rel="stylesheet" href={{ asset("assets/front-office/css/yellow-color.css") }}>
@@ -125,7 +125,16 @@
         </div><!-- Responsive Menu -->
     </div><!-- Responsive Header -->
 
-
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('danger') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
     {% block contenu %}
     {% endblock %}
 

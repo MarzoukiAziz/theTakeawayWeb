@@ -2,6 +2,11 @@
 
 {% block links %}
     <title>Réclamations</title>
+    <style>
+        .badge{
+            font-size: 16px!important;
+        }
+    </style>
 {% endblock %}
 
 {% block contenu %}
@@ -10,10 +15,20 @@
 
     <div class="card mb-3" >
         <div class="card-header " style="font-size: 22px;font-weight: bold;">
-            <i class="fa fa-table"></i> Réclamations
+            <i class="fa fa-table"></i> Réclamations <sup>{{ filter }}</sup>
 
         </div>
-
+        <div class="m-2 float-right">
+            <a href="{{ path('reclamation_admin') }}">
+                <span class="badge badge-primary">Tous</span>
+            </a>
+            <a href="{{ path('reclamation_by_statut_admin', {'statut': 'Ouvert',}) }}">
+                <span class="badge badge-warning">Ouvert</span>
+            </a>
+            <a href="{{ path('reclamation_by_statut_admin', {"statut":"Fermé"}) }}">
+                <span class="badge badge-danger">Fermé</span>
+            </a>
+        </div>
         <div class="card-body" style="text-align: center">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -33,7 +48,14 @@
                         <tr>
                             <td>{{ reclamation.clientId.nom }}</td>
                             <td>{{ reclamation.sujet }}</td>
-                            <td>{{ reclamation.statut }}</td>
+                            {% if reclamation.statut== 'Ouvert' %}
+                                <td><span class="badge badge-warning">Ouvert</span></td>
+
+                            {% endif %}
+                            {% if reclamation.statut== 'Fermé' %}
+                                <td><span class="badge badge-danger">Fermé</span></td>
+
+                            {% endif %}
                             <td>{{ reclamation.date ? reclamation.date|date('d M Y') : '' }}</td>
                             <td>{{ reclamation.heure ? reclamation.heure|date('H:i') : '' }}</td>
                             <td>

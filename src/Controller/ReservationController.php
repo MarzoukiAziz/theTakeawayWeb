@@ -10,6 +10,7 @@ use App\Entity\Table;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
@@ -17,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 class ReservationController extends AbstractController
 {
@@ -58,32 +61,154 @@ class ReservationController extends AbstractController
             ->orderBy('r.date', 'DESC')
             ->getQuery()
             ->getResult();
-        //paginating the reservations by 10 per page
+        //paginating the reservations by 8 per page
         $rev = $paginator->paginate(
             $rev,
             $request->query->getInt('page', 1),
-            10
+            8
         );
         return $this->render('reservation/admin/admin-reservations.html.twig', [
             'rev' => $rev,
             'res' => $res,
+            'filter' => ""
         ]);
     }
+
+
+
+    /**
+     * @Route("/admin/reservations/{rid}/sort-by-statut/{statut}", name="admin-sort-reservation-statut")
+     */
+    //show all reservations of the chosen restaurant
+    public function showReservationsSortedByRestaurantAndStatut(Request $request, PaginatorInterface $paginator, $rid, $statut): Response
+    {
+        $rep = $this->getDoctrine()->getRepository(Restaurant::class);
+        $res = $rep->find($rid);
+        //check if the restaurant id is valid
+        if ($res == null) {
+            return $this->redirectToRoute("erreur-back");
+        }
+        //getting the reservations by restaurant id
+        $rev = $this->getDoctrine()->getRepository(Reservation::class)
+            ->createQueryBuilder('r')
+            ->where('r.restaurant=?1')
+            ->setParameter(1, $rid)
+            ->andWhere('r.statut=?2')
+            ->setParameter(2, $statut)
+            ->orderBy('r.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+        //paginating the reservations by 8 per page
+        $rev = $paginator->paginate(
+            $rev,
+            $request->query->getInt('page', 1),
+            8
+        );
+        return $this->render('reservation/admin/admin-reservations.html.twig', [
+            'rev' => $rev,
+            'res' => $res,
+            'filter' => $statut
+        ]);
+    }
+
+
+    /**
+     * @Route("/admin/reservations/{rid}/sort-by-date/{date}", name="admin-sort-reservation-date")
+     */
+    //show all reservations of the chosen restaurant
+    public function showReservationsSortedByRestaurantAndDate(Request $request, PaginatorInterface $paginator, $rid, $date): Response
+    {
+        $rep = $this->getDoctrine()->getRepository(Restaurant::class);
+        $res = $rep->find($rid);
+        //check if the restaurant id is valid
+        if ($res == null) {
+            return $this->redirectToRoute("erreur-back");
+        }
+        //date loading
+        $d = new \DateTime();
+        $d->setTime(0, 0);
+        if ($date == "Demain") {
+            $d->modify("+24 hour");
+        }
+
+        //getting the reservations by restaurant id
+        $rev = $this->getDoctrine()->getRepository(Reservation::class)
+            ->createQueryBuilder('r')
+            ->where('r.restaurant=?1')
+            ->setParameter(1, $rid)
+            ->andWhere('r.date=?2')
+            ->setParameter(2, $d)
+            ->orderBy('r.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+        //paginating the reservations by 8 per page
+        $rev = $paginator->paginate(
+            $rev,
+            $request->query->getInt('page', 1),
+            8
+        );
+        return $this->render('reservation/admin/admin-reservations.html.twig', [
+            'rev' => $rev,
+            'res' => $res,
+            'filter' => $date
+        ]);
+    }
+
 
     /**
      * @Route("/admin/reservations/{rid}/{id}/change-statut/{s}/", name="admin-change-reservation-statut")
      */
     //change the status of a reservation
-    public function updateReservationStatutByAdmin($rid, $id, $s): Response
+    public function updateReservationStatutByAdmin($rid, $id, $s, MailerInterface $mailer): Response
     {
         $rep = $this->getDoctrine()->getRepository(Reservation::class);
         $reservation = $rep->find($id);
-        if (!($s == "Accepté" or $s == "Réfusé" or $s = "Annulé")  or $reservation == null) {
+        if (!($s == "Accepté" or $s == "Réfusé" or $s = "Annulé") or $reservation == null) {
             return $this->redirectToRoute("erreur-back");
         }
         $reservation->setStatut($s);
         $reservation->setAdminCharge($this->getUser());
         $this->getDoctrine()->getManager()->flush();
+        $this->addFlash('success', 'Statut changé avec succès!');
+
+
+        $email = (
+        new Email())
+            ->from('thetakeaway.esprit@gmail.com')
+            ->to($reservation->getClientId()->getEmail());
+
+        if ($s == "Accepté") {
+            $email->subject('Reservation Accpetée')
+                ->html('
+<h2>R&eacute;servation accept&eacute;e</h2>
+
+<p>Bonjour ' . $reservation->getClientId()->getNom() . ',</p>
+<p>
+ Nous avons le plaisir de vous informer que votre réservation pour ' . $reservation->getRestaurant()->getNom() . ' le ' . $reservation->getDate()->format('d M Y') . ' , a été acceptée.
+</p>');
+        } else if ($s == "Réfusé") {
+            $email->subject('Reservation Réfusé')
+                ->html('
+<h2>R&eacute;servation accept&eacute;e</h2>
+
+<p>Bonjour ' . $reservation->getClientId()->getNom() . ',</p>
+<p>
+ Nous sommes désolé de vous informer que votre réservation pour ' . $reservation->getRestaurant()->getNom() . ' le ' . $reservation->getDate()->format('d M Y') . ' , a été réfusée.
+</p>');
+        } else if ($s == "Annulé") {
+            $email->subject('Reservation Annulée')
+                ->html('
+<h2>R&eacute;servation accept&eacute;e</h2>
+
+<p>Bonjour ' . $reservation->getClientId()->getNom() . ',</p>
+<p>
+ Nous sommes désolé de vous informer que votre réservation pour ' . $reservation->getRestaurant()->getNom() . ' le ' . $reservation->getDate()->format('d M Y') . ' , a été annulée.
+</p>');
+        }
+
+
+        $mailer->send($email);
+
         return $this->redirectToRoute('admin-reservations-restaurant', ['rid' => $rid]);
     }
 
@@ -128,17 +253,14 @@ class ReservationController extends AbstractController
     public function searchForm()
     {
         //limit the available dates at the current and the next month.
-        $years = array(date("Y"));
-        $months = array(date("m"), date("m") + 1);
-        if (date("m") == 12) {
-            $years = array(date("Y"), date("Y") + 1);
-        }
         $defaultData = ['message' => ''];
         $form = $this->createFormBuilder($defaultData)
             ->add('date', DateType::class, [
-                'widget' => 'choice',
-                'months' => $months,
-                'years' => $years,
+                'label' => 'Date Commande',
+                'widget' => 'single_text',
+                'attr' => [
+                    'placeholder' => 'Date',
+                ]
             ])
             ->add('heureArrive', TimeType::class, array(
                 'widget' => 'choice',
@@ -190,9 +312,15 @@ class ReservationController extends AbstractController
         }
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
             //getting the reservations by date and restaurant id
             $data = $form->getData();
-
+            $today = new \DateTime("now");
+            $today->setTime(0, 0);
+            if ($data["date"] < $today) {
+                $this->addFlash('danger', 'Date Invalide');
+                return $this->redirect($request->getUri());
+            }
             $currentReservations = $this->getDoctrine()->getRepository(Reservation::class)
                 ->createQueryBuilder('r')
                 ->where('r.date=?1')
@@ -210,7 +338,7 @@ class ReservationController extends AbstractController
             //finding the unavailable tables which already have a reservation at the given time //work with ids
             $ut = array();
             foreach ($currentReservations as $cr) {
-                if($cr->getStatut()=="Accepté" or $cr->getStatut()=="En Attente"){
+                if ($cr->getStatut() == "Accepté" or $cr->getStatut() == "En Attente") {
                     if (($cr->getHeureDepart() >= $data["heureArrive"] and $cr->getHeureArrive() <= $data["heureArrive"])
                         or ($cr->getHeureArrive() >= $heureDepart and $cr->getHeureDepart() <= $heureDepart)) {
                         foreach ($cr->getTables() as $tab) {
@@ -266,7 +394,7 @@ class ReservationController extends AbstractController
         $rep = $this->getDoctrine()->getRepository(Restaurant::class);
         $res = $rep->find($rid);
         $data = $request->request;
-        if($res == null){
+        if ($res == null) {
             return $this->redirectToRoute("erreur-front");
         }
         //setting the data of the new reservation object
@@ -285,13 +413,15 @@ class ReservationController extends AbstractController
                 $newRev->addTable($t);
             }
         }
-        if($newRev->getTables()->count()==0){
-            return $this->redirectToRoute("reserve",['rid'=>$rid]);
+        if ($newRev->getTables()->count() == 0) {
+            $this->addFlash("danger","Pas de table séléctionnée!");
+            return $this->redirectToRoute("reserve", ['rid' => $rid]);
         }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($newRev);
         $em->flush();
+        $this->addFlash("success","Réservation ajoutée avec succès!");
         return $this->redirectToRoute("reservations");
     }
 
@@ -316,9 +446,47 @@ class ReservationController extends AbstractController
         );
         return $this->render('reservation/reservations-client.html.twig', [
             'rev' => $rev,
+            "filter"=>""
         ]);
 
     }
+
+
+    /**
+     * @Route("/reservations/filter-by-date/{date}", name="reservations-date")
+     */
+    //show the client reservations
+    public function showClientReservationsByDate(Request $request, PaginatorInterface $paginator,$date): Response
+    {
+        //date loading
+        $d = new \DateTime();
+        $d->setTime(0, 0);
+        if ($date == "Demain") {
+            $d->modify("+24 hour");
+        }
+        //getting the reservations by client id
+        $rev = $this->getDoctrine()->getRepository(Reservation::class)
+            ->createQueryBuilder('r')
+            ->where('r.clientId=?1')
+            ->setParameter(1, $this->getUser()->getId())
+            ->andWhere('r.date=?2')
+            ->setParameter(2, $d)
+            ->getQuery()
+            ->getResult();
+        //paginating the reservations by 10 per page
+        $rev = $paginator->paginate(
+            $rev,
+            $request->query->getInt('page', 1),
+            10
+        );
+        return $this->render('reservation/reservations-client.html.twig', [
+            'rev' => $rev,
+            'filter'=>$date
+        ]);
+
+    }
+
+
     /**
      * @Route("/reservations/{rid}/cancel", name="client-cancel-reservation")
      */
@@ -332,13 +500,13 @@ class ReservationController extends AbstractController
             return $this->redirectToRoute("erreur-back");
         }
         //check if this reservation belongs to the current user
-        if ($this->getUser() !=$reservation->getClientId()){
+        if ($this->getUser() != $reservation->getClientId()) {
             return $this->redirectToRoute("erreur-front");
         }
 
-
         $reservation->setStatut('Annulé');
         $this->getDoctrine()->getManager()->flush();
+        $this->addFlash("success","Réservation annulée avec succès!");
         return $this->redirectToRoute('reservations');
     }
 

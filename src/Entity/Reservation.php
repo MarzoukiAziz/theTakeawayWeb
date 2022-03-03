@@ -23,8 +23,9 @@ class Reservation
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\Date
-     * @var string A "Y-m-d" formatted value
+     * @Assert\NotBlank
+     * @Assert\GreaterThan("today")
+     * ('la date est incorrecte')
      */
     private $date;
 

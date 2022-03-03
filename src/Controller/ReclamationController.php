@@ -40,7 +40,31 @@ class ReclamationController extends AbstractController
             10
         );
         return $this->render('reclamation/admin/index.html.twig', [
-            'reclamations' => $reclamations
+            'reclamations' => $reclamations,
+            "filter"=>""
+        ]);
+    }
+
+    /**
+     * @Route("/admin/reclamations/statut/{statut}", name="reclamation_by_statut_admin", methods={"GET"})
+     */
+    public function showReclamationsToAdminByStatut(Request $request, PaginatorInterface $paginator, $statut, ReclamationRepository $reclamationRepository): Response
+    {
+        $reclamations = $this->getDoctrine()->getRepository(Reclamation::class)
+            ->createQueryBuilder('r')
+            ->Where('r.statut=?1')
+            ->setParameter(1, $statut)
+            ->orderBy('r.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+        $reclamations = $paginator->paginate(
+            $reclamations,
+            $request->query->getInt('page', 1),
+            10
+        );
+        return $this->render('reclamation/admin/index.html.twig', [
+            'reclamations' => $reclamations,
+            "filter"=>$statut
         ]);
     }
 
@@ -70,7 +94,7 @@ class ReclamationController extends AbstractController
             $reponse->setReclamation($reclamation);
             $em->persist($reponse);
             $em->flush();
-
+            $this->addFlash("success","Réponse ajouté avec succès!");
             return $this->redirectToRoute('reclamation_show_admin', ['id' => $reclamation->getId()], Response::HTTP_SEE_OTHER);
         }
         return $this->render('reclamation/admin/show.html.twig', [
@@ -89,6 +113,7 @@ class ReclamationController extends AbstractController
         $rec = $em->getRepository(Reclamation::class)->find($id);
         $em->remove($rec);
         $em->flush();
+        $this->addFlash("success","Réclamation supprimée avec succès!");
         return $this->redirectToRoute('reclamation_admin', [], Response::HTTP_SEE_OTHER);
     }
 
@@ -106,6 +131,7 @@ class ReclamationController extends AbstractController
         }
         $reclamation->setStatut("Fermé");
         $this->getDoctrine()->getManager()->flush();
+        $this->addFlash("success","Réclamation fermée avec succès!");
         return $this->redirectToRoute('reclamation_show_admin', ['id' => $reclamation->getId()]);
     }
 
@@ -123,6 +149,7 @@ class ReclamationController extends AbstractController
         }
         $reclamation->setStatut("Ouvert");
         $this->getDoctrine()->getManager()->flush();
+        $this->addFlash("success","Réclamation ouverte avec succès!");
         return $this->redirectToRoute('reclamation_show_admin', ['id' => $reclamation->getId()]);
     }
 
@@ -134,26 +161,51 @@ class ReclamationController extends AbstractController
     /**
      * @Route("/reclamations", name="reclamation_index", methods={"GET"})
      */
-    public function index(Request $request): Response
+    public function reclamationsClient(Request $request): Response
     {
         $clientId=$this->getUser()->getId();
         $client = $this->getDoctrine()->getRepository(Client::class)->find($clientId);
         $reclamations = $this->getDoctrine()->getRepository(Reclamation::class)
             ->createQueryBuilder('r')
-            ->andWhere('r.clientId=?1')
+            ->Where('r.clientId=?1')
             ->setParameter(1, $client->getId())
             ->orderBy('r.date', 'DESC')
             ->getQuery()
             ->getResult();
         return $this->render('reclamation/index.html.twig', [
-            'reclamations' => $reclamations
+            'reclamations' => $reclamations,
+            'filter'=>""
         ]);
     }
+
+
+    /**
+     * @Route("/reclamations/statut/{statut}", name="reclamation_by_statut", methods={"GET"})
+     */
+    public function reclamationsClientByStatut(Request $request,$statut): Response
+    {
+        $clientId=$this->getUser()->getId();
+        $client = $this->getDoctrine()->getRepository(Client::class)->find($clientId);
+        $reclamations = $this->getDoctrine()->getRepository(Reclamation::class)
+            ->createQueryBuilder('r')
+            ->Where('r.clientId=?1')
+            ->setParameter(1, $client->getId())
+            ->AndWhere('r.statut=?2')
+            ->setParameter(2, $statut)
+            ->orderBy('r.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+        return $this->render('reclamation/index.html.twig', [
+            'reclamations' => $reclamations,
+            "filter"=>$statut
+        ]);
+    }
+
 
     /**
      * @Route("/reclamations/new", name="reclamation_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function newReclmation(Request $request, EntityManagerInterface $entityManager): Response
     {
         $reclamation = new Reclamation();
         $form = $this->createForm(ReclamationType::class, $reclamation);
@@ -169,6 +221,7 @@ class ReclamationController extends AbstractController
             $reclamation->setHeure($date);
             $entityManager->persist($reclamation);
             $entityManager->flush();
+            $this->addFlash("success","Réclamation ajoutée avec succès!");
             return $this->redirectToRoute('reclamation_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -203,6 +256,7 @@ class ReclamationController extends AbstractController
             $reponse->setReclamation($reclamation);
             $em->persist($reponse);
             $em->flush();
+            $this->addFlash("success","Réponse ajouté avec succès!");
             return $this->redirectToRoute('reclamation_show', ['id' => $reclamation->getId()], Response::HTTP_SEE_OTHER);
         }
         return $this->render('reclamation/show.html.twig', [
@@ -223,6 +277,7 @@ class ReclamationController extends AbstractController
         $rec = $em->getRepository(Reclamation::class)->find($id);
         $em->remove($rec);
         $em->flush();
+        $this->addFlash("success","Réclamation supprimée avec succès!");
         return $this->redirectToRoute('reclamation_index', [], Response::HTTP_SEE_OTHER);
     }
 }
