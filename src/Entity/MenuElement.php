@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\MenuElementRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass=MenuElementRepository::class)
  */
@@ -108,7 +109,7 @@ class MenuElement
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    public function setImage( $image): self
     {
         $this->image = $image;
 

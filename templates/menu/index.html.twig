@@ -28,7 +28,7 @@
                 <th scope="col">Description</th>
                 <th scope="col">Prix</th>
                 <th scope="col">Categorie</th>
-                <th scope="col">Image</th>
+
                 <th scope="col">Options</th>
                 <th scope="col">Mise a jour</th>
             </tr>
@@ -41,7 +41,7 @@
                 <td>{{ menu_element.description }}</td>
                 <td>{{ menu_element.prix }}</td>
                 <td>{{ menu_element.categorie }}</td>
-                <td>{{ menu_element.image }}</td>
+
                 <td>{{ menu_element.options ? menu_element.options|join(', ') : '' }}</td>
                 <td>
                     <a class="btn_1 gray" href="{{ path('menu_show', {'id': menu_element.id}) }}"><i class="fa fa-fw fa-eye"></i>show</a>

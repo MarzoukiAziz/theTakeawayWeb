@@ -10,12 +10,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\File;
+
 
 /**
  * @Route("/menu")
  */
+
+
 class MenuController extends AbstractController
 {
+
+
+
+
     /**
      * @Route("/", name="menu_index", methods={"GET"})
      */
@@ -36,6 +44,23 @@ class MenuController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if($menuElement->getImage()=="")
+                $menuElement->setImage("no_image.jpg");
+            else
+            {
+                $file =new File($menuElement->getImage());
+                $fileName=md5(uniqid()).'.'.$file->guessExtension();
+                $file->move($this->getParameter('upload_directory'),$fileName);
+                $menuElement->setImage($fileName);
+
+            }
+
+
+
+
+
+
+
             $entityManager->persist($menuElement);
             $entityManager->flush();
 
@@ -63,10 +88,30 @@ class MenuController extends AbstractController
      */
     public function edit(Request $request, MenuElement $menuElement, EntityManagerInterface $entityManager): Response
     {
+        $name= $menuElement->getImage();
         $form = $this->createForm(MenuElementType::class, $menuElement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($menuElement->getImage()=="")
+                $menuElement->setImage($name);
+            else
+            {
+                $file = new File($menuElement->getImage());
+                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $file->move($this->getParameter('upload_directory'),$fileName);
+                $menuElement->setImage($fileName);
+                if($name!="no_image.jpg")
+                if( file_exists("couvertures/".$name))
+                    unlink("couvertures/".$name) ;
+
+
+
+
+            }
+            
+            
+            
             $entityManager->flush();
 
             return $this->redirectToRoute('menu_index', [], Response::HTTP_SEE_OTHER);

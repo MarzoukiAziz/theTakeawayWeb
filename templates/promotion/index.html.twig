@@ -26,6 +26,7 @@
                 <th scope="col">HeureFin</th>
                 <th scope="col">Banner</th>
                 <th scope="col">PrixPromo</th>
+
                 <th scope="col">Mise a jours</th>
             </tr>
         </thead>
@@ -39,6 +40,7 @@
                 <td>{{ promotion.heureFin ? promotion.heureFin|date('H:i:s') : '' }}</td>
                 <td>{{ promotion.banner }}</td>
                 <td>{{ promotion.prixPromo }}</td>
+
                 <td>
                     <a class="btn_1 gray" href="{{ path('promotion_show', {'id': promotion.id}) }}"><i class="fa fa-fw fa-eye"></i>show</a>
                     <a class="btn_1 gray approve" href="{{ path('promotion_edit', {'id': promotion.id}) }}">edit</a>
@@ -53,6 +55,12 @@
     </table>
 
     <a class="btn_1 gray approve" href="{{ path('promotion_new') }}">Ajouter</a>
+
+
+
+
+
+
 {% endblock %}
 
 {% endblock %}

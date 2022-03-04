@@ -28,6 +28,7 @@ class Promotion
      * @ORM\Column(type="date")
      * @Assert\Type("\DateTime")
      * @Assert\GreaterThan("today")
+     *  @Assert\GreaterThan(propertyPath="dateDebut")
      */
     private $dateFin;
 
@@ -38,6 +39,7 @@ class Promotion
 
     /**
      * @ORM\Column(type="time")
+     * @Assert\GreaterThan(propertyPath="heureDebut")
      */
     private $heureFin;
 
