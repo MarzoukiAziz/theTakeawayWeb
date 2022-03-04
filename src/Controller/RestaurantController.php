@@ -105,6 +105,10 @@ class RestaurantController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
+
+          if( $restaurant->getAdresse())
+          {$adresseGps = str_replace (" ","+",$restaurant->getAdresse());}
+
             if($restaurant->getImages()=="")
                 $restaurant->setImages("no_images.jpg");
             else
