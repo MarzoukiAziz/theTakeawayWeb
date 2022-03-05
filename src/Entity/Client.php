@@ -114,6 +114,10 @@ class Client implements UserInterface
      */
     private $IsVerified;
 
+    /**
+     * @ORM\OneToMany(targetEntity=CartBancaire::class, mappedBy="client", orphanRemoval=true)
+     */
+    private $cards;
 
 
 
@@ -121,6 +125,7 @@ class Client implements UserInterface
     public function __construct()
     {
         $this->restaurant = new ArrayCollection();
+        $this->cards = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -369,4 +374,36 @@ class Client implements UserInterface
     {
         $this->IsVerified = $IsVerified;
     }
+
+    /**
+     * @return Collection<int, CartBancaire>
+     */
+    public function getCards(): Collection
+    {
+        return $this->cards;
+    }
+
+    public function addCard(CartBancaire $card): self
+    {
+        if (!$this->cards->contains($card)) {
+            $this->cards[] = $card;
+            $card->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCard(CartBancaire $card): self
+    {
+        if ($this->cards->removeElement($card)) {
+            // set the owning side to null (unless already changed)
+            if ($card->getClient() === $this) {
+                $card->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

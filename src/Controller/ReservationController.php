@@ -428,7 +428,7 @@ class ReservationController extends AbstractController
     /**
      * @Route("/reservations", name="reservations")
      */
-    //show the client reservations
+    //show the client all reservations
     public function showClientReservations(Request $request, PaginatorInterface $paginator): Response
     {
         //getting the reservations by client id
@@ -446,7 +446,38 @@ class ReservationController extends AbstractController
         );
         return $this->render('reservation/reservations-client.html.twig', [
             'rev' => $rev,
-            "filter"=>""
+            "filter"=>"",
+            'res'=>$this->getDoctrine()->getRepository(Restaurant::class)->findAll()
+        ]);
+
+    }
+    /**
+     * @Route("/reservations/filter-by-restaurant/{rid}", name="reservations-by-restaurant")
+     */
+    //show the client reservations by restaurant
+    public function showClientReservationsByRestaurant(Request $request, $rid, PaginatorInterface $paginator): Response
+    {
+        $restaurants=$this->getDoctrine()->getRepository(Restaurant::class)->findAll();
+        $restaurant=$this->getDoctrine()->getRepository(Restaurant::class)->find($rid);
+        //getting the reservations by client id
+        $rev = $this->getDoctrine()->getRepository(Reservation::class)
+            ->createQueryBuilder('r')
+            ->where('r.clientId=?1')
+            ->setParameter(1, $this->getUser()->getId())
+            ->Andwhere('r.restaurant=?2')
+            ->setParameter(2, $restaurant)
+            ->getQuery()
+            ->getResult();
+        //paginating the reservations by 10 per page
+        $rev = $paginator->paginate(
+            $rev,
+            $request->query->getInt('page', 1),
+            10
+        );
+        return $this->render('reservation/reservations-client.html.twig', [
+            'rev' => $rev,
+            "filter"=>$restaurant->getNom(),
+            'res'=>$restaurants
         ]);
 
     }
@@ -455,7 +486,7 @@ class ReservationController extends AbstractController
     /**
      * @Route("/reservations/filter-by-date/{date}", name="reservations-date")
      */
-    //show the client reservations
+    //show the client reservations by date
     public function showClientReservationsByDate(Request $request, PaginatorInterface $paginator,$date): Response
     {
         //date loading

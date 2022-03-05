@@ -49,6 +49,12 @@ class CartBancaire
      */
     private $cvv;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="cards")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $client;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -99,6 +105,18 @@ class CartBancaire
     public function setCvv(int $cvv): self
     {
         $this->cvv = $cvv;
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
 
         return $this;
     }

@@ -21,7 +21,6 @@
            </div>
 
 
-
                 {{ form_start(f)}}
                 <div class="form-group" style="color:#000" >
                     <label class="form-label" style="color: white">Date</label>
@@ -29,18 +28,18 @@
                         {'attr': {'class': '','style':'display:flex;width: -webkit-fill-available;' , 'placeholder' : 'Date'}} ) }}
                     {{ form_errors(f.date) }}
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Heure Arrivé</label>
+                <div class="form-group" style="color:#000">
+                    <label class="form-label" style="color: white">Heure Arrivé</label>
                     {{ form_widget(f.heureArrive , {'attr': {'class': '','style':'display:flex;' , 'placeholder' : 'Heure d\'arrivée'}} ) }}
                     {{ form_errors(f.heureArrive) }}
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Départ dans</label>
+                <div class="form-group" style="color:#000">
+                    <label class="form-label" style="color: white">Départ dans</label>
                     {{ form_widget(f.Duree , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Durée'}} ) }}
                     {{ form_errors(f.Duree) }}
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Nombre de Personnes</label>
+                <div class="form-group" style="color:#000">
+                    <label class="form-label" style="color: white">Nombre de Personnes</label>
                     {{ form_widget(f.nbPersonne , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Nombre de presonnes'}} ) }}
                     {{ form_errors(f.nbPersonne) }}
                 </div>
