@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Client;
+use App\Entity\Image;
 use App\Form\EditeProfileType;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -40,12 +41,38 @@ class EditUserController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+
+
+            $images = $form->get('images')->getData();
+
+            foreach($images as $image){
+                $fichier = md5(uniqid()).'.'.$image->guessExtension();
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+                $img = new Image();
+                $img->setName($fichier);
+                $user->addImage($img);
+            }
+
+
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
+
+
+
             $this->addFlash('message', 'Profil mis à jour');
             return $this->redirectToRoute('users_profil_modifier');
+
+
+
+
+
+
         }
 
         return $this->render('edit_user/index.html.twig', [

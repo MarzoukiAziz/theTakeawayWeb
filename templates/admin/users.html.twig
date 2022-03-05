@@ -24,9 +24,15 @@
                 <td>
                     {% for role in user.roles %}
                         {% if role == "ROLE_USER" %}
-                            Utilisateur
+                            <div style="color: red">
+                                Utilisateur
+                            </div>
+
                             {% elseif role == "ROLE_EDITOR" %}
-                                Editeur
+                                <div style="color: green">
+                                    Employer
+                                </div>
+
                             {% elseif role =="ROLE_ADMIN" %}
                             ADMIN
                         {% endif %}
