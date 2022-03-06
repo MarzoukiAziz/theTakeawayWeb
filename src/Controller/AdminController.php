@@ -31,6 +31,21 @@ class AdminController extends AbstractController
 
     }
     /**
+     * @Route("/admin/{roless}", name="rolesg")
+     */
+    public function affichee(Request $request,$roless)
+    {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $users = $entityManager->getRepository(Client::class)->findByRole($roless);
+
+
+        return $this->render("admin/Employer.html.twig",[
+            'users' =>$users
+        ]);
+
+    }
+    /**
      * @Route("/admin/User/modifier/{id}", name="modifier_utulisateur")
      */
     public function edituser(Client $user,Request $request){

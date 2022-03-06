@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\File;
 
 class EditUserController extends AbstractController
 {
@@ -36,6 +37,7 @@ class EditUserController extends AbstractController
     public function editProfile(Request $request)
     {
         $user = $this->getUser();
+
         $form = $this->createForm(EditeProfileType::class, $user);
 
         $form->handleRequest($request);
@@ -43,18 +45,21 @@ class EditUserController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
 
 
-            $images = $form->get('images')->getData();
-
-            foreach($images as $image){
-                $fichier = md5(uniqid()).'.'.$image->guessExtension();
-                $image->move(
-                    $this->getParameter('images_directory'),
-                    $fichier
-                );
-                $img = new Image();
-                $img->setName($fichier);
-                $user->addImage($img);
+            $brochureFile = $form->get('brochure')->getData();
+            if ($brochureFile) {
+                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
+                try {
+                    $brochureFile->move(
+                        $this->getParameter('brochures_directory'),
+                        $newFilename,
+                        $user->setBrochureFilename($newFilename)
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
             }
+
 
 
 

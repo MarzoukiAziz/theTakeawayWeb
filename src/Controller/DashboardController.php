@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
 use App\Repository\ClientRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,7 @@ class DashboardController extends AbstractController
      */
     public function index(ClientRepository $clientRepository): Response
     {
+
         return $this->render('dashboard/index.html.twig', [
             'controller_name' => 'DashboardController',
         ]);

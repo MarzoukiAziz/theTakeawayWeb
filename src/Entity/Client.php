@@ -115,9 +115,10 @@ class Client implements UserInterface
     private $IsVerified;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="client",cascade={"persist"})
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $image;
+    private $brochureFilename;
+
 
 
 
@@ -126,7 +127,7 @@ class Client implements UserInterface
     public function __construct()
     {
         $this->restaurant = new ArrayCollection();
-        $this->image = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -376,33 +377,19 @@ class Client implements UserInterface
         $this->IsVerified = $IsVerified;
     }
 
-    /**
-     * @return Collection|Image[]
-     */
-    public function getImage(): Collection
+    public function getBrochureFilename(): ?string
     {
-        return $this->image;
+        return $this->brochureFilename;
     }
 
-    public function addImage(Image $image): self
+    public function setBrochureFilename(?string $brochureFilename): self
     {
-        if (!$this->image->contains($image)) {
-            $this->image[] = $image;
-            $image->setClient($this);
-        }
+        $this->brochureFilename = $brochureFilename;
 
         return $this;
     }
 
-    public function removeImage(Image $image): self
-    {
-        if ($this->image->removeElement($image)) {
-            // set the owning side to null (unless already changed)
-            if ($image->getClient() === $this) {
-                $image->setClient(null);
-            }
-        }
 
-        return $this;
-    }
+
+
 }

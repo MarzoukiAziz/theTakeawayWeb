@@ -3,6 +3,8 @@
 namespace App\Form;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 
 use App\Entity\Client;
 use Symfony\Component\Form\AbstractType;
@@ -25,6 +27,23 @@ class RegistrationFormType extends AbstractType
             ->add('prenom',TextType::class)
             ->add('email',EmailType::class)
             ->add('num_tel')
+            ->add('brochure', FileType::class, [
+                'label' => 'Brochure (PDF file)',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'application/pdf',
+                            'application/x-pdf',
+                            'image/jpeg',
+                            'image/png'
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid PDF document',
+                    ])],
+            ])
+
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [

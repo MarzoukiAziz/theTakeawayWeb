@@ -44,7 +44,7 @@
             <div class="container">
                 {% if app.user %}
                     <div class="topbar-register">
-                        <a href="/dashboard">Mon Compte</a> /
+                        <a href="{{ path('dashboard', {'id': app.user.id}) }}">Mon Compte</a> /
                         <a href="/logout">Déconnexion</a>
                     </div>
                 {% else %}
@@ -66,6 +66,8 @@
             <div class="container">
                 <div class="logo"><h1 itemprop="headline">
                         <a href="/" title="Home" itemprop="url">
+
+
                             <img src="{{ asset("assets/front-office/images/logo.png") }}" alt="logo.png" itemprop="image" height="80px">
                         </a></h1></div>
                 <nav>
@@ -141,7 +143,7 @@
                                                 <div class="profile-sidebar-inner brd-rd5">
                                                     <div class="user-info red-bg">
 
-                                                        <img class="brd-rd50" src="{{ asset("assets/front-office/images/resource/user-avatar.jpg") }}" alt="user-avatar.jpg" itemprop="image">
+                                                        <img class="image-display" src="{{ asset('Uploads/' ~ app.user.brochureFilename) }}" style="width: 1500px;height: 150px"/>
                                                         <div class="user-info-inner">
                                                             <h5 itemprop="headline"><a href="#" title="" itemprop="url">{{ app.user.prenom }}
                                                                     <br>

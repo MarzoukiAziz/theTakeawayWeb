@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
+
 class RegistrationController extends AbstractController
 {
     /**
@@ -23,10 +24,27 @@ class RegistrationController extends AbstractController
         $user = new Client();
         $user->setDateCurent(new \DateTime('now'));
         $user->setPoints(0);
+
+
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $brochureFile = $form->get('brochure')->getData();
+            $newFilename = 'avatar.jpg';
+            if ($brochureFile) {
+                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
+                try {
+                    $brochureFile->move(
+                        $this->getParameter('brochures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $newFilename = 'null';
+                }
+            }
+            $user->setBrochureFilename($newFilename);
             // encode the plain password
             $user->setPassword(
             $userPasswordEncoder->encodePassword(

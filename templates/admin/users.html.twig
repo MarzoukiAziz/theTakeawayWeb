@@ -7,6 +7,12 @@
 {% endblock %}
 
 {% block contenu %}
+    <a href="{{ path('rolesg',{'roless':"ROLE_ADMIN"}) }}"
+       class="btn btn-danger">Admin</a>
+    <a href="{{ path('rolesg',{'roless':"ROLE_EDITOR"}) }}"
+       class="btn btn-warning">Employer</a>
+    <a href="{{ path('rolesg',{'roless':"ROLE_USER"}) }}"
+       class="btn btn-dark">Simpl-Utilisateur</a>
     <table class="table">
        <thead>
        <th>ID</th>
@@ -23,18 +29,21 @@
                 <td>{{ user.nom }}</td>
                 <td>
                     {% for role in user.roles %}
-                        {% if role == "ROLE_USER" %}
-                            <div style="color: red">
-                                Utilisateur
-                            </div>
+                        {% if role == "ROLE_ADMIN"  %}
 
+                            <div style="color: #b21f2d">
+                                ADMIN
+                            </div>
                             {% elseif role == "ROLE_EDITOR" %}
-                                <div style="color: green">
+                                <div style="color: #d39e00">
                                     Employer
                                 </div>
 
-                            {% elseif role =="ROLE_ADMIN" %}
-                            ADMIN
+                            {% elseif role =="ROLE_USER" %}
+                                <div style="color: #343a40">
+                                    Utilisateur
+                                </div>
+
                         {% endif %}
                     {% endfor %}
                 </td>

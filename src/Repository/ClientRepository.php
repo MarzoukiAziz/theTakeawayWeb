@@ -35,6 +35,21 @@ class ClientRepository extends ServiceEntityRepository implements PasswordUpgrad
         $this->_em->persist($user);
         $this->_em->flush();
     }
+    /**
+     * @param string $role
+     *
+     * @return array
+     */
+    public function findByRole($role)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('u')
+            ->from($this->_entityName, 'u')
+            ->where('u.roles LIKE :roles')
+            ->setParameter('roles', '%"'.$role.'"%');
+
+        return $qb->getQuery()->getResult();
+    }
 
     // /**
     //  * @return Client[] Returns an array of Client objects

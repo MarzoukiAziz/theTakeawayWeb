@@ -30,6 +30,11 @@
         {{ form_widget(f.num_tel , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Numero'}} ) }}
         {{ form_errors(f.num_tel ) }}
     </div>
+    <div class="form-group">
+        <label class="form-label">Image</label>
+        {{ form_widget(f.brochure ) }}
+        {{ form_errors(f.brochure ) }}
+    </div>
 
     {{ form_end(f) }}
     {% endblock %}

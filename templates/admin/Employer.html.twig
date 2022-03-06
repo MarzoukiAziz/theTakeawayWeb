@@ -1,0 +1,57 @@
+{% extends 'back-office.html.twig' %}
+
+{% block links %}
+    <title>
+        Liste de Utulisateur
+    </title>
+{% endblock %}
+
+{% block contenu %}
+    <a href="{{ path('utulisatuer') }}"
+       class="btn btn-danger">Back</a>
+    <table class="table">
+        <thead>
+        <th>ID</th>
+        <th>EMAIL</th>
+        <th>Nom</th>
+        <th>ROLES</th>
+        <th>Actions</th>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.nom }}</td>
+                <td>
+                    {% for role in user.roles %}
+                        {% if role == "ROLE_USER" %}
+                            <div style="color: red">
+                                Utilisateur
+                            </div>
+
+                        {% elseif role == "ROLE_EDITOR" %}
+                            <div style="color: green">
+                                Employer
+                            </div>
+
+                        {% elseif role =="ROLE_ADMIN" %}
+                            ADMIN
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{{ path('modifier_utulisateur',{'id':user.id}) }}"
+                       class="btn btn-warning">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Il n'yas pas d'utilisateurs</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+{% endblock  %}

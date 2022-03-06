@@ -11,8 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-
+use Symfony\Component\Validator\Constraints\File;
 
 
 class EditeProfileType extends AbstractType
@@ -25,11 +24,21 @@ class EditeProfileType extends AbstractType
             ->add('prenom',TextType::class)
             ->add('email',EmailType::class)
             ->add('num_tel')
-            ->add('images', FileType::class,[
-                'label' => false,
-                'multiple' => true,
+            ->add('brochure', FileType::class, [
+                'label' => 'Brochure (PDF file)',
                 'mapped' => false,
-                'required' => false
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'application/pdf',
+                            'application/x-pdf',
+                            'image/jpeg',
+                            'image/png'
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid PDF document',
+                    ])],
             ])
             ->add('Valider',SubmitType::class)
 
