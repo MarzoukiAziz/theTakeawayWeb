@@ -17,24 +17,26 @@
                     <span class="yellow-clr">WE'RE WORKING ON SOMTHING NEW!</span>
                     <h1 itemprop="headline" class="wow flash" data-wow-delay="0.2s">Coming Soon</h1>
                     <p itemprop="description">Vivam pulput vehic Mauris porttitor erovel sapien Sed ut persp tatem semper mi, at ultricies odio.</p>
+                    {% for promotion in promotions %}
                     <ul class="countdown">
                         <li class="brd-rd50 yellow-bg wow bounceIn" data-wow-delay="0.2s">
-                            <span class="days">00</span>
+                            <span class="days">{{ promotion.dateDebut ? promotion.dateDebut|date('d') : '' }}</span>
                             <p class="days_ref">Days</p>
                         </li>
                         <li class="brd-rd50 yellow-bg wow bounceIn" data-wow-delay="0.4s">
-                            <span class="hours">00</span>
+                            <span class="hours">{{ promotion.heureDebut ? promotion.heureDebut|date('H') : '' }}</span>
                             <p class="hours_ref">Hours</p>
                         </li>
                         <li class="brd-rd50 yellow-bg wow bounceIn" data-wow-delay="0.5s">
-                            <span class="minutes">00</span>
+                            <span class="minutes">{{ promotion.heureDebut ? promotion.heureDebut|date('i') : '' }}</span>
                             <p class="minutes_ref">Minutes</p>
                         </li>
                         <li class="brd-rd50 yellow-bg wow bounceIn" data-wow-delay="0.6s">
-                            <span class="seconds">00</span>
+                            <span class="seconds">{{ promotion.heureDebut ? promotion.heureDebut|date('s') : '' }}</span>
                             <p class="seconds_ref">Seconds</p>
                         </li>
                     </ul>
+                    {% endfor %}
                     <div class="follow-us">
                         <span>Follow Us :</span>
                         <a href="#" title="Facebook" itemprop="url" target="_blank"><i class="fa fa-facebook-square"></i></a>

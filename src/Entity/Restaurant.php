@@ -46,6 +46,7 @@ class Restaurant
 
     /**
      * @ORM\Column(type="time")
+     * @Assert\GreaterThan(propertyPath="heureOuverture")
      */
     private $heureFermeture;
 

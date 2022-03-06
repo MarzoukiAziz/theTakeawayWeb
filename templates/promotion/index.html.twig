@@ -26,6 +26,8 @@
                 <th scope="col">HeureFin</th>
                 <th scope="col">Banner</th>
                 <th scope="col">PrixPromo</th>
+                <th scope="col">Nom du plat</th>
+
 
                 <th scope="col">Mise a jours</th>
             </tr>
@@ -40,6 +42,7 @@
                 <td>{{ promotion.heureFin ? promotion.heureFin|date('H:i:s') : '' }}</td>
                 <td>{{ promotion.banner }}</td>
                 <td>{{ promotion.prixPromo }}</td>
+                <td>{{ promotion.element.nom }}</td>
 
                 <td>
                     <a class="btn_1 gray" href="{{ path('promotion_show', {'id': promotion.id}) }}"><i class="fa fa-fw fa-eye"></i>show</a>

@@ -19,7 +19,7 @@ class MenuElementType extends AbstractType
             ->add('categorie')
             ->add('image' , FileType::class , array('data_class'=>null ,
                'required'=>false ))
-            ->add('options')
+            ->add('options' )
         ;
     }
 
