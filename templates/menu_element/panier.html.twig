@@ -5,7 +5,10 @@
 {% endblock %}
 
 {% block contenu %}
-<table class="table">
+    <section class="bg-light p-3 text-center">
+        <h1>Votre panier</h1>
+    </section>
+<table class="table" style=": flex;justify-content: center;">
     <thead>
     <tr>
         <th>Produit</th>
@@ -16,23 +19,70 @@
     </tr>
     </thead>
     <tbody>
+    {% for element in dataPanier %}
+        <tr>
+            <td>{{ element.produit.nom }}</td>
+            <td>{{ element.produit.prix }} Dt</td>
+            <td> {{ element.quantite  }}</td>
+            <td> {{ element.quantite*element.produit.prix }} Dt</td>
+            <td> <a href="{{ path("cart_add",{id:element.produit.id}) }}" class="btn btn-success">
+                    <i class="bi bi-cart-plus"></i>
+                </a>
+                <a href="{{ path("cart_remove",{id:element.produit.id}) }}" class="btn btn-warning">
+                    <i class="bi bi-cart-dash"></i>
+                </a>
+                <a href="{{ path("cart_delete",{id:element.produit.id}) }}"  class="btn btn-danger">
+                    <i class="bi bi-cart-x"></i>
+                </a>
+            </td>
 
-    </tbody>
-</table>
-
-{% for element in dataPanier %}
-       <tr>
-           <td>{{ element.produit.nom }}</td>
-           <td></td>
-           <td></td>
-           <td></td>
-           <td></td>
-
-       </tr>
+        </tr>
     {% else %}
         <tr>
             <td colspan="5" class="text-center">Votre Panier est vide</td>
         </tr>
     {% endfor %}
+
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="3">Total</td>
+        <td class="text-end">{{ total }} Dt</td>
+        <td>  <a href="{{ path("deleteAll") }}"  class="btn btn-danger">
+                <i class="bi bi-cart-x"></i>
+            </a>
+        </td>
+    </tr>
+
+
+    </tfoot>
+
+</table>
+    <div style="display: flex;justify-content: center;margin: 30px;height: 400px;">
+        <div  class="fit-bg"></div>
+
+        <div class="card-body">
+            <h2 class="text-center" >Chekout Panier</h2>
+            {{ form_start(form) }}
+            <div class="form-group" >
+                <label class="form-label ">Methode de Paiement</label>
+                {{ form_widget(form.methode ,
+                    {'attr': {'class': '','style':'display:flex;'}} ) }}
+                {{ form_errors(form.methode) }}
+            </div>
+            <div class="form-group" >
+                <label class="form-label ">PointUtilisees</label>
+                {{ form_widget(form.pointUtilisees ,
+                    {'attr': {'class': '','style':'color:black;' , 'placeholder' : 'pointUtilisees'}} ) }}
+                {{ form_errors(form.pointUtilisees) }}
+            </div>
+            {{ form_widget(form) }}
+            <button class="btn btn-primary">{{ button_label|default('Checkout') }}</button>
+            {{ form_end(form) }}
+
+
+        </div>
+    </div>
+
 {#    {{ dump() }}#}
 {% endblock %}

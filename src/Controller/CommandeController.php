@@ -27,9 +27,6 @@ class CommandeController extends AbstractController
      * ********front office**
      ************************/
     //implemnt this later
-    public function calculatePrixTotale():Float{
-        return 154;
-    }
 //métier
     /**
      * @Route("/restaurant/{rid}/menu", name="choose-menu", methods={"GET", "POST"})
@@ -54,41 +51,41 @@ class CommandeController extends AbstractController
 //
 //
 
-    /**
-     * @Route("/restaurant/{rid}/commander", name="commande_new", methods={"GET", "POST"})
-     */
-    public function new(Request $request, $rid,EntityManagerInterface $entityManager): Response
-    {
-
-        $commande = new Commande();
-        $form = $this->createForm(CommandeType::class, $commande);
-        $form->handleRequest($request);
-        $restaurant = $this->getDoctrine()->getRepository(Restaurant::class)->find($rid);
-        if($restaurant == null){
-            $this->redirectToRoute("front-erreur");
-        }
-        if ($form->isSubmitted() && $form->isValid()) {
-            $commande->setRestaurant($restaurant);
-            //to change later
-            $client = $this->getDoctrine()->getRepository(Client::class)->find("1");
-            $commande->setClientId($client);
-            $commande->setStatut("En Attente");
-            $commande->setPrixTotal($this->calculatePrixTotale());
-            $date = new \DateTime();
-            $commande->setDate($date);
-            //par defaut success à traiter plus tard
-            $commande->setStatutPaiement("Success");
-            $entityManager->persist($commande);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('commandes', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('commande/new.html.twig', [
-            'commande' => $commande,
-            'form' => $form->createView(),
-        ]);
-    }
+//    /**
+//     * @Route("/restaurant/{rid}/commander", name="commande_new", methods={"GET", "POST"})
+//     */
+//    public function new(Request $request, $rid,EntityManagerInterface $entityManager): Response
+//    {
+//
+//        $commande = new Commande();
+//        $form = $this->createForm(CommandeType::class, $commande);
+//        $form->handleRequest($request);
+//        $restaurant = $this->getDoctrine()->getRepository(Restaurant::class)->find($rid);
+//        if($restaurant == null){
+//            $this->redirectToRoute("front-erreur");
+//        }
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $commande->setRestaurant($restaurant);
+//            //to change later
+//            $client = $this->getDoctrine()->getRepository(Client::class)->find("1");
+//            $commande->setClientId($client);
+//            $commande->setStatut("En Attente");
+//            $commande->setPrixTotal($this->calculatePrixTotale());
+//            $date = new \DateTime();
+//            $commande->setDate($date);
+//            //par defaut success à traiter plus tard
+//            $commande->setStatutPaiement("Success");
+//            $entityManager->persist($commande);
+//            $entityManager->flush();
+//
+//            return $this->redirectToRoute('commandes', [], Response::HTTP_SEE_OTHER);
+//        }
+//
+//        return $this->render('commande/new.html.twig', [
+//            'commande' => $commande,
+//            'form' => $form->createView(),
+//        ]);
+//    }
 
     /**
      * @Route("/commandes", name="commandes"))

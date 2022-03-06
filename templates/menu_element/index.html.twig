@@ -7,13 +7,13 @@
 {% block contenu %}
     <main class="container pt-5">
     <section class="">
-        {% for m in menu %}
+        {% for produit in menu %}
             <div class="" >
-                    <h2>{{ m.nom }}</h2>
+                    <h2>{{ produit.nom }}</h2>
 
                     <img class="w-100" src= "{{ asset("assets/front-office/images/resource/dish-img2-1.jpg") }}" alt="dish-img1-1.jpg" itemprop="image">
-                    <p>{{ m.prix }} Dt</p>
-                    <a href="{{ path("cart_add", {id :m.id}) }}" class="btn btn-success">
+                    <p>{{ produit.prix }} Dt</p>
+                    <a href="{{ path("cart_add", {id :produit.id}) }}" class="btn btn-success">
                         <i class="bi bi-cart-plus"></i> Ajouter
                     </a>
                 <hr>

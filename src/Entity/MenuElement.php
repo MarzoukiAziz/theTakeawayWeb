@@ -20,7 +20,7 @@ class MenuElement
     /**
      * @ORM\Column(type="string", length=255)
      */
-    public $nom;
+    private $nom;
 
     /**
      * @ORM\Column(type="text")
@@ -116,18 +116,7 @@ class MenuElement
 
         return $this;
     }
-//
-//    public function getOptions(): ?array
-//    {
-//        return $this->options;
-//    }
-//
-//    public function setOptions(?array $options): self
-//    {
-//        $this->options = $options;
-//
-//        return $this;
-//    }
+
 
 public function getOptions(): ?array
 {
