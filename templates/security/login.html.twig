@@ -40,6 +40,15 @@ S'authentifier
         <input type="hidden" name="_csrf_token"
                value="{{ csrf_token('authenticate') }}"
         >
+        <style>
+            mb-3{
+               cursor: copy;
+                color: #bd4147;
+            }
+        </style>
+        <div class="mb-3" style="margin: 10px 0px">
+            <a  style="color: red" href="/reset-password">Forgot Password ?</a>
+        </div>
 
 
 
