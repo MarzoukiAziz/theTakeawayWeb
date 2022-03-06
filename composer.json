@@ -11,6 +11,7 @@
         "doctrine/doctrine-bundle": "^2.5",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.11",
+        "dompdf/dompdf": "^1.2",
         "hwi/oauth-bundle": "^1.4",
         "knplabs/knp-paginator-bundle": "^5.8",
         "php-http/httplug-bundle": "^1.25",

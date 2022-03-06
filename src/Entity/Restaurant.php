@@ -64,6 +64,11 @@ class Restaurant
      */
     private $tables;
 
+    /**
+     * @ORM\OneToMany(targetEntity=RestaurantFavoris::class, mappedBy="Restaurant")
+     */
+    private $favoris;
+
     public function __construct()
     {
         $this->tables = new ArrayCollection();
@@ -202,5 +207,48 @@ class Restaurant
         return $this;
     }
 
+    /**
+     * @return Collection<int, RestaurantFavoris>
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
 
+    public function addFavori(RestaurantFavoris $favori): self
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris[] = $favori;
+            $favori->setRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(RestaurantFavoris $favori): self
+    {
+        if ($this->favoris->removeElement($favori)) {
+            // set the owning side to null (unless already changed)
+            if ($favori->getRestaurant() === $this) {
+                $favori->setRestaurant(null);
+            }
+        }
+
+        return $this;
+    }
+    /**
+     * @param Client $client
+     * @return boolean
+     *
+     */
+
+    public function isLikedByUser(Client $client) : bool
+    {
+        foreach ($this->favoris as $favoris)
+        {
+            if($favoris->getClient() == $client) return true ;
+
+        }
+        return false;
+    }
 }

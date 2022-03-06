@@ -120,7 +120,10 @@ class Client implements UserInterface
     private $cards;
 
 
-
+    /**
+     * @ORM\OneToMany(targetEntity=RestaurantFavoris::class, mappedBy="client")
+     */
+    private $favoris;
 
     public function __construct()
     {
@@ -404,6 +407,34 @@ class Client implements UserInterface
 
         return $this;
     }
+    /**
+     * @return Collection<int, RestaurantFavoris>
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
 
+    public function addFavori(RestaurantFavoris $favori): self
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris[] = $favori;
+            $favori->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(RestaurantFavoris $favori): self
+    {
+        if ($this->favoris->removeElement($favori)) {
+            // set the owning side to null (unless already changed)
+            if ($favori->getClient() === $this) {
+                $favori->setClient(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

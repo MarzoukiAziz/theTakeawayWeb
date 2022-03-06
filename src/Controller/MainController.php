@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Reclamation;
 use App\Entity\Reservation;
 use App\Entity\Restaurant;
+use App\Entity\RestaurantFavoris;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,6 +46,7 @@ class MainController extends AbstractController
     {
         $restaurants = $this->getDoctrine()->getRepository(Restaurant::class)->findAll();
         $reservations = $this->getDoctrine()->getRepository(Reservation::class)->findAll();
+        $fav=  $this->getDoctrine()->getRepository(RestaurantFavoris::class)->findAll();
         //shortcuts data
         $reservationsEnAttente=$this->getDoctrine()->getRepository(Reservation::class)->findBy(["statut"=>"En Attente"]);
         $reclamationsOuvertes=$this->getDoctrine()->getRepository(Reclamation::class)->findBy(["statut"=>"Ouvert"]);
@@ -70,6 +72,16 @@ class MainController extends AbstractController
             $data2[strval(date_diff($r->getHeureDepart(), $r->getHeureArrive())->i)]++;
         }
 
+        //third chart
+        $data3 = array();
+        foreach ($restaurants as $r) {
+            $data3[$r->getNom()] = 0;
+        }
+        foreach ($fav as $r) {
+            $data3[$r->getRestaurant()->getNom()]++;
+        }
+
+
         return $this->render('main/admin/dashboard.html.twig', [
             "s1"=>$s1,
             's2'=>$s2,
@@ -79,6 +91,8 @@ class MainController extends AbstractController
             "revData" => array_values($data1),
             "maxRev" => count($reservations),
             "timeData" => array_values($data2),
+            "resX"=>array_keys($data3),
+            "favX"=> array_values($data3),
         ]);
     }
 }

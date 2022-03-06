@@ -1,0 +1,102 @@
+<html>
+<style type="text/css">
+    body {
+        margin-top: 30px;
+    }
+</style>
+<head>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+</head>
+<body>
+<h4>{{ title }}</h4>
+<div class="container">
+    <div class="row">
+        <div class="well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <address>
+                        <strong>''THe Cafe''</strong>
+                        <br>
+                        2135 Sunset Blvd Lac 1
+                        <br>
+                        Tunisie, TU 90026
+                        <br>
+                        <abbr title="Phone">P:</abbr> (+216) 98-322-544
+                    </address>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                    <p>
+                        <em>Date: 1st November, 2013</em>
+                    </p>
+                    <p>
+                        <em>Receipt #: 34522677W</em>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center">
+                    <h1>Receipt</h1>
+                </div>
+                </span>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantite</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="col-md-9"><em>{{ fr.ingrediant.nom}}</em></h4></td>
+                        <td class="col-md-1" style="text-align: center"> {{ fr.quantite }} </td>
+                        <td class="col-md-1 text-center">dt{{ fr.prixUnitaire }}</td>
+                        <td class="col-md-1 text-center">dt12O</td>
+                    </tr>
+
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td class="text-right">
+                            <p>
+                                <strong>Subtotal: </strong>
+                            </p>
+                            <p>
+                                <strong>Tax: </strong>
+                            </p></td>
+                        <td class="text-center">
+                            <p>
+                                <strong>dt6.94</strong>
+                            </p>
+                            <p>
+                                <strong>dt6.94</strong>
+                            </p></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td class="text-right"><h4><strong>Total: </strong></h4></td>
+                        <td class="text-center text-danger"><h4><strong>dt126.95</strong></h4></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <form>
+
+                    <center>
+                        <button class="btn btn-primary hidden-print" onclick="imprimer_page()"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
+                    </center>                </form>
+                <script type="text/javascript">
+                    function imprimer_page(){
+                        window.print();
+                    }
+                </script>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends 'back-office.html.twig' %}
+{% block contenu %}
+
+    <table class="table table-hover table-dark">
+        <thead>
+        <tr>
+
+            <th scope="col">nom</th>
+            <th scope="col">quantité</th>
+            <th scope="col">Options</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr>   {% for f in fr %}
+
+            <td>{{ f.nom }}</td>
+            <td>{{ f.quantite}}</td>
+
+
+
+            <td> <a href="{{ path('deleteingrediant',{'id':f.id}) }}">Delete</a>
+                <a href="{{ path('updateingrediant',{'id':f.id}) }}">Update</a>
+
+
+            </td>
+
+
+
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+     <a  href="{{ path('choix') }}" class="btn btn-secondary btn-lg btn-block">Ajouter Nouveau Ingrediant</a>
+
+{% endblock %}

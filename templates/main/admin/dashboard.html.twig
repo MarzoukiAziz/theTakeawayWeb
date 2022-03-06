@@ -116,6 +116,26 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Example Bar Chart Card-->
+                    <div class="card mb-3">
+                         </div>
+                </div>
+                <div class="col-lg-4">
+                    <!-- Example Pie Chart Card-->
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <i class="fa fa-pie-chart"></i> Les Durées des reservations
+                        </div>
+                        <div class="card-body">
+                            <canvas id="favXXX" width="100%" height="100"></canvas>
+                        </div>
+                        <div class="card-footer small text-muted">Mis à jour le {{ "now"|date("d M Y") }}</div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 {% endblock %}
@@ -195,6 +215,28 @@
                 datasets: [{
                     data: d3,
                     backgroundColor: ['#007bff', '#dc3545', '#ffc107'],
+                }],
+            },
+        });
+        // -- sinda Chart Example
+        var ctxx = document.getElementById("favXXX");
+        var d4=[];
+        {% for x in favX %}
+        d4.push(parseInt("{{ x }}"))
+        {% endfor %}
+        var d5 = [];
+
+        {% for x in resX %}
+        d5.push(parseInt("{{ x }}"))
+        {% endfor %}
+
+        var favShartX = new Chart(ctxx, {
+            type: 'pie',
+            data: {
+                labels: d1,
+                datasets: [{
+                    data: d4,
+                    backgroundColor: ["green","yellow","orange","red","blue"],
                 }],
             },
         });

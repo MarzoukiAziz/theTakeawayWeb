@@ -1,0 +1,26 @@
+
+{% extends 'back-office.html.twig' %}
+
+
+{% block links %} <title>Restaurants</title>{% endblock %}
+
+
+{% block contenu %}
+
+    {% block title %}<ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Ajout Restaurant</li>
+    </ol>{% endblock %}
+
+{{ form_start(form) }}
+    {{ form_label(form.nom,"Nom du resto") }}
+    {{ form_widget(form) }}
+
+    <button class="btn_1 gray approve">{{ button_label|default('Save') }}</button>
+    {{ form_end (form)}}
+
+    <a class="btn_1 gray approve" href="{{ path('AfficheR') }}"><i class="fa fa-fw fa-reply"></i> back to list</a>
+
+{% endblock %}
