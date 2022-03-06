@@ -147,6 +147,16 @@
 <!-- /Navigation-->
 <div class="content-wrapper">
     <div class="container-fluid">
+        {% for message in app.flashes('oups') %}
+        <div class="alert alert-danger">
+{{ message }}
+
+        </div>
+        {% endfor %}
+
+
+
+
         {%  block contenu %}{% endblock %}
     </div>
     <!-- /.container-fluid-->

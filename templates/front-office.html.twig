@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <link rel="shortcut icon" href={{ asset("assets/front-office/images/logo2.svg")}} type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
 
     {% block links %}{% endblock %}
 
@@ -77,9 +77,10 @@
                             <li><a href="/"  itemprop="url"><span class="red-clr">Decouvrez Nos</span>Restaurants</a></li>
                             <li><a href="/"  itemprop="url"><span class="red-clr">Hot <i class="fa fa-fire"></i></span>Promotions</a></li>
                             <li><a href="/"  itemprop="url"><span class="red-clr">&nbsp; </span>Blog</a></li>
-                            <li><a href="/"  itemprop="url"><span class="red-clr"> &nbsp;</span>A propos de nous</a></li>
                             <li><a href="/"  itemprop="url"><span class="red-clr"> &nbsp;</span>Contact</a></li>
-                           </ul>
+                            <li><a href="/favoris/25"  itemprop="url"><span class="red-clr">wishlist<i class="fa fa-heart"></i> </span></a></li>
+
+                        </ul>
                     </div>
                 </nav><!-- Navigation -->
             </div>
@@ -129,6 +130,7 @@
 
 
     {% block contenu %}
+
     {% endblock %}
 
 
@@ -195,6 +197,8 @@
 <script src="{{ asset("assets/front-office/js/bootstrap.min.js") }}"></script>
 <script src="{{ asset("assets/front-office/js/plugins.js") }}"></script>
 <script src="{{ asset("assets/front-office/js/main.js") }}"></script>
+<script type="text/javascript"src="https://www.gstatic.com/charts/loader.js"></script>
+
 {% block javascripts %}{% endblock %}
 
 </body>

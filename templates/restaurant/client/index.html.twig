@@ -112,9 +112,9 @@
                                                             <span class="post-rate yellow-bg brd-rd2"><i class="fa fa-star-o"></i> 4.25</span>
                                                            <a href="{{ path('restaurant_like',{'id': r.id}) }}" class="btn btn-link js-like-link">
                                                                {% if app.user and r.isLikedByUser(app.user) %}
-                                                                   <i class="fa fa-laptop"></i>
-                                                               {% else %}
                                                                    <i class="fa fa-heart"></i>
+                                                               {% else %}
+                                                                   <i class="fa fa-heart-o" aria-hidden="true"></i>
                                                            {% endif %}
 
 
@@ -160,8 +160,10 @@
             const spanCount = this.querySelector('span.js-likes');
             axios.get(url).then(function(response){
                 console.log(response);
-                if(icone.classList.contains('laptop')){icone.classList.replace('laptop','heart');}
-                else {icone.classList.replace('heart','laptop');}
+                console.log(icone.classList.contains('fa-heart-o'));
+                if(icone.classList.contains('fa-heart-o')){icone.className ="fa fa-heart";}
+                else {icone.className ="fa fa-heart-o";}
+
                 spanCount.textContent = response.data.favoris;
 
             }).catch(function (error){

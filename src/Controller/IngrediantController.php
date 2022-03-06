@@ -86,11 +86,18 @@ public function delete($id)
 public function updateingrediant(Request $request,$id)
 {
     $fr = $this->getDoctrine()->getRepository(Ingrediant::class)->find($id);
+    $fr->getQuantite();
     $form = $this->createForm(IngrediantType::class, $fr);
     $form->handleRequest($request);
     if ($form->isSubmitted()) {
         $em = $this->getDoctrine()->getManager();
         $em->flush();
+       $q= $fr->getQuantite();
+       $nom=$fr->getNom();
+       if ($q==0)
+       {
+
+        $this->addFlash('oups',"Oups !! la $nom nest plus disponible");}
         return $this->redirectToRoute('listingrediant');
     }
     return $this->render("ingrediant/update-ingrediant.html.twig",array('f'=>$form->createView()));

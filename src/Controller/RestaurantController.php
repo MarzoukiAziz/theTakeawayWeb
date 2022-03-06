@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\File;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
 
 
 class RestaurantController extends AbstractController
@@ -198,7 +199,7 @@ class RestaurantController extends AbstractController
 
             $manager->remove($like);
             $manager->flush();
-            return $this->json(['code' => 200, 'message' => 'yedek', 'favoris' => $likerepo->count(['Restaurant' => $resto])], 200);
+            return $this->json(['code' => 200, 'message' => 'supprimé', 'favoris' => $likerepo->count(['Restaurant' => $resto])], 200);
 
 
         }
@@ -211,6 +212,102 @@ class RestaurantController extends AbstractController
 
         return $this->json(['code' => 200, 'message' => 'ajouutéééééé', 'favoris' => $likerepo->count(['Restaurant' => $resto])], 200);
     }}
+
+
+    /**
+     * @Route("/restaurant/stats", name="restaurantstat")
+     */
+    public function stat()
+    {
+        $repository = $this->getDoctrine()->getRepository(Restaurant::class);
+        $restaurant = $repository->findAll();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $r1=2;
+        $r2=2;
+
+        foreach ($restaurant as $restaurant)
+        {
+            $like=$restaurant->getfavoris();
+            if ( $restaurant->getfavoris()== "3")  :
+
+                $r1+=1;
+            else:
+
+                $r2+=1;
+
+
+            endif;
+
+        }
+
+        $pieChart = new PieChart();
+        $pieChart->getData()->setArrayToDataTable(
+            [['favoris', 'nombre'],
+                ['favoris', $like]
+            ]
+        );
+        $pieChart->getOptions()->setTitle('Services Le plus demandé ');
+        $pieChart->getOptions()->setHeight(500);
+        $pieChart->getOptions()->setWidth(900);
+        $pieChart->getOptions()->getTitleTextStyle()->setBold(true);
+        $pieChart->getOptions()->getTitleTextStyle()->setColor('#FFFFFF');
+        $pieChart->getOptions()->getTitleTextStyle()->setItalic(true);
+        $pieChart->getOptions()->getTitleTextStyle()->setFontName('Arial');
+        $pieChart->getOptions()->getTitleTextStyle()->setFontSize(20);
+        $pieChart->getOptions()->setBackgroundColor('#454d55');
+
+
+        return $this->render('restaurant/stat.html.twig', array('piechart' => $pieChart));
+    }
+
+    /**
+     * @Route("/testi", name="testi")
+     */
+    public function dashboard(): Response
+{
+$restaurant = $this->getDoctrine()->getRepository(Restaurant::class)->findAll();
+$reservations = $this->getDoctrine()->getRepository(Reservation::class)->findAll();
+    //shortcuts data
+$reservationsEnAttente=$this->getDoctrine()->getRepository(Reservation::class)->findBy(["statut"=>"En Attente"]);
+$reclamationsOuvertes=$this->getDoctrine()->getRepository(Reclamation::class)->findBy(["statut"=>"Ouvert"]);
+$s1=26;
+$s2 =count($reservationsEnAttente);
+$s3=count($reclamationsOuvertes);
+$s4=3;
+
+    //first chart
+$data1 = array();
+foreach ($restaurants as $r) {
+$data1[$r->getNom()] = 0;
+}
+foreach ($reservations as $r) {
+    $data1[$r->getRestaurant()->getNom()]++;
+}
+//second chart
+$data2 = array();
+$data2["15"] = 0;
+$data2["30"] = 0;
+$data2["45"] = 0;
+foreach ($reservations as $r) {
+    $data2[strval(date_diff($r->getHeureDepart(), $r->getHeureArrive())->i)]++;
+}
+
+return $this->render('main/admin/dashboard.html.twig', [
+    "s1"=>$s1,
+    's2'=>$s2,
+    "s3"=>$s3,
+    "s4"=>$s4,
+    "resNames" => array_keys($data1),
+    "revData" => array_values($data1),
+    "maxRev" => count($reservations),
+    "timeData" => array_values($data2),
+]);
+}
+
+
+
 
 
 }

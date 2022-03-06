@@ -1,6 +1,18 @@
 {% extends 'back-office.html.twig' %}
 {% block contenu %}
+    {{ form_start(form) }}
 
+    <div class="form-row align-items-end" >
+
+        <div class="col">
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Rechercher</button>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form.fournisseur) }}
+
+    {% if factures %}
     <table class="table table-hover table-dark">
         <thead>
         <tr>
@@ -11,11 +23,13 @@
             <th scope="col">prix </th>
          <th scope="col">Produit </th>
         <th scope="col">Fournisseur </th>
+            <th scope="col">options </th>
+            <th scope="col">More </th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            {% for f in fr %}
+            {% for f in factures %}
             <th scope="row">{{ f.id }}</th>
             <td>{{ f.quantite }}</td>
             <td>{{ f.date ? f.date|date('Y-m-d') : '' }}</td>
@@ -32,16 +46,13 @@
 
             <td> <a href="{{ path('deletefacture',{'id':f.id}) }}">Delete</a>
                 <a href="{{ path('updatefacture',{'id':f.id}) }}">Update</a>
-
-
             </td>
-
-
-
-        </tr>
+            <td> <a href="{{ path('facturepdf',{'id':f.id}) }}">Show</a>
+            </td>
+            </tr>
         {% endfor %}
         </tbody>
     </table>
     <a  href="{{ path('choixFournisseur') }}" class="btn btn-secondary btn-lg btn-block">Ajouter Nouvelle Facture</a>
-
+    {% endif %}
 {% endblock %}

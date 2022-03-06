@@ -5,12 +5,13 @@
     }
 </style>
 <head>
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
 </head>
 <body>
+<h4>{{ title }}</h4>
 <div class="container">
     <div class="row">
         <div class="well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
@@ -87,10 +88,7 @@
 
                     <center>
                         <button class="btn btn-primary hidden-print" onclick="imprimer_page()"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
-                    </center>
-                    <center>
-                        <a href="{{ path('facturepdf',{'id':fr.id}) }}">pdf</a>
-                    </center>   </form>
+                    </center>                </form>
                 <script type="text/javascript">
                     function imprimer_page(){
                         window.print();
