@@ -25,6 +25,7 @@ class RegistrationController extends AbstractController
         $user->setDateCurent(new \DateTime('now'));
         $user->setPoints(0);
         $user->setRoles(['ROLE_USER']);
+        $user->setStatus(true);
 
 
         $form = $this->createForm(RegistrationFormType::class, $user);

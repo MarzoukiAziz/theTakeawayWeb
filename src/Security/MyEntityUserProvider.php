@@ -4,6 +4,7 @@ namespace App\Security;
 
 use App\Entity\Client;
 
+use App\Repository\ClientRepository;
 use HWI\Bundle\OAuthBundle\Connect\AccountConnectorInterface;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\EntityUserProvider;
@@ -29,9 +30,13 @@ class MyEntityUserProvider extends EntityUserProvider implements AccountConnecto
         $lastname = $response->getLastName();
 
         $email = $response->getEmail();
+
+
+
+
         if (null === $user = $this->findUser([$this->properties[$resourceOwnerName] => $username])) {
             // TODO: Create new user
-            if (null === $user = $this->findUser(['email' => $email])){
+            if ((null === $user = $this->findUser(['email' => $email]))and($status="false")){
                 $user = new Client();
                 $user->setIsVerified(true);
 
@@ -60,7 +65,9 @@ class MyEntityUserProvider extends EntityUserProvider implements AccountConnecto
      */
     public function connect(UserInterface $user, UserResponseInterface $response)
     {
-        if (!$user instanceof Client) {
+
+
+        if ((!$user instanceof Client) and ($status==0)) {
             throw new UnsupportedUserException(sprintf('Expected an instance of App\Model\User, but got "%s".', get_class($user)));
         }
 

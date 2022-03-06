@@ -52,6 +52,7 @@ class ClientAuthenticationAuthenticator extends AbstractFormLoginAuthenticator i
         $credentials = [
             'email' => $request->request->get('email'),
             'password' => $request->request->get('password'),
+
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
@@ -71,7 +72,8 @@ class ClientAuthenticationAuthenticator extends AbstractFormLoginAuthenticator i
 
         $user = $this->entityManager->getRepository(Client::class)->findOneBy(['email' => $credentials['email']]);
 
-        if (!$user) {
+
+        if (!$user){
             throw new UsernameNotFoundException('Email could not be found.');
         }
 
@@ -79,8 +81,13 @@ class ClientAuthenticationAuthenticator extends AbstractFormLoginAuthenticator i
     }
 
     public function checkCredentials($credentials, UserInterface $user)
-    {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+    {  $user = $this->entityManager->getRepository(Client::class)->findOneBy(['email' => $credentials['email']]);
+        $is='false';
+        if($user->getStatus()=='true'){
+            $is= $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        }
+
+       return $is;
     }
 
     /**

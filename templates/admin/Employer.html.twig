@@ -25,18 +25,21 @@
                 <td>{{ user.nom }}</td>
                 <td>
                     {% for role in user.roles %}
-                        {% if role == "ROLE_USER" %}
-                            <div style="color: red">
-                                Utilisateur
+                        {% if role == "ROLE_ADMIN"  %}
+                            <div style="color: #b21f2d">
+                                Admine
                             </div>
 
                         {% elseif role == "ROLE_EDITOR" %}
-                            <div style="color: green">
+                            <div style="color: #ffc107">
                                 Employer
                             </div>
 
-                        {% elseif role =="ROLE_ADMIN" %}
-                            ADMIN
+                        {% elseif role =="ROLE_USER" %}
+                            <div style="color: #1d2124">
+                                Utilisateur
+                            </div>
+
                         {% endif %}
                     {% endfor %}
                 </td>

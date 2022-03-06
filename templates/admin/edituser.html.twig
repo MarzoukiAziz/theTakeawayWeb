@@ -10,5 +10,15 @@
 
 {% block contenu %}
     <h1>Modifier l'utilisateur</h1>
-    {{ form(f) }}
+    {{ form_start(f) }}
+    <div class="container"style="justify-content: space-between">
+        <div style="position: relative;display: inline-block ;margin: 10px 30px">
+            {{ form_widget(f.roles) }}
+        </div>
+        <div style="position: relative;display: inline-block">
+            Status:
+            {{ form_widget(f.status) }}
+        </div>
+    </div>
+    {{ form_end(f) }}
 {% endblock  %}

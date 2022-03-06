@@ -119,6 +119,11 @@ class Client implements UserInterface
      */
     private $brochureFilename;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $status;
+
 
 
 
@@ -385,6 +390,18 @@ class Client implements UserInterface
     public function setBrochureFilename(?string $brochureFilename): self
     {
         $this->brochureFilename = $brochureFilename;
+
+        return $this;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
