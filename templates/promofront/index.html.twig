@@ -14,10 +14,12 @@
             <div style="background-image: url(assets/front-office/images/topbg.jpg);" class="fixed-bg full-height"></div>
             <div class="coming-soon-wrapper text-center">
                 <div class="coming-soon-inner">
+
                     <div class="logo"><h1 itemprop="headline"><a href="index-2.html" title="Home" itemprop="url"><img src="assets/front-office/images/logo.png" alt="logo.png" itemprop="image"></a></h1></div>
                     <span class="yellow-clr">WE'RE WORKING ON SOMTHING NEW!</span>
                     <h1 itemprop="headline" class="wow flash" data-wow-delay="0.2s">Coming Soon</h1>
-                    <p itemprop="description">Vivam pulput vehic Mauris porttitor erovel sapien Sed ut persp tatem semper mi, at ultricies odio.</p>
+                    <div><h1   itemprop="description"  class="text-warning" > EAST OR WEST FOOD IS THE BEST</h1></div>
+
                     {% for promotion in promotions %}
 
                         <script>
@@ -66,6 +68,7 @@
 
                         <p style=" text-align: center;font-size: 60px;margin-top: 0px;" id="demo"></p>
                     <ul class="countdown">
+                        <h1 class="text-danger" ><a href="{{ path('promo') }}">{{ promotion.element.nom }}</a></h1>
                         <li class="brd-rd50 yellow-bg wow bounceIn" data-wow-delay="0.2s">
                             <span id="day" class="days"></span>
                             <p class="days_ref">Days</p>

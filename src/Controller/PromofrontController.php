@@ -18,4 +18,14 @@ class PromofrontController extends AbstractController
             'promotions' => $promotionRepository->findAll(),
         ]);
     }
+
+    /**
+     * @Route("/promo", name="promo")
+     */
+    public function affichep(PromotionRepository $promotionRepository): Response
+    {
+        return $this->render('promofront/promo.html.twig', [
+            'promotions' => $promotionRepository->findAll(),
+        ]);
+    }
 }
