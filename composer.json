@@ -1,4 +1,5 @@
 {
+    "snipe/banbuilder": "dev-master",
     "name": "symfony/website-skeleton",
     "type": "project",
     "license": "MIT",

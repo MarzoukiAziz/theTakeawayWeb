@@ -35,6 +35,19 @@
                                 <h1 itemprop="headline" >{{ blog_client.title }}</h1>
                                 <h3 itemprop="description">{{ blog_client.contenu }}</h3>
     </tr>
+                                <tr>
+                                    <th>Statut</th>
+                                    {% if (blog_client.statut =="Ouvert") %}
+                                        <td>
+                                            <span style="background-color: darkgreen;color: whitesmoke;padding:4px 8px;border-radius: 8px">accepté</span>
+                                        </td>
+                                    {% else %}
+                                        <td>
+                                            <span style="background-color: darkred;color: whitesmoke;padding:4px 8px;border-radius: 8px">refusé</span>
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                                <tr>
                             </div>
 
 
@@ -53,6 +66,49 @@
 
 
 
+
+
+
+    <h1>Create new Commentaire</h1>
+    {{ form_start(f) }}
+    <form>
+
+        <div style="margin-top: 50px" class="form-group">
+            {{ form_label(f.contenu, 'Nouveau Reponse',{'attr': {'class': 'form-label'}} ) }}
+            {{ form_widget(f.contenu , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Le contenu de votre réponse','rows':'3'}} ) }}
+            {{ form_errors(f.contenu) }}
+        </div>
+        <button type="submit" style="float: right" class="btn btn-success">Ajouter</button>
+        <button type="reset" class="btn btn-warning">Recommencer</button>
+
+        {{ form_end(f) }}
+
+    </form>
+
+
+    {% for commentaire in commentaires %}
+    <div style="display: flex" class=" flex-row comment-row">
+
+    {% if('Client' in commentaire.author.roles) %}
+        <div style="margin: 20px" class="p-2"><span class="round"><img src="{{ asset("assets/client.png") }}" alt="user"
+                                                                       width="50"></span></div>
+    {% else %}
+        <div style="margin: 20px" class="p-2"><span class="round"><img src="{{ asset("assets/admin.png") }}" alt="user"
+                                                                       width="50"></span></div>
+
+    {% endif %}
+        <div class="comment-text w-100">
+            <h4>{% if('Client' in commentaire.author.roles) %}
+                    You
+                {% else %}
+                    Admin
+                {% endif %}</h4>
+            <div class="comment-footer"><span class="date">{{ commentaire.date ? commentaire.date|date('d M Y') : '' }}</span>
+                <span class="action-icons"> </span></div>
+            <p class="m-b-5 m-t-10">{{ commentaire.contenu }}</p>
+        </div>
+    </div>
+    {% endfor %}
 
 
 {% endblock %}

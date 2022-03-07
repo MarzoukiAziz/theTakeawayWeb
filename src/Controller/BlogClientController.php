@@ -2,9 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
+use App\Entity\Commentaire;
 use App\Entity\Admin;
 use App\Entity\BlogClient;
+use App\Entity\Reponse;
+use App\Form\CommentaireType;
 use App\Form\BlogClientType;
+use App\Form\ReponseType;
 use App\Repository\BlogClientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,6 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\File;
+use App\Repository\CommentaireRepository;
+
 
 
 class BlogClientController extends AbstractController
@@ -78,16 +85,88 @@ class BlogClientController extends AbstractController
             'f' => $form->createView(),
         ]);
     }
-
-    /**
+    /*/**
      * @Route("/blog/{id}", name="blog_client_show", methods={"GET"})
-     */
-    public function show(BlogClient $blogClient): Response
+
+    public function show(BlogClient $blogClient, Request $request, EntityManagerInterface $entityManager,CommentaireRepository $commentaireRepository ): Response
     {
+        $commentaire = new Commentaire();
+        $commentaire->setBlogClient($blogClient);
+        $form = $this->createForm(CommentaireType::class, $commentaire);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() ) {
+            $entityManager->persist($commentaire);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('blog_client_show', ['id'=>$blogClient->getId()]);
+
+        }
+
         return $this->render('blog_client/show.html.twig', [
             'blog_client' => $blogClient,
+
+            'form' => $form->createView(),
+            'commentaires' => $commentaireRepository->findByblogClient($blogClient->getId()),
+        ]);
+
+    }
+*/
+    /**
+     * @Route("/blog/{id}", name="blog_client_show", methods={"GET","POST"})
+*/
+    public function show(BlogClient $blogClient, Request $request ): Response
+    {
+        $commentaire = new Commentaire();
+        $form = $this->createForm(CommentaireType::class, $commentaire);
+        $form->handleRequest($request);
+        $commentaires= $this->getDoctrine()->getRepository(commentaire::class)
+        ->createQueryBuilder('b')
+        ->andWhere('b.blogClient=?1')
+        ->setParameter(1, $blogClient)
+        ->getQuery()
+        ->getResult();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->getRepository(Reponse::class);
+            $client=$this->getDoctrine()->getRepository(Client::class)->find(1);
+            $commentaire->setAuthor($client);
+            $date = new \DateTime();
+            $commentaire->setDate(new \DateTime());
+            $commentaire->setBlogClient($blogClient);
+
+            $em->persist($commentaire);
+            $em->flush();
+
+
+            return $this->redirectToRoute('blog_client_show', ['id' => $commentaire->getId()], Response::HTTP_SEE_OTHER);
+
+        }
+        return $this->render('blog_client/show.html.twig', [
+            'blog_client' => $blogClient,
+            'commentaires' => $commentaires,
+            'f' => $form->createView(),
+
+
         ]);
     }
+
+
+
+
+
+    /**
+     * @Route("/blog/{id}", name="app_commentaire_index", methods={"GET"})
+     */
+    public function indexcomm(CommentaireRepository $commentaireRepository): Response
+    {
+        return $this->render('blog_client/show.html.twig', [
+            'commentaires' => $commentaireRepository->findAll(),
+        ]);
+    }
+
+
+
 
     /**
      * @Route("/blog/{id}/edit", name="blog_client_edit", methods={"GET", "POST"})

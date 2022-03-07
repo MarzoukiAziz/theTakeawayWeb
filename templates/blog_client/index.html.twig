@@ -22,10 +22,6 @@
 
 
 
-
-
-
-
     <div class="bread-crumbs-wrapper">
         <div class="container">
             <ol class="breadcrumb">
@@ -43,8 +39,14 @@
 
             <body>
 
+
              <div class="container">
                 <div class="row g-3">
+
+                    <div style="float: right ;margin-bottom: 20px">
+                        <a  href="{{ path('blog_client_new') }}"><button  class="btn btn-success ">create new blog</button></a>
+
+                    </div>
                     {% for blog_client in blog_clients %}
                             <div class="col-md-12 col-sm-12 col-lg-12">
                                 <div class="card">
@@ -53,6 +55,7 @@
                                                     <div class="news-thumb">
                                                         <a class="brd-rd2" href="blog-detail-right-sidebar.html" title="" itemprop="url"><img src="{{ asset('couverture/'~blog_client.image) }}"   class="card-img-top" ></a>
                                                         <div class="news-btns">
+
                                                             <a class="post-date red-bg" href="#" title="" itemprop="url">{{ blog_client.date ? blog_client.date|date('m-d') : '' }}</a>
                                                             <a class="read-more" href="{{ path('blog_client_show', {'id': blog_client.id}) }}" itemprop="url">READ MORE</a>
                                                         </div>
@@ -65,6 +68,7 @@
                                                 <div class="card-text">
                                                 <p itemprop="description">{{ blog_client.contenu }}</p>
                                                     <br>
+
                             <a> {{ include('blog_client/_delete_form.html.twig') }}</a>
                                                 </div>
                                         </div>
@@ -77,7 +81,7 @@
                         <p >no records found</p>
 
                     {% endfor %}
-                    <a  href="{{ path('blog_client_new') }}"><button  class="btn btn-success float-right ">create new blog</button></a>
+
                 </div>
             </div>
 

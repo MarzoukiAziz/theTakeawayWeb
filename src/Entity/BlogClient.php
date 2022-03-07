@@ -27,12 +27,7 @@ class BlogClient
 
     /**
      * @ORM\Column(type="text")
-     * * @Assert\Length(
-     *      min = 5,
-     *      max = 50,
-     *      minMessage = "Le sujet doit comporter au moins 5 caractères",
-     *      maxMessage = "Le sujet ne peut pas dépasser 50 caractères"
-     * )
+     *
      */
     private $contenu;
 

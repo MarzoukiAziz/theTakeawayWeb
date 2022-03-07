@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Commentaire;
 use App\Entity\BlogClient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
