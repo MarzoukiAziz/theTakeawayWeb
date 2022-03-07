@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\File;
 use App\Repository\CommentaireRepository;
+use Snipe\BanBuilder\CensorWords;
+
 
 
 
@@ -127,6 +129,11 @@ class BlogClientController extends AbstractController
         ->getResult();
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $contenuCommentaire = $form->getData()->getContenu();
+            $censor = new CensorWords;
+            $badwords = $censor->setDictionary('fr');
+            $string = $censor->censorString($contenuCommentaire);
+            $commentaire->setContenu($string['clean']);
             $em = $this->getDoctrine()->getManager();
             $em->getRepository(Reponse::class);
             $client=$this->getDoctrine()->getRepository(Client::class)->find(1);
@@ -139,7 +146,7 @@ class BlogClientController extends AbstractController
             $em->flush();
 
 
-            return $this->redirectToRoute('blog_client_show', ['id' => $commentaire->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('blog_client_show', ['id' => $blogClient->getId()], Response::HTTP_SEE_OTHER);
 
         }
         return $this->render('blog_client/show.html.twig', [

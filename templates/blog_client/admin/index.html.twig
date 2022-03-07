@@ -7,40 +7,55 @@
 
     <div class="card mb-3" >
         <div class="card-header " style="font-size: 22px;font-weight: bold;">
-            <i class="fa fa-table"></i> LES BLOG
+            <i class="fa fa-table"></i> LES BLOGS
 
         </div>
 
 
+        <div class="card-body" style="text-align: center">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr style="background-color: #212529;color: whitesmoke"></th>
+                        <th>id blog</th>
+                        <th>title</th>
+                        <th>image</th>
+                        <th>statut</th>
+                        <th>contenu</th>
+                        <th>Date</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
 
         <body>
 
 
-        <div class="container">
-            <div class="row g-3">
-                {% for blog_client in blog_clients %}
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="card">
-                            <img src="{{ asset('couverture/'~blog_client.image) }}"alt="image" width="200" height="200" class="card-img-top" >
-                            <div class="card-body">
-                                <h5 class="card-title">{{ blog_client.title }}</h5>
-                                <p>{{ blog_client.statut }}</p>
-
-                                <p class="card-text"><b>{{ blog_client.contenu }}</b></p><br>
-                                <small><p>{{ blog_client.date ? blog_client.date|date('Y-m-d') : '' }}</p></small><br>
-                                <a href="{{ path('blog_admin_show', {'id': blog_client.id}) }}"><button class="btn btn-primary">show details</button></a>
-                            </div>
-                        </div>
-                    </div>
-                {% else %}
-
-                    <p >no records found</p>
-                {% endfor %}
-
-            </div>
 
         </div>
+        {% for blog_client in blog_clients %}
+            <tr>
+                <td>{{ blog_client.Id }}</td>
+                <td>{{ blog_client.title }}</td>
+                <td><img src="{{ asset('couverture/'~blog_client.image) }}"alt="image"  class="card-img-top" ></td>
+            <td>{{ blog_client.statut }}</td>
+                <td>{{ blog_client.contenu }}</td>
+                <td>{{ blog_client.date ? blog_client.date|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('blog_admin_show', {'id': blog_client.id}) }}"><button class="btn btn-primary">Consulter</button></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Pas de blog trouvé! </td>
+            </tr>
+        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -59,6 +74,9 @@
         </body>
 
     </div>
+
+
+
 
 
 

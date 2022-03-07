@@ -1,10 +1,11 @@
 {
-    "snipe/banbuilder": "dev-master",
+
     "name": "symfony/website-skeleton",
     "type": "project",
     "license": "MIT",
     "description": "A skeleton to start a new Symfony website",
     "require": {
+        "snipe/banbuilder": "dev-master",
         "php": ">=7.1.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
