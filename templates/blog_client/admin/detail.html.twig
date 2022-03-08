@@ -11,45 +11,63 @@
     </div>
 
 
+    {% if(blog_client.statut =="Ouvert") %}
+        <form method="post" action="">
+            <button style="float: right;margin-bottom: 10px" class="btn btn-warning"><a href="{{ path('admin-close-blog' , {'id' :blog_client.id }) }}">Fermer</a></button>
 
-    <section>
-        <div class="block less-spacing gray-bg top-padd30">
+        </form>
+    {% else %}
+        <form method="post" action="">
+            <button style="float: right;margin-bottom: 10px" class="btn btn-primary"><a href="{{ path('admin-reopen-blog' , {'id' :blog_client.id }) }}">Reopen</a></button>
 
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="sec-box">
-                            <div class="col-md-12 col-sm-12 col-lg-12">
-                                <div class="blog-detail-wrapper">
-                                    <div class="blog-detail-thumb wow fadeIn" data-wow-delay="0.2s">
-                                        <td><img src="{{ asset('couverture/'~ blog_client.image) }}" style="width: px;height: Px"  ></td>
+        </form>
+    {% endif %}
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>title</th>
+            <td>{{ blog_client.title }}</td>
 
-                                    </div>
-                                    <div class="blog-detail-info">
+        </tr>
+        <tr>
+            <th>image du blog</th>
+            <td><img src="{{ asset('couverture/'~ blog_client.image) }}" style="width: px;height: Px"  ></td>
+        </tr>
 
-                                        <span class="post-detail-date red-clr"><i class="fa fa-clock-o"></i>{{ blog_client.date ? blog_client.date|date('Y-m-d') : '' }}</span>
-                                        <div class="post-meta">
-                                        </div>
-                                    </div>
-                                    <tr>
-                                        <a>titre du blog:</a>
-                                        <br>
-                                        <h4 itemprop="headline" >{{ blog_client.title }}</h4>
-                                        <a>contenu du blog:</a>
-                                        <br>
-                                        <h6 itemprop="description">{{ blog_client.contenu }}</h6>
-                                    </tr>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        <tr>
+            <th>Statut</th>
+            {% if (blog_client.statut =="Ouvert") %}
+                <td>
+                    <span style="background-color: darkgreen;color: whitesmoke;padding:4px 8px;border-radius: 8px">Ouvert</span>
+                </td>
+            {% else %}
+                <td>
+                    <span style="background-color: darkred;color: whitesmoke;padding:4px 8px;border-radius: 8px">Fermé</span>
+                </td>
+            {% endif %}
+        </tr>
+        <tr>
+            <th> client</th>
+            <td>{{ blog_client.Id }}</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{{ blog_client.date ? blog_client.date|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Contenu</th>
+            <td>{{blog_client.contenu }}</td>
+        </tr>
+
+
+        </tbody>
+        
+    </table>
 
 
     <a href="{{ path('blog_admin_index') }}"><button class="btn btn-primary">back to list</button></a>
     <a> {{ include('blog_client/admin/delete.html.twig') }}</a>
+
+
 
 {% endblock %}

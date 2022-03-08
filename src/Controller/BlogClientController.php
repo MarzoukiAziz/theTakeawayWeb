@@ -6,11 +6,13 @@ use App\Entity\Client;
 use App\Entity\Commentaire;
 use App\Entity\Admin;
 use App\Entity\BlogClient;
+use App\Entity\Reclamation;
 use App\Entity\Reponse;
 use App\Form\CommentaireType;
 use App\Form\BlogClientType;
 use App\Form\ReponseType;
 use App\Repository\BlogClientRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,13 +27,123 @@ use Snipe\BanBuilder\CensorWords;
 
 class BlogClientController extends AbstractController
 {
+
     /**
-     * @Route("/blog/{id}/detail", name="blog_admin_show", methods={"GET"})
+     * @Route("/blog/{id}/detail/reopen", name="admin-reopen-blog" )
      */
-    public function AdminShow(BlogClient $blogClient): Response
+    //change the status of a reservation
+    public function reopenBlog($id): Response
     {
+        $rep = $this->getDoctrine()->getRepository(blogClient::class);
+        $blogClient = $rep->find($id);
+        //check if the parameters are correct
+        if ($blogClient == null) {
+            return $this->redirectToRoute("erreur-back");
+        }
+        $blogClient->setStatut("Ouvert");
+        $this->getDoctrine()->getManager()->flush();
+        return $this->redirectToRoute('blog_admin_show', ['id' => $blogClient->getId()]);
+    }
+    /**
+     * @Route("/blog/{id}/detail/close", name="admin-close-blog")
+     */
+    public function deleteBlogByAdmin(Request $request, $id, BlogClientRepository $blogClientRepository): Response
+    {
+        $rep = $this->getDoctrine()->getRepository(blogClient::class);
+        $blogClient = $rep->find($id);
+        $rec = $blogClientRepository->find($id);
+        $rec->setStatut("Ferme");
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($rec);
+        $em->flush();
+        return $this->redirectToRoute('blog_admin_show', ['id' => $blogClient->getId()]);
+    }
+    /**
+     * @Route("/blog/{id}/detail", name="blog_admin_show", methods={"GET" ,"POST"})
+     */
+    public function AdminShow(BlogClient $blogClient,Request $request): Response
+    {
+
+        $commentaire= new commentaire();
+        $form = $this->createForm(commentaireType::class, $commentaire);
+        $form->handleRequest($request);
+        $commentaires = $this->getDoctrine()->getRepository(commentaire::class)
+            ->createQueryBuilder('b')
+            ->andWhere('b.author=?1')
+            ->setParameter(1, $blogClient)
+            ->getQuery()
+            ->getResult();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $contenuCommentaire = $form->getData()->getContenu();
+            $em = $this->getDoctrine()->getManager();
+            $em->getRepository(commentaire::class);
+            ///Warning
+            /// change this later
+
+
+            $author = $this->getDoctrine()->getRepository(commentaire::class)->find("2");
+            $commentaire->setAuthor($author);
+            $date = new \DateTime();
+            $commentaire->setDate($date);
+            $commentaire->setHeure($date);
+            $commentaire->setBlogClient($blogClient);
+            $em->persist($commentaire);
+            $em->flush();
+
+            return $this->redirectToRoute('blog_admin_show', ['id' => $commentaire->getId()], Response::HTTP_SEE_OTHER);
+        }
         return $this->render('blog_client/admin/detail.html.twig', [
             'blog_client' => $blogClient,
+            'commenatires' => $commentaires,
+            'f' => $form->createView(),
+
+
+
+        ]);
+    }
+    /**
+     * @Route("/blog/{id}", name="blog_client_show", methods={"GET","POST"})
+     */
+    public function show(BlogClient $blogClient, Request $request ): Response
+    {
+        $commentaire = new Commentaire();
+        $form = $this->createForm(CommentaireType::class, $commentaire);
+        $form->handleRequest($request);
+        $commentaires= $this->getDoctrine()->getRepository(commentaire::class)
+            ->createQueryBuilder('b')
+            ->andWhere('b.blogClient=?1')
+            ->setParameter(1, $blogClient)
+            ->getQuery()
+            ->getResult();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $contenuCommentaire = $form->getData()->getContenu();
+            $censor = new CensorWords;
+            $badwords = $censor->setDictionary('fr');
+            $string = $censor->censorString($contenuCommentaire);
+            $commentaire->setContenu($string['clean']);
+            $em = $this->getDoctrine()->getManager();
+            $em->getRepository(Reponse::class);
+            $client=$this->getDoctrine()->getRepository(Client::class)->find(1);
+            $commentaire->setAuthor($client);
+            $date = new \DateTime();
+            $commentaire->setDate(new \DateTime());
+            $commentaire->setBlogClient($blogClient);
+
+            $em->persist($commentaire);
+            $em->flush();
+
+
+            return $this->redirectToRoute('blog_client_show', ['id' => $blogClient->getId()], Response::HTTP_SEE_OTHER);
+
+        }
+        return $this->render('blog_client/show.html.twig', [
+            'blog_client' => $blogClient,
+            'commentaires' => $commentaires,
+            'f' => $form->createView(),
+
+
         ]);
     }
 
@@ -42,6 +154,7 @@ class BlogClientController extends AbstractController
 {
     return $this->render('blog_client/admin/index.html.twig', [
         'blog_clients' => $blogClientRepository->findAll(),
+
     ]);
 }
     /**
@@ -87,90 +200,12 @@ class BlogClientController extends AbstractController
             'f' => $form->createView(),
         ]);
     }
-    /*/**
-     * @Route("/blog/{id}", name="blog_client_show", methods={"GET"})
-
-    public function show(BlogClient $blogClient, Request $request, EntityManagerInterface $entityManager,CommentaireRepository $commentaireRepository ): Response
-    {
-        $commentaire = new Commentaire();
-        $commentaire->setBlogClient($blogClient);
-        $form = $this->createForm(CommentaireType::class, $commentaire);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() ) {
-            $entityManager->persist($commentaire);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('blog_client_show', ['id'=>$blogClient->getId()]);
-
-        }
-
-        return $this->render('blog_client/show.html.twig', [
-            'blog_client' => $blogClient,
-
-            'form' => $form->createView(),
-            'commentaires' => $commentaireRepository->findByblogClient($blogClient->getId()),
-        ]);
-
-    }
-*/
-    /**
-     * @Route("/blog/{id}", name="blog_client_show", methods={"GET","POST"})
-*/
-    public function show(BlogClient $blogClient, Request $request ): Response
-    {
-        $commentaire = new Commentaire();
-        $form = $this->createForm(CommentaireType::class, $commentaire);
-        $form->handleRequest($request);
-        $commentaires= $this->getDoctrine()->getRepository(commentaire::class)
-        ->createQueryBuilder('b')
-        ->andWhere('b.blogClient=?1')
-        ->setParameter(1, $blogClient)
-        ->getQuery()
-        ->getResult();
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $contenuCommentaire = $form->getData()->getContenu();
-            $censor = new CensorWords;
-            $badwords = $censor->setDictionary('fr');
-            $string = $censor->censorString($contenuCommentaire);
-            $commentaire->setContenu($string['clean']);
-            $em = $this->getDoctrine()->getManager();
-            $em->getRepository(Reponse::class);
-            $client=$this->getDoctrine()->getRepository(Client::class)->find(1);
-            $commentaire->setAuthor($client);
-            $date = new \DateTime();
-            $commentaire->setDate(new \DateTime());
-            $commentaire->setBlogClient($blogClient);
-
-            $em->persist($commentaire);
-            $em->flush();
-
-
-            return $this->redirectToRoute('blog_client_show', ['id' => $blogClient->getId()], Response::HTTP_SEE_OTHER);
-
-        }
-        return $this->render('blog_client/show.html.twig', [
-            'blog_client' => $blogClient,
-            'commentaires' => $commentaires,
-            'f' => $form->createView(),
-
-
-        ]);
-    }
 
 
 
 
 
-    /**
-     * @Route("/blog/{id}", name="app_commentaire_index", methods={"GET"})
-     */
-    public function indexcomm(CommentaireRepository $commentaireRepository): Response
-    {
-        return $this->render('blog_client/show.html.twig', [
-            'commentaires' => $commentaireRepository->findAll(),
-        ]);
-    }
+
 
 
 

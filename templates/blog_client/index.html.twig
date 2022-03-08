@@ -48,6 +48,7 @@
 
                     </div>
                     {% for blog_client in blog_clients %}
+                        {% if blog_client.statut == "Ouvert" %}
                             <div class="col-md-12 col-sm-12 col-lg-12">
                                 <div class="card">
                                       <div class="block less-spacing gray-bg top-padd30">
@@ -76,9 +77,8 @@
 
                                 </div>
                             </div>
-                    {% else %}
+                    {% endif %}
 
-                        <p >no records found</p>
 
                     {% endfor %}
 
