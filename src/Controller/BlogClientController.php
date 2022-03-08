@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Client;
 use App\Entity\Commentaire;
 use App\Entity\Admin;
@@ -21,12 +22,57 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\File;
 use App\Repository\CommentaireRepository;
 use Snipe\BanBuilder\CensorWords;
+use Twilio\Rest\Client as Twilio ;
 
 
 
 
 class BlogClientController extends AbstractController
 {
+    /**
+     * @Route("/blog/new", name="blog_client_new", methods={"GET", "POST"})
+     */
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $blogClient = new BlogClient();
+        $form = $this->createForm(BlogClientType::class, $blogClient);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if($blogClient->getImage()=="")
+                $blogClient->setImage('no_image.jpg');
+            else {
+                $file = new File($blogClient->getImage());
+                $fileName= md5(uniqid()).'.'.$file->guessExtension();
+                $file->move( $this->getParameter ('upload_directory') , $fileName);
+                $blogClient->setImage($fileName);
+            }
+            $date = new \DateTime();
+            $blogClient->setDate($date);
+            $blogClient->setAuthor($this->getUser());
+            $blogClient->setStatut("En Attente");
+            $entityManager->persist($blogClient);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('blog_client_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('blog_client/new.html.twig', [
+            'blog_client' => $blogClient,
+            'f' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/blog/blogadmin", name="blog_admin_index", methods={"GET"})
+     */
+    public function AdminIndex(BlogClientRepository $blogClientRepository): Response
+    {
+        return $this->render('blog_client/admin/index.html.twig', [
+            'blog_clients' => $blogClientRepository->findAll(),
+
+        ]);
+    }
 
     /**
      * @Route("/blog/{id}/detail/reopen", name="admin-reopen-blog" )
@@ -40,6 +86,22 @@ class BlogClientController extends AbstractController
         if ($blogClient == null) {
             return $this->redirectToRoute("erreur-back");
         }
+        $user = $this->getDoctrine()->getRepository(Client::class)->find(1);
+
+            $sid = "AC129fc18c3e71f7ed7330e630d246af42"; // Your Account SID from www.twilio.com/console
+            $token = "e88bb294159ad8317d59afc2943f0238"; // Your Auth Token from www.twilio.com/console
+
+            $client = new Twilio($sid, $token);
+            $message = $client->messages->create(
+                '+216'.$user->getNumTel(), // Text this number
+                [
+                    'from' => '+14793232793', // From a valid Twilio number
+                    'body' => 'Félicitations! Votre blog est acceptée'
+                ]
+            );
+
+
+
         $blogClient->setStatut("Ouvert");
         $this->getDoctrine()->getManager()->flush();
         return $this->redirectToRoute('blog_admin_show', ['id' => $blogClient->getId()]);
@@ -147,16 +209,7 @@ class BlogClientController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/blog/blogadmin", name="blog_admin_index", methods={"GET"})
-     */
-    public function AdminIndex(BlogClientRepository $blogClientRepository): Response
-{
-    return $this->render('blog_client/admin/index.html.twig', [
-        'blog_clients' => $blogClientRepository->findAll(),
 
-    ]);
-}
     /**
      * @Route("/blog", name="blog_client_index", methods={"GET"})
      */
@@ -167,39 +220,6 @@ class BlogClientController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/blog/new", name="blog_client_new", methods={"GET", "POST"})
-     */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $blogClient = new BlogClient();
-        $form = $this->createForm(BlogClientType::class, $blogClient);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            if($blogClient->getImage()=="")
-                $blogClient->setImage('no_image.jpg');
-            else {
-                $file = new File($blogClient->getImage());
-                $fileName= md5(uniqid()).'.'.$file->guessExtension();
-                $file->move( $this->getParameter ('upload_directory') , $fileName);
-                $blogClient->setImage($fileName);
-            }
-            $date = new \DateTime();
-            $blogClient->setDate($date);
-            $blogClient->setAuthor($this->getUser());
-            $blogClient->setStatut("En Attente");
-            $entityManager->persist($blogClient);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('blog_client_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('blog_client/new.html.twig', [
-            'blog_client' => $blogClient,
-            'f' => $form->createView(),
-        ]);
-    }
 
 
 
