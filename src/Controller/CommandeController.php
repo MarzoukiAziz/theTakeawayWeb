@@ -1,6 +1,11 @@
 <?php
 
 namespace App\Controller;
+<<<<<<< Updated upstream
+=======
+use App\Services\QrcodeService;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
+>>>>>>> Stashed changes
 
 use App\Entity\Client;
 use App\Entity\Commande;
@@ -176,7 +181,11 @@ class CommandeController extends AbstractController
     /**
      * @Route("/admin/commandes/{rid}", name="commandes-admin", methods={"GET"})
      */
+<<<<<<< Updated upstream
     public function afficherCommandesAdmin(Request $request ,PaginatorInterface $paginator,$rid): Response
+=======
+    public function afficherCommandesAdmin(Request $request ,PaginatorInterface $paginator,$rid ): Response
+>>>>>>> Stashed changes
     {
         //warning find by client id
 
@@ -202,6 +211,10 @@ class CommandeController extends AbstractController
 //            $restaurant = $request->get('restaurant');
 //            $cmds = $donnees->getRepository("CommandeController:Commande")->findBy(array('restaurant'=>restaurant));
 //        }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         return $this->render('commande/admin/index.html.twig', [
             'cmds' => $cmds,
             'res' => $res,
@@ -258,6 +271,80 @@ class CommandeController extends AbstractController
     }
 
 
+<<<<<<< Updated upstream
+=======
+    /**
+     * @Route("/admin/", name="statistique")
+     */
+    public function stat()
+    {
+
+        $repository = $this->getDoctrine()->getRepository(Commande::class);
+        $commande = $repository->findAll();
+
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        $r1=0;
+        $r2=0;
+        $r3=0;
+        $r4=0;
+        $r5=0;
+        $r6=0;
+
+
+        foreach ($commande as $commandes)
+        {
+            if ( $commandes->getStatut()=="En Attente")  :
+
+                $r1+=1;
+            elseif ( $commandes->getStatut()=="Accepté"):
+
+                $r2+=1;
+
+            elseif ( $commandes->getStatut()=="Rejeté"):
+
+                $r3+=1;
+            elseif ( $commandes->getStatut()=="En traitement"):
+
+                $r4+=1;
+            elseif ( $commandes->getStatut()=="Pret à ramasser"):
+
+                $r5+=1;
+            else :
+                $r6+=1;
+            endif;
+
+        }
+
+        $pieChart = new PieChart();
+        $pieChart->getData()->setArrayToDataTable(
+            [['commande', 'nombre'],
+                ['En Attente', $r1],
+                ['Accepté', $r2],
+                ['Rejeté', $r3],
+                ['En traitement', $r4],
+                ['Pret à ramasser', $r5],
+                ['Complete', $r6],
+            ]
+        );
+        $pieChart->getOptions()->setTitle('Statut commandes ');
+        $pieChart->getOptions()->setHeight(500);
+        $pieChart->getOptions()->setWidth(900);
+        $pieChart->getOptions()->getTitleTextStyle()->setBold(true);
+        $pieChart->getOptions()->getTitleTextStyle()->setColor('#FFFFFF');
+        $pieChart->getOptions()->getTitleTextStyle()->setItalic(true);
+        $pieChart->getOptions()->getTitleTextStyle()->setFontName('Arial');
+        $pieChart->getOptions()->getTitleTextStyle()->setFontSize(20);
+        $pieChart->getOptions()->setBackgroundColor('#454d55');
+
+
+        return $this->render('commande/admin/index1.html.twig', array('piechart' => $pieChart));
+    }
+
+
+>>>>>>> Stashed changes
 
 
 

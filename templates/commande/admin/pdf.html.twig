@@ -39,9 +39,7 @@
                 <td>{{ commande.methode }}</td>
                 <td>{{ commande.pointUtilisees }} Pt</td>
                 <td>{{ commande.statutPaiement }}</td>
-                <td>
-                    <a href="/admin/commandes/{{ res.id }}/{{ commande.id }}"><button class="btn btn-primary">Details</button> </a>
-                </td>
+
             </tr>
         {% else %}
             <tr>
@@ -49,10 +47,6 @@
             </tr>
         {% endfor %}
         </tbody>
-     <button class="btn-info">{{ knp_pagination_render(cmds) }}</button>
     </table>
-<<<<<<< Updated upstream
-=======
-    <a href="/admin/"> <button class="btn btn-success"> statistique</button></a>
->>>>>>> Stashed changes
+
 {% endblock %}

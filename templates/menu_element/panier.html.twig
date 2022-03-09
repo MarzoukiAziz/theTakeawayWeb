@@ -2,6 +2,10 @@
 
 {% block links %}
     <title>Pannier</title>
+<<<<<<< Updated upstream
+=======
+    <script src="https://www.paypal.com/sdk/js?client-id=AS4P6GWIY-OLJXGaPsochga9Xux3ACn8SQG3Ze4MdAEojjpQDzH_qMs_3MVZuo3T7F1pFuTTcm9MIM4p"></script>
+>>>>>>> Stashed changes
 {% endblock %}
 
 {% block contenu %}
@@ -76,12 +80,66 @@
                     {'attr': {'class': '','style':'color:black;' , 'placeholder' : 'pointUtilisees'}} ) }}
                 {{ form_errors(form.pointUtilisees) }}
             </div>
+<<<<<<< Updated upstream
+=======
+
+
+            <div id="paypal-button-container"></div>
+            <script>
+                paypal.Buttons({
+
+                    createOrder: function(data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: {{ total }}
+                                }
+                            }]
+                        });
+                    },
+
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(orderData) {
+
+                            console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                            var transaction = orderData.purchase_units[0].payments.captures[0];
+                            alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+
+
+                        });
+                    }
+                }).render('#paypal-button-container');
+
+            </script>
+
+
+
+
+
+            <script>
+
+
+                var payButton = document.getElementById('paypal-button-container');
+
+                payButton.addEventListener('click',function(event){
+
+                });
+
+            </script>
+
+>>>>>>> Stashed changes
             {{ form_widget(form) }}
             <button class="btn btn-primary">{{ button_label|default('Checkout') }}</button>
             {{ form_end(form) }}
 
+<<<<<<< Updated upstream
 
         </div>
+=======
+        </div>
+
+
+>>>>>>> Stashed changes
     </div>
 
 {#    {{ dump() }}#}
