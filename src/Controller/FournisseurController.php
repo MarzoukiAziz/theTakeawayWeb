@@ -34,7 +34,7 @@ class FournisseurController extends AbstractController
  }
 
     /**
-     * @Route("/admin/fournisseur"", name="listfournisseur")
+     * @Route("/admin/fournisseur", name="listfournisseur")
      */
     public function listfournisseur()
     {
