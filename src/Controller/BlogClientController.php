@@ -138,7 +138,7 @@ class BlogClientController extends AbstractController
         $form->handleRequest($request);
         $commentaires = $this->getDoctrine()->getRepository(commentaire::class)
             ->createQueryBuilder('b')
-            ->andWhere('b.author=?1')
+            ->andWhere('b.blogClient=?1')
             ->setParameter(1, $blogClient)
             ->getQuery()
             ->getResult();

@@ -1,9 +1,34 @@
 {% extends 'front-office.html.twig' %}
 
 
-
 {% block contenu %}
+    <!--Modal: modalConfirmDelete-->
+    <div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+            <!--Content-->
+            <div class="modal-content text-center">
+                <!--Header-->
+                <div class="modal-header d-flex justify-content-center">
+                    <p class="heading">Merci Pour Votre Admission</p>
+                </div>
 
+                <!--Body-->
+                <div class="modal-body">
+
+                    <p>Veuillez attendre un SMS d'acceptation</p>
+
+                </div>
+
+                <!--Footer-->
+                <div class="modal-footer flex-center">
+                    <button type="submit" style="float: right" class="btn btn-success">Confirmer</button>
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+    <!--Modal: modalConfirmDelete-->
 
 <div style="display: table;margin:30px auto;color: whitesmoke;">
     <div style="background-image: url({{ asset("assets/front-office/images/topbg.jpg") }});" class="fixed-bg"></div>
@@ -40,7 +65,9 @@
                 {{ form_errors(f.image) }}
             </div>
 
-            <button type="submit" style="float: right" class="btn btn-success">Confirmer</button>
+            <!-- Button trigger modal-->
+            <button type="submit,button" style="float: right" data-toggle="modal" data-target="#modalConfirmDelete" class="btn btn-success">
+                Confirmer</button>
             <button type="reset" class="btn btn-warning">Recommencer</button>
 
             {{ form_end(f) }}
