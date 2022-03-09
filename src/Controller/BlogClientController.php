@@ -5,13 +5,15 @@ namespace App\Controller;
 
 use App\Entity\Client;
 use App\Entity\Commentaire;
-use App\Entity\Admin;
 use App\Entity\BlogClient;
+use App\Entity\Admin;
 use App\Entity\Reclamation;
 use App\Entity\Reponse;
+use App\Entity\SearchData;
 use App\Form\CommentaireType;
 use App\Form\BlogClientType;
 use App\Form\ReponseType;
+use App\Form\SearchType;
 use App\Repository\BlogClientRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,8 +25,6 @@ use Symfony\Component\HttpFoundation\File\File;
 use App\Repository\CommentaireRepository;
 use Snipe\BanBuilder\CensorWords;
 use Twilio\Rest\Client as Twilio ;
-
-
 
 
 class BlogClientController extends AbstractController
@@ -64,12 +64,18 @@ class BlogClientController extends AbstractController
     }
 
     /**
-     * @Route("/blog/blogadmin", name="blog_admin_index", methods={"GET"})
+     * @Route("/blog/blogadmin", name="blog_admin_index", methods={"GET", "POST"})
      */
-    public function AdminIndex(BlogClientRepository $blogClientRepository): Response
+    public function AdminIndex(BlogClientRepository $blogClientRepository ,Request $request): Response
     {
+        $data = new SearchData();
+        $form = $this->createForm(SearchType::class,$data);
+        $form->handleRequest($request);
+        $blog = $blogClientRepository->findSearch($data);
+
         return $this->render('blog_client/admin/index.html.twig', [
-            'blog_clients' => $blogClientRepository->findAll(),
+            'blog_clients' => $blog,
+            'form'=>$form->createView(),
 
         ]);
     }
@@ -86,7 +92,7 @@ class BlogClientController extends AbstractController
         if ($blogClient == null) {
             return $this->redirectToRoute("erreur-back");
         }
-        $user = $this->getDoctrine()->getRepository(Client::class)->find(1);
+        $user = $this->getDoctrine()->getRepository(Client::class)->find(1);//badel user el connecter
 
             $sid = "AC129fc18c3e71f7ed7330e630d246af42"; // Your Account SID from www.twilio.com/console
             $token = "e88bb294159ad8317d59afc2943f0238"; // Your Auth Token from www.twilio.com/console
@@ -96,7 +102,7 @@ class BlogClientController extends AbstractController
                 '+216'.$user->getNumTel(), // Text this number
                 [
                     'from' => '+14793232793', // From a valid Twilio number
-                    'body' => 'Félicitations! Votre blog est acceptée'
+                    'body' => 'Félicitations! hello '
                 ]
             );
 

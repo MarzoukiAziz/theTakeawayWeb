@@ -6,6 +6,7 @@ use App\Repository\BlogClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @ORM\Entity(repositoryClass=BlogClientRepository::class)
@@ -170,6 +171,10 @@ class BlogClient
         $this->image = $image;
 
         return $this;
+    }
+    public function __toString()
+    {
+       return $this->title;
     }
 
 
