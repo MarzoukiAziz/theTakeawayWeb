@@ -97,6 +97,10 @@ public function updateingrediant(Request $request,$rid,$iid)
        {
 
         $this->addFlash('danger',"Oups !! la $nom nest plus disponible");}
+        if ($q<10 && $q>0)
+        {
+
+            $this->addFlash('danger'," la quantite du $nom est presque fini ! ");}
         return $this->redirectToRoute('listingrediant',["rid"=>$rid]);
     }
     return $this->render("ingrediant/update-ingrediant.html.twig",array('f'=>$form->createView()));
