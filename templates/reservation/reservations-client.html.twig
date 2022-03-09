@@ -1,0 +1,132 @@
+{%  extends "front-office.html.twig" %}
+
+{% block links %}
+    <title> Reservations</title>
+    <style>
+        .badge{
+            font-size: 16px!important;
+        }
+    </style>
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(function(){
+            // bind change event to select
+            $('#dynamic_select').on('change', function () {
+                var url = $(this).val(); // get selected value
+                if (url) { // require a URL
+                    window.location = url; // redirect
+                }
+                return false;
+            });
+        });
+    </script>
+{% endblock %}
+
+{%  block contenu %}
+
+    <div class="card mb-3" style="padding: 80px">
+        <div class="card-header " style="font-size: 22px;font-weight: bold;margin-bottom: 50px">
+            <i class="fa fa-table" ></i> Réservations <sup>{{ filter }}</sup>
+            <div class="m-2 float-right">
+                <a href="{{ path('reservations') }}">
+                    <span class="badge badge-primary">Tous</span>
+                </a>
+                <a href="{{ path('reservations-date', {"date":"Aujourd'hui"}) }}">
+                    <span class="badge badge-info">Aujourd'hui</span>
+                </a>
+                <a href="{{ path('reservations-date', {"date":"Demain"}) }}">
+                    <span class="badge badge-dark">Demain</span>
+                </a>
+            </div>
+        </div>
+      <div style="width: 250px">
+          <label for="dynamic_select"> Filtrer par restaurant : </label>
+          <select id="dynamic_select">
+              <option value="{{ path('reservations') }}">Tous</option>
+              {% for r in res %}
+                  <option {% if filter==r.nom%}selected {% endif%} value="{{ path('reservations-by-restaurant',{"rid":r.id}) }}">{{ r.nom }}</option>
+              {% endfor %}
+          </select>
+      </div>
+
+
+        <div class="card-body" style="text-align: center">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr style="background-color: #212529;color: whitesmoke"></th>
+
+                        <th>Restaurant</th>
+                        <th>Date</th>
+                        <th>Heure </th>
+                        <th>Pour</th>
+                        <th>Tables</th>
+                        <th>Statut</th>
+                        <th>Annuler</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for r in rev %}
+                        <tr {% if loop.index is odd %}style="background-color: #dfdfdf" {% else %}style="background-color: white"{% endif%} >
+                            <td>{{ r.restaurant.nom }}</td>
+                            <td>{{ r.date|date('Y-m-d') }}</td>
+                            <td>de {{ r.heureArrive|date('G:i')}}<br>
+                                à {{ r.heureDepart|date('G:i')}}</td>
+                            <td>{{ r.nbPersonne }} Peronne(s)</td>
+                            <td>
+                                {% for t in r.tables %}
+                                    {{ t.numero  }} ({{ t.nbPalces }}) <br>
+                                {% endfor %}
+                            </td>
+                            {% if r.statut== 'Accepté' %}
+                                <td><span class="badge badge-success">Accepté</span></td>
+
+                            {% endif %}
+                            {% if r.statut== 'Réfusé' %}
+                                <td><span class="badge badge-danger" >Réfusé</span></td>
+
+                            {% endif %}
+                            {% if r.statut== 'Annulé' %}
+                                <td><span class="badge badge-secondary">Annulé</span></td>
+                            {% endif %}
+                            {% if r.statut== 'En Attente' %}
+                                <td><span class="badge badge-warning" >En Attente</span></td>
+                            {% endif %}
+
+                            <td>
+                                    {%  if r.statut=="En Attente" %}
+                                        <a  href="{{ path('client-cancel-reservation', {'rid':r.id,"s":"Annuler"}) }}" >  <button type="button" class="btn btn-danger">Annuler
+
+                                        <i class="fa fa-fw fa-trash"></i> </button></a>
+                                    {% endif %}
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div style="float: right">
+        {{ knp_pagination_render(
+            rev,
+            '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig',
+            {
+                'queryParam1': 'param1 value',
+                'queryParam2': 'param2 value'
+            },
+            {
+                'viewParam1': 'param1 value',
+                'viewParam2': 'param2 value'
+            },
+        ) }}
+    </div>
+{%  endblock %}

@@ -1,0 +1,92 @@
+{% extends 'back-office.html.twig' %}
+{% block links %}
+    <title>Factures</title>
+    <style>
+        .badge{
+            font-size: 17px!important;
+        }
+    </style>
+{% endblock %}
+
+{% block contenu %}
+    {{ form_start(fr) }}
+    <label>Fournisseur :</label>
+    {{ form_widget(fr.fournisseur) }}
+    <button type="submit" class="btn btn-info">Rechercher</button>
+
+
+    {{ form_end(fr) }}
+
+
+
+
+    <div class="card mb-3">
+        <div class="card-header " style="font-size: 22px;font-weight: bold;display: table">
+            <i class="fa fa-table"></i> Factures
+            {% if factures %}
+                 <a href="{{ path("facture_calendar",{"fou":factures[0].fournisseur.id}) }}" class="badge badge-warning"> <i class="fa fa-calendar"></i></a></span>
+
+            {% endif %}
+            <a href="{{ path('choixFournisseur') }}" class="float-right m-3">
+                <button class="btn btn-success "> Ajouter Nouvelle Facture</button>
+            </a>
+        </div>
+
+        <div class="card-body" style="text-align: center">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr style="background-color: #212529;color: whitesmoke"></th>
+                        <th scope="col">Réference</th>
+                        <th scope="col">Restaurant</th>
+                        <th scope="col">quantite</th>
+                        <th scope="col">date</th>
+                        <th scope="col">heure</th>
+                        <th scope="col">prix</th>
+                        <th scope="col">Produit</th>
+                        <th scope="col">options</th>
+                        <th scope="col">More</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for f in factures %}
+
+                        <tr {% if loop.index is odd %}style="background-color: #dfdfdf" {% endif %}>
+                            <th scope="row">{{ f.id }}</th>
+                            <th scope="row">{{ f.ingrediant.restaurant.nom }}</th>
+                            <td>{{ f.quantite }}</td>
+                            <td>{{ f.date ? f.date|date('d M Y') : '' }}</td>
+                            <td>{{ f.heure ? f.heure|date('H:i') : '' }}</td>
+                            <td>{{ f.prixUnitaire }}</td>
+
+
+                            <td>
+                                {{ f.ingrediant.nom }}
+                            </td>
+
+
+                            <td><a class="badge badge-danger" href="{{ path('deletefacture',{'id':f.id}) }}">Delete</a>
+                                <a class="badge badge-warning" href="{{ path('updatefacture',{'id':f.id}) }}">Update</a>
+
+
+                            </td>
+                            <td><a class="badge badge-secondary" href="{{ path('show',{'id':f.id}) }}">Show</a>
+
+
+                            </td>
+
+
+                        </tr>
+                    {% endfor %}
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

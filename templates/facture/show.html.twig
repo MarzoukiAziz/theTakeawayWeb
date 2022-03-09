@@ -1,0 +1,124 @@
+<html>
+<style type="text/css">
+    body {
+        margin-top: 30px;
+    }
+</style>
+<head>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <title>Facture N° {{ fr.id }}</title>
+<!------ Include the above in your HEAD tag ---------->
+</head>
+<body>
+<div class="container">
+    <div class="invoice">
+        <div class="row">
+            <div class="col-7">
+                <img height="80px" src="{{ asset("assets/front-office/images/logo.png") }} " class="logo">
+            </div>
+            <div class="col-5 float-right">
+                <h1 class="document-type display-4">FACTURE</h1>
+                <p class="text-right"><strong>{{ fr.id }}</strong></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-7">
+                <p>
+                    <strong>The Takeaway</strong><br>
+                    24, Rue Mohamed Ali, Rades, Ben Arous, Tunisie<br>
+                    (216) 54136336
+                </p>
+            </div>
+            <div class="col-5">
+                <br><br><br>
+                <p>
+                    <strong>{{ fr.fournisseur.nom }}</strong><br>
+                    {{ fr.fournisseur.adresse }}<br>
+                    {{  fr.fournisseur.email }}<br>
+                    {{  fr.fournisseur.telephone }}
+                </p>
+            </div>
+        </div>
+        <br>
+        <br>
+        <h6>Audits et rapports mensuels (1er Novembre 2016 - 30 Novembre 2016)</h6>
+        <br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Description</th>
+                <th>Quantité</th>
+                <th>Unité</th>
+                <th>PU HT</th>
+                <th>TVA</th>
+                <th>Total HT</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ fr.ingrediant.nom}}</td>
+                <td>{{ fr.quantite }}</td>
+                <td>KG</td>
+                <td class="text-right">{{ fr.prixUnitaire }} Dt</td>
+                <td>19%</td>
+                <td class="text-right">{{ fr.prixUnitaire*fr.quantite }} Dt</td>
+            </tr>
+
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-8">
+            </div>
+            <div class="col-4">
+                <table class="table table-sm text-right">
+
+
+                    <tr>
+                        <td><strong>Total TTC</strong></td>
+                        <td class="text-right">{{ fr.prixUnitaire*fr.quantite }} Dt</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <p class="conditions">
+            En votre aimable règlement
+            <br>
+            Et avec nos remerciements.
+            <br><br>
+            Conditions de paiement : paiement à réception de facture, à 15 jours.
+            <br>
+            Aucun escompte consenti pour règlement anticipé.
+            <br>
+            Règlement par virement bancaire.
+            <br><br>
+            En cas de retard de paiement, indemnité forfaitaire pour frais de recouvrement : 40 euros (art. L.4413 et L.4416 code du commerce).
+        </p>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <form>
+
+            <center>
+                <button class="btn btn-primary hidden-print" onclick="imprimer_page()"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
+            </center>
+            <center>
+                <a href="{{ path('facturepdf',{'id':fr.id}) }}">pdf</a>
+            </center>   </form>
+        <script type="text/javascript">
+            function imprimer_page(){
+                window.print();
+            }
+        </script>
+
+    </div>
+</div>
+</body>
+</html>
+
+
+

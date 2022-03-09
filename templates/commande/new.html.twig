@@ -1,0 +1,45 @@
+{% extends 'front-office.html.twig' %}
+
+{% block links %}
+    <title>New Commande</title>
+{% endblock %}
+
+{% block contenu %}
+
+
+
+    <div style="display: flex;justify-content: center;margin: 30px;height: 400px;color: whitesmoke">
+        <div style="background-image: url({{ asset("assets/commande-bg.jpg") }});" class="fit-bg"></div>
+
+        <div class="card-body">
+            <h1  style="margin-bottom: 50px" class="text-center">Create New Commandes</h1>
+            {{ form_start(form) }}
+            <div class="form-group" >
+                <label class="form-label ">Methode de Paiement</label>
+                {{ form_widget(form.methode ,
+                    {'attr': {'class': '','style':'display:flex;'}} ) }}
+                {{ form_errors(form.methode) }}
+            </div>
+            <div class="form-group" >
+                <label class="form-label ">PointUtilisees</label>
+                {{ form_widget(form.pointUtilisees ,
+                    {'attr': {'class': '','style':'color:black;' , 'placeholder' : 'pointUtilisees'}} ) }}
+                {{ form_errors(form.pointUtilisees) }}
+            </div>
+
+
+
+            {{ form_widget(form) }}
+            <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+            {{ form_end(form) }}
+
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+
+

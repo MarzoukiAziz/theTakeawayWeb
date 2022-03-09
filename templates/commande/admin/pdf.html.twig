@@ -1,0 +1,52 @@
+{% extends 'back-office.html.twig' %}
+
+{% block links %}
+    <title>Les Commandes</title>
+{% endblock %}
+
+{% block contenu %}
+    <h1>Commandes</h1>
+    <form method="POST">
+        <input type="text" name="Restaurant">
+        <input type="submit" value="recherche">
+    </form>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Réference</th>
+            <th>Restaurant</th>
+            <th>Client</th>
+            <th>PrixTotal</th>
+            <th>Statut</th>
+            <th>Date</th>
+            <th>Methode</th>
+            <th>PointUtilisees</th>
+            <th>StatutPaiement</th>
+            <th>Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for commande in cmds %}
+            <tr>
+
+                <td>{{ commande.id }}</td>
+                <td>{{ commande.restaurant.nom }}</td>
+                <td>{{ commande.client.nom }} {{ commande.client.prenom }}</td>
+                <td>{{ commande.prixTotal }} Dt</td>
+                <td>{{ commande.statut }}</td>
+                <td>{{ commande.date ? commande.date|date('Y-m-d') : '' }}</td>
+                <td>{{ commande.methode }}</td>
+                <td>{{ commande.pointUtilisees }} Pt</td>
+                <td>{{ commande.statutPaiement }}</td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">pas de commandes</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

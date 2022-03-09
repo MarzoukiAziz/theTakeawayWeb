@@ -1,0 +1,64 @@
+{% extends 'front-office.html.twig' %}
+{% block links %}
+    <title>Promotion</title>
+    <style>
+        main {
+            padding: 180px !important;
+        }
+    </style>
+{% endblock %}
+{% block contenu %}
+
+    <div class="block">
+        <div class="fixed-bg" style="background-image: url(https://wallpaperaccess.com/full/2567134.jpg);background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;height: 500px">
+            <div class="page-title-wrapper text-center mt-4">
+                <div class="col-md-12 col-sm-12 col-lg-12">
+                    <div class="page-title-inner" style="background-color: rgba(0,0,0,0.6)">
+                        <h1 itemprop="headline">Promotion</h1>
+                        <span>A Greate Discount For You </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <section>
+    <div class="block less-spacing grayish opc98">
+        <div class="fixed-bg" style="background-image: url(assets/images/parallax4.jpg);"></div>
+        <div class="container">
+            <div class="row">
+                <img style="margin: auto;width: 50%" src="{{ promotion.banner }}">
+                <div class="col-md-12 col-sm-12 col-lg-12">
+                        <div class="food-featured-post">
+                            <div class="food-featured-post-thumb wow fadeIn" data-wow-delay="0.2s">
+                                <a href="#" title="" itemprop="url"><img
+                                            src="{{ asset('couvertures/'~ promotion.element.image ) }}"
+                                            alt="featured-post-img.jpg" itemprop="image"
+                                            style="height: 513px;width: 398px"></a>
+                            </div>
+                            <div class="food-featured-post-info wow fadeIn" data-wow-delay="0.2s">
+                                <h3 itemprop="headline"><a href="#" title=""
+                                                           itemprop="url">{{ promotion.element.nom }}</a></h3>
+                                <p itemprop="description">{{ promotion.element.description }}</p>
+                                <h1 itemprop="description " style="color: darkred"> {{ promotion.prixpromo }}Dt <span style="color: gray;
+    font-size: 30px;
+    text-decoration: line-through;">{{ promotion.element.prix }}Dt</span> </h1>
+                                <a class="brd-rd30 red-bg" href="#" title="" itemprop="url">
+
+                                    <i
+                                            class="fa fa-angle-double-right"></i> Commander</a>
+                            </div>
+                        </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

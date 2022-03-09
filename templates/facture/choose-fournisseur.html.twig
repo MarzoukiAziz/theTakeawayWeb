@@ -1,0 +1,19 @@
+{% extends "back-office.html.twig" %}
+
+{% block links %}
+    <title>Choisir un Ingrediant</title>
+{% endblock %}
+{% block contenu %}
+    <div class="card mb-3" >
+        <div class="card-header" style="font-size: 22px;font-weight: bold">
+            Choisissez Un Ingrediant
+        </div>
+        <div class="card-body">
+            {% for x in res %}
+                <a href="/addfacture/{{ idf }}/{{ x.id }}"><button type="button" class="btn btn-secondary btn-lg btn-block">{{ x.nom }}</button></a>
+                <br>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}

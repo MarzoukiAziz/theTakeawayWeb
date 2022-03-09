@@ -1,0 +1,57 @@
+{% extends 'back-office.html.twig' %}
+
+
+{% block links %} <title>Menu</title>{% endblock %}
+
+
+{% block contenu %}
+
+{% block title %}<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/admin">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="/admin/menu">Menu</a>
+    </li>
+    <li class="breadcrumb-item active">Show Menu</li>
+</ol>{% endblock %}
+
+{% block body %}
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ menu_element.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ menu_element.nom }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ menu_element.description }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ menu_element.prix }}</td>
+            </tr>
+            <tr>
+                <th>Categorie</th>
+                <td>{{ menu_element.categorie }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><img width="300px" src="{{ asset('couvertures/'~ menu_element.image ) }}"></td>
+            </tr>
+
+        </tbody>
+    </table>
+    <a class="btn_1 gray approve" href="{{ path('menu_index') }}"> <i class="fa fa-fw fa-reply"></i> back to list</a>
+
+    <a class="btn_1 gray approve" href="{{ path('menu_edit', {'id': menu_element.id}) }}">edit</a>
+    {{ include('menu/_delete_form.html.twig') }}
+
+
+{% endblock %}
+{% endblock %}

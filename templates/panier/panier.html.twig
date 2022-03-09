@@ -1,0 +1,154 @@
+{% extends "front-office.html.twig" %}
+
+{% block links %}
+    <title>Panier</title>
+    <link rel="stylesheet" href={{ asset("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css") }}>
+    <link rel="stylesheet" href={{ asset("assets/front-office/css/icons.min.css") }}>
+    <link rel="stylesheet" href={{ asset("assets/front-office/css/bootstrap.min.css") }}>
+    <link rel="stylesheet" href={{ asset("assets/front-office/css/main.css") }}>
+    <link rel="stylesheet" href={{ asset("assets/front-office/css/red-color.css") }}>
+    <link rel="stylesheet" href={{ asset("assets/front-office/css/yellow-color.css") }}>
+    <link rel="stylesheet" href={{ asset("assets/front-office/css/responsive.css") }}>
+    <script src="https://www.paypal.com/sdk/js?client-id=AS4P6GWIY-OLJXGaPsochga9Xux3ACn8SQG3Ze4MdAEojjpQDzH_qMs_3MVZuo3T7F1pFuTTcm9MIM4p"></script>
+{% endblock %}
+
+{% block contenu %}
+    <div class="container">
+        <center>
+            <h1 style="    margin-top: 50px;
+    font-weight: bold;font-family: "Roboto", sans-serif;" >Finaliser Votre Commande</h2>
+
+        </center>
+        <div style="padding:30px!important;display: flex!important;font-size: 18px;font-family: "Roboto", sans-serif">
+
+            <table class="table" style=": flex;justify-content: center;">
+                <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                    <th >Total</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for element in dataPanier %}
+                    <tr>
+                        <td>{{ element.produit.nom }}</td>
+                        <td>{{ element.produit.prix }} Dt</td>
+                        <td> {{ element.quantite  }}</td>
+                        <td> {{ element.quantite*element.produit.prix }} Dt</td>
+                        <td> <a href="{{ path("cart_add_panier",{id:element.produit.id}) }}" class="btn btn-success">
+                                <i class="bi bi-cart-plus"></i>
+                            </a>
+                            <a href="{{ path("cart_remove",{id:element.produit.id}) }}" class="btn btn-warning">
+                                <i class="bi bi-cart-dash"></i>
+                            </a>
+                            <a href="{{ path("cart_delete",{id:element.produit.id}) }}"  class="btn btn-danger">
+                                <i class="bi bi-cart-x"></i>
+                            </a>
+                        </td>
+
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center">Votre Panier est vide</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+                <tfoot>
+                <tr class="alert-success">
+                    <td colspan="3" >Total</td>
+                    <td class="text-end">{{ total }} Dt</td>
+                    <td>  <a href="{{ path("deleteAll") }}"  class="btn btn-danger">
+                            <i class="bi bi-cart-x"></i> Vider le panier
+                        </a>
+                    </td>
+                </tr>
+
+
+                </tfoot>
+
+            </table>
+            <div style="display: flex;justify-content: center;margin: 30px;height: 400px;">
+                <div  class="fit-bg"></div>
+
+                <div class="card-body">
+                    <h2 class="text-center" >Chekout Panier</h2>
+                    {{ form_start(form) }}
+                    <div class="form-group" >
+                        <label class="form-label ">Methode de Paiement</label>
+                        {{ form_widget(form.methode ,
+                            {'attr': {'class': '','style':'display:flex;'}} ) }}
+                        {{ form_errors(form.methode) }}
+                    </div>
+                    <div class="form-group" >
+                        <label class="form-label ">PointUtilisees</label>
+                        {{ form_widget(form.pointUtilisees ,
+                            {'attr': {'class': '','style':'color:black;' , 'placeholder' : 'pointUtilisees','value':'0'}} ) }}
+                        {{ form_errors(form.pointUtilisees) }}
+                    </div>
+
+
+                    <div id="paypal-button-container"></div>
+
+
+                    {{ form_widget(form) }}
+                    <button class="btn btn-primary">{{ button_label|default('Checkout') }}</button>
+                    {{ form_end(form) }}
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    {#    {{ dump() }}#}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    paypal.Buttons({
+
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: {{ total }}
+                    }
+                }]
+            });
+        },
+
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(orderData) {
+
+                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                var transaction = orderData.purchase_units[0].payments.captures[0];
+                alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+
+
+            });
+        }
+    }).render('#paypal-button-container');
+
+</script>
+
+
+
+
+
+<script>
+
+
+    var payButton = document.getElementById('paypal-button-container');
+
+    payButton.addEventListener('click',function(event){
+
+    });
+
+</script>
+{% endblock %}

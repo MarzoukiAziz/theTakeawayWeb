@@ -1,0 +1,68 @@
+{% extends 'front-office.html.twig' %}
+
+{% block links %}
+<title>S'inscrire</title>
+{% endblock %}
+
+{% block contenu %}
+<div style="display: flex;justify-content: center;margin: 30px;color: whitesmoke;">
+    <div style="background-image: url({{ asset("assets/front-office/images/topbg.jpg") }});" class="fixed-bg"></div>
+
+
+    <div class="card-body">
+        <h1 class="h3 mb-3 font-weight-normal mt-2 text-center">S'inscrire</h1>
+        {{ form_start(f)}}
+
+        <form >
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                {{ form_widget(f.email , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Email'}} ) }}
+                {{ form_errors(f.email) }}
+            </div>
+            <div class="form-group">
+                <label class="form-label">Nom</label>
+                {{ form_widget(f.nom , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Nom'}} ) }}
+                {{ form_errors(f.nom) }}
+            </div>
+            <div class="form-group">
+                <label class="form-label">Prenom</label>
+                {{ form_widget(f.prenom , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Prenom'}} ) }}
+                {{ form_errors(f.prenom) }}
+            </div>
+            <div class="form-group">
+                <label class="form-label">Téléphone</label>
+                {{ form_widget(f.num_tel , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Téléphone'}} ) }}
+                {{ form_errors(f.num_tel) }}
+            </div>
+            <div class="form-group">
+                <label class="form-label">Mot De Passe</label>
+                {{ form_widget(f.plainPassword , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Mot De Passe'}} ) }}
+                {{ form_errors(f.plainPassword) }}
+            </div>
+            <div class="form-group">
+                <label class="form-label">Posser Votre Image</label>
+                {{ form_widget(f.brochure) }}
+                {{ form_errors(f.brochure) }}
+            </div>
+            <div class="form-group">
+                {{ form_widget(f.agreeTerms)}}
+                    <p>en cliquant sur ajouter j'accepte les conditions générales d’utilisation
+                    </p>
+            </div>
+
+            <div class="form-group mb-0">
+                <div class="checkbox checkbox-secondary" style="float: right">
+                    {{ form_widget(f) }}
+                    <button type="SubmitType" class="btn btn-primary " onClick="validateSubmit()">S'inscrire</button>
+                </div>
+            </div>
+
+
+
+            {{ form_end(f) }}
+
+        </form>
+    </div>
+
+</div>
+{% endblock %}

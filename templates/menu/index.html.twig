@@ -1,0 +1,69 @@
+{% extends 'back-office.html.twig' %}
+
+
+{% block links %} <title>Menu</title>{% endblock %}
+
+
+{% block contenu %}
+
+    {% block title %} <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active"> Menu</li>
+    </ol>{% endblock %}
+
+
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <h1 class="text-title" style="color: grey!important;">Menu<a class="float-right" href="{{ path('menu_new') }}">
+                    <button class="btn btn-success">Ajouter</button>
+                </a> </h1>
+
+
+        </div>
+
+    <div class="card-body" style="text-align: center">
+    <div class="table-responsive">
+        <table class="table table-bordered " style="color:#000;" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+            <tr style="background-color: #0c0c0c;color: whitesmoke">
+                <th scope="col">Id</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Description</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Categorie</th>
+
+                <th scope="col">Mise a jour</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for menu_element in menu_elements %}
+                <tr {% if loop.index is odd %}style="background-color: #8bb0d4" {% endif %}>
+                    <td>{{ menu_element.id }}</td>
+                    <td>{{ menu_element.nom }}</td>
+                    <td>{{ menu_element.description }}</td>
+                    <td>{{ menu_element.prix }}</td>
+                    <td>{{ menu_element.categorie }}</td>
+
+                    <td style="display: flex">
+                        <a class="btn_1 gray" href="{{ path('menu_show', {'id': menu_element.id}) }}"><i class="fa fa-fw fa-eye"></i>show</a>
+
+                        <a class="btn_1 gray approve" href="{{ path('menu_edit', {'id': menu_element.id}) }}"><i class="fa fa-fw fa-edit"></i>edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+{% endblock %}
+{% endblock %}

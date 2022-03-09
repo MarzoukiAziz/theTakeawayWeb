@@ -1,0 +1,62 @@
+{% extends 'back-office.html.twig' %}
+
+{% block links %}
+<title>Fournisseurs</title>
+    <style>
+        .badge{
+            font-size: 17px!important;
+        }
+    </style>
+{% endblock %}
+{% block contenu %}
+
+
+<div class="card mb-3">
+    <div class="card-header " style="font-size: 22px;font-weight: bold;display: table">
+        <i class="fa fa-table"></i> Fournisseurs
+        <a style="float: right;width: fit-content" href="{{ path('add') }}" class="btn btn-success btn-lg btn-block">Ajouter Nouveau Fournisseur</a>
+
+    </div>
+
+    <div class="card-body" style="text-align: center">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr style="background-color: #212529;color: whitesmoke"></th>
+                    <th scope="col">Réference</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Adresse</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Mettre à jour</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for f in fr %}
+                    <tr {% if loop.index is odd %}style="background-color: #dfdfdf" {% endif %}>
+                        <th scope="row">{{ f.id }}</th>
+                        <td>{{ f.nom }}</td>
+                        <td>{{ f.adresse }}</td>
+                        <td>{{ f.telephone }}</td>
+                        <td>{{ f.email }}</td>
+                        <td><a class="badge badge-danger" href="{{ path('deletefournisseur',{'id':f.id}) }}">Delete</a>
+                            <a class="badge badge-warning" href="{{ path('updatefournisseur',{'id':f.id}) }}">Update</a>
+
+
+                        </td>
+
+
+                    </tr>
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

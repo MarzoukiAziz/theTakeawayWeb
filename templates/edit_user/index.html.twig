@@ -1,0 +1,40 @@
+{% extends 'Dasbord-User.html.twig' %}
+
+{% block links %}
+    <title>
+        S'authentifier
+    </title>
+{% endblock %}
+
+{% block contenu %}
+  {{ form_start(f)}}
+
+<form >
+    <div class="form-group">
+        <label class="form-label">Nom</label>
+        {{ form_widget(f.nom , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Nom'}} ) }}
+        {{ form_errors(f.nom) }}
+    </div>
+    <div class="form-group">
+        <label class="form-label">Prenom</label>
+        {{ form_widget(f.prenom , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Prenom'}} ) }}
+        {{ form_errors(f.prenom ) }}
+    </div>
+    <div class="form-group">
+        <label class="form-label">EMAIL</label>
+        {{ form_widget(f.email , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Email'}} ) }}
+        {{ form_errors(f.email ) }}
+    </div>
+    <div class="form-group">
+        <label class="form-label">Numero</label>
+        {{ form_widget(f.num_tel , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Numero'}} ) }}
+        {{ form_errors(f.num_tel ) }}
+    </div>
+    <div class="form-group">
+        <label class="form-label">Image</label>
+        {{ form_widget(f.brochure ) }}
+        {{ form_errors(f.brochure ) }}
+    </div>
+
+    {{ form_end(f) }}
+    {% endblock %}

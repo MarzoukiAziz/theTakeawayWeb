@@ -1,0 +1,60 @@
+{% extends 'Dasbord-User.html.twig' %}
+
+{% block links %}
+    <title>
+        Mon Compte
+    </title>
+{% endblock %}
+
+{% block contenu %}
+    <div class="tab-pane fade in active" id="dashboard">
+        <div class="dashboard-wrapper brd-rd5">
+           <div class="flex" >
+               <div class="servise-box wow fadeIn " style="width: 300px ;height:180px;margin-right: 20px" data-wow-delay="0.7s">
+                   <figure>
+                       <img src="https://www.posist.com/restaurant-times/wp-content/uploads/2016/12/restaurant-delivery-orders-1024x683.jpg"
+                            alt="">
+                   </figure>
+                   <div class="uper-meta">
+                       <img src={{ asset("assets/back-office/img/order.png") }} height="40px">
+                       <h4><a href="/commandes" title="">Commandes</a></h4>
+                   </div>
+               </div>
+               <div class="servise-box wow fadeIn " style="width: 300px ;height:180px;"  data-wow-delay="0.7s">
+                   <figure>
+                       <img src="https://www.rooneysrestaurant.com/wp-content/uploads/2016/08/reservation-img.jpg"
+                            alt="">
+                   </figure>
+                   <div class="uper-meta">
+                       <img src={{ asset("assets/back-office/img/booking.png") }} height="40px">
+                       <h4><a href="/reservations" title="">Réservations</a></h4>
+                   </div>
+               </div>
+           </div>
+           <div class="flex" style="justify-content: space-between">
+               <div class="servise-box wow fadeIn " style="width: 300px ;height:180px;margin-right: 20px" data-wow-delay="0.7s">
+                   <figure>
+                       <img src="https://www.marhba.com/images/dareljeld2020.jpg"
+                            alt="">
+                   </figure>
+                   <div class="uper-meta">
+                       <img src={{ asset("assets/back-office/img/restaurant.png") }} height="40px">
+                       <h4><a href="/wishlist" title="">wishlist</a></h4>
+                   </div>
+               </div>
+               <div class="servise-box wow fadeIn " style="width: 300px ;height:180px;" data-wow-delay="0.7s">
+                   <figure>
+                       <img src="https://www.bizzmine.com/images/articles/complaint/Complaint_management.jpg"
+                            alt="">
+                   </figure>
+                   <div class="uper-meta">
+                       <img src={{ asset("assets/back-office/img/complain.png") }} height="40px">
+                       <h4><a href="/reclamations" title="">Réclamations</a></h4>
+                   </div>
+               </div>
+
+           </div>
+        </div>
+    </div>
+{% endblock %}
+

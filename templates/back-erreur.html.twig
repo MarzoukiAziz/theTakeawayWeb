@@ -1,0 +1,15 @@
+{%  extends "back-office.html.twig" %}
+{% block contenu %}
+    <section>
+        <div class="block">
+            <div class="error-page-wrapper text-center mt-5">
+                <div class="error-page-inner">
+                    <h1 itemprop="headline">404 <span class="red-clr">Error</span></h1>
+                    <h4 itemprop="headline"><span class="yellow-clr">Oops,</span> This Page Not Found!</h4>
+                    <img width="50%" src="{{ asset("assets/back-office/img/notfound.svg")}}">
+                </div>
+            </div><!-- Error Page Wrapper -->
+        </div>
+    </section>
+
+{%  endblock %}

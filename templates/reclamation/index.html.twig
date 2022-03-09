@@ -1,0 +1,73 @@
+{% extends 'front-office.html.twig' %}
+
+{% block links %}
+    <title>Réclamations</title>
+    <style>
+        .badge {
+            font-size: 16px !important;
+        }
+    </style>
+{% endblock %}
+
+
+{% block contenu %}
+    <div style="display: flex;justify-content: center;margin: 30px;min-height: 400px;color: whitesmoke">
+        <div style="background-image: url({{ asset("assets/reclamation-bg.jpg") }});" class="fit-bg"></div>
+
+        <div style="background-color: rgba(0,0,0,0.5);width: 70%">
+            <h1 style="margin-bottom: 50px" class="text-center">Vos Reclamations <sup
+                        style="font-size: 16px;color: lightgray">{{ filter }}</sup></h1>
+            <a href="{{ path('reclamation_new') }}">
+                <button class="btn btn-success float-right mb-3">Nouvelle Réclamation</button>
+            </a>
+            <div class="m-2">
+                <a href="{{ path('reclamation_index') }}">
+                    <span class="badge badge-primary">Tous</span>
+                </a>
+                <a href="{{ path('reclamation_by_statut', {'statut': 'Ouvert',}) }}">
+                    <span class="badge badge-warning">Ouvert</span>
+                </a>
+                <a href="{{ path('reclamation_by_statut', {"statut":"Fermé"}) }}">
+                    <span class="badge badge-danger">Fermé</span>
+                </a>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Sujet</th>
+                    <th>Statut</th>
+                    <th>Date</th>
+                    <th>Heure</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for reclamation in reclamations %}
+                    <tr>
+                        <td>{{ reclamation.sujet }}</td>
+                        {% if reclamation.statut== 'Ouvert' %}
+                            <td><span class="badge badge-warning">Ouvert</span></td>
+
+                        {% endif %}
+                        {% if reclamation.statut== 'Fermé' %}
+                            <td><span class="badge badge-danger">Fermé</span></td>
+
+                        {% endif %}
+                        <td>{{ reclamation.date ? reclamation.date|date('d M Y') : '' }}</td>
+                        <td>{{ reclamation.heure ? reclamation.heure|date('H:i') : '' }}</td>
+                        <td>
+                            <a href="{{ path('reclamation_show', {'id': reclamation.id}) }}">
+                                <button class="btn btn-primary">Consulter</button>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7">Pas de réclmation trouvé!</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

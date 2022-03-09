@@ -1,0 +1,16 @@
+{% extends 'back-office.html.twig' %}
+
+
+{% block links %} <title>Menu</title>{% endblock %}
+
+
+{% block contenu %}
+
+<form method="post" action="{{ path('menu_delete', {'id': menu_element.id}) }}" onsubmit="return confirm('Are you sure ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ menu_element.id) }}">
+    <button class="btn_1 gray delete" ><i class="fa fa-fw fa-times-circle-o"></i>Delete</button>
+
+</form>
+
+
+{% endblock %}

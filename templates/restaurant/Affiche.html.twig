@@ -1,0 +1,67 @@
+{% extends 'back-office.html.twig' %}
+
+
+{% block links %} <title>Restaurants</title>{% endblock %}
+
+
+{% block contenu %}
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Restaurant</li>
+    </ol>
+
+<div class="card">
+    <div class="card-header">
+        <h1 class="text-title" style="color: grey!important;">Restaurants<a class="float-right" href="{{ path('restaurant_add') }}">
+                <button class="btn btn-success">Ajouter</button>
+            </a> </h1>
+
+    </div>
+    <div class="card-body" style="text-align: center">
+        <div class="table-responsive">
+
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead >
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Adresse</th>
+                <th scope="col">Mise a jours </th>
+
+
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr {% for r in restaurant %}>
+
+                <td>{{ r.id }}</td>
+                <td>{{ r.nom }}</td>
+                <td>{{ r.adresse }}</td>
+
+
+
+
+                <td> <a class="btn_1 gray" href="{{ path('restaurant_show', {'id': r.id}) }}"><i class="fa fa-fw fa-eye"></i>show</a>
+                    <a class="btn_1 gray approve" href="{{ path('update', {'id': r.id}) }}">EDIT</a> </td>
+
+            </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

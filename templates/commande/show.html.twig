@@ -1,0 +1,65 @@
+{% extends 'front-office.html.twig' %}
+
+{% block links %}
+<title>Details de commande</title>
+{% endblock %}
+
+{% block contenu %}
+    <a style="color: whitesmoke;margin: 20px" href="/commandes">&lt;&lt;Rétourner à vos commandes</a>
+
+     <div style="background-image: url({{ asset("assets/commande-bg.jpg") }});" class="fixed-bg"></div>
+<div style="display: table;margin:30px auto;color: whitesmoke;">
+    <div class="">
+        <h1 class="h3 mb-3 font-weight-normal mt-2 text-center"> Votre Commande N° {{ commande.id}} </h1>
+
+        <img src="{{ asset("qr-code/"~commande.id~".png") }}">
+        <div style="margin: 30px 10px">
+
+        {% for element_detail in commande.details %}
+            <div class="row flex" style="margin:30px;border: 1px white solid">
+            <img width="240px" sizes="margin:20px" src="{{ asset('couvertures/'~ element_detail.elementId.image ) }}">
+            <table class="table" style="width: 200px">
+                <tbody>
+            <tr>
+                <div class="form-group" >
+                <th>{{  element_detail.elementId.nom }}</th>
+                    <td></td>
+                    </div>
+            </tr>
+            <tr>
+                <th>Quantite</th>
+                <td>{{ element_detail.quantite }}</td>
+            </tr>
+            <tr>
+                <th>options</th>
+                <td>{{ element_detail.options  }}</td>
+            </tr>
+
+                    {%  if commande.statut=="En attente" %}
+            <tr>
+
+                <th></th>
+                <td>
+                        <form mathod="POST" action="/commande/{{ commande.id }}/cancel">
+                            <button  type="submit" class="btn btn-danger">Annuler
+
+                                <i class="fa fa-fw fa-trash"></i> </button>
+                        </form>
+                </td>
+
+            </tr>
+
+                    {% endif %}
+
+                </tbody>
+            </table>
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+</div>
+
+
+{% endblock %}

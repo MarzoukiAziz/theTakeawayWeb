@@ -1,0 +1,128 @@
+{% extends "front-office.html.twig" %}
+{% block links %}
+    <title>TheTakeaway</title>
+{% endblock %}
+{% block contenu %}
+    <section>
+        <div class="error-page-wrapper text-center" style="height: 500px">
+            <div style="background-image: url({{ asset("assets/front-office/images/topbg.jpg") }});"
+                 class="fit-bg"></div>
+
+            <h1 style="color: whitesmoke;font-size: 80px">Bienvenue</h1>
+            <img src="{{ asset('/assets/front-office/images/logo2.png') }}">
+        </div><!-- Error Page Wrapper -->
+    </section>
+
+
+    <section>
+        <div class="block blackish low-opacity">
+            <div class="fixed-bg" style="background-image: url(assets/images/parallax1.jpg);"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <div class="title1-wrapper text-center">
+                            <div class="title1-inner">
+                                <span>Le plaisir de manger chez nous </span>
+                                <h2 class="text-white" itemprop="headline">Votre Commande En 3 Etapes</h2>
+                            </div>
+                        </div>
+                        <div class="remove-ext text-center">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-4 col-lg-4">
+                                    <div class="step-box wow fadeIn" data-wow-delay="0.2s">
+                                        <i><img src="{{ asset("assets/front-office/images/resource/setp-img1.png") }}" alt="setp-img1.png" itemprop="image"> <span class="brd-rd50 red-bg">1</span></i>
+                                        <div class="setp-box-inner">
+                                            <h4 itemprop="headline">Choisir un restaurant</h4>
+                                        </div>
+                                    </div><!-- Step Box -->
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-lg-4">
+                                    <div class="step-box wow fadeIn" data-wow-delay="0.4s">
+                                        <i><img src="{{ asset("assets/front-office/images/resource/setp-img2.png") }}" alt="setp-img2.png" itemprop="image"> <span class="brd-rd50 red-bg">2</span></i>
+                                        <div class="setp-box-inner">
+                                            <h4 itemprop="headline">Consulter le menu</h4>
+                                        </div>
+                                    </div><!-- Step Box -->
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-lg-4">
+                                    <div class="step-box wow fadeIn" data-wow-delay="0.6s">
+                                        <i><img src="{{ asset("assets/front-office/images/resource/setp-img3.png") }}" alt="setp-img3.png" itemprop="image"> <span class="brd-rd50 red-bg">3</span></i>
+                                        <div class="setp-box-inner">
+                                            <h4 itemprop="headline">Passer votre Commande</h4>
+                                        </div>
+                                    </div><!-- Step Box -->
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section>
+        <div class="fit-bg " style="background-image: url(https://wallpaperaccess.com/full/6169319.jpg);"></div>
+
+        <center  >
+            <h2 style="    font-family: Poppins;
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 20px;
+    text-transform: uppercase;" class="badge badge-warning" itemprop="headline">Suiver nous sur Facebook</h2>
+
+
+        </center>
+        <center>
+            <div style="margin: 50px" class="fb-page" data-href="https://www.facebook.com/TheTakeawayEsprit/" data-tabs="timeline"
+                 data-width="800" data-height="600" data-small-header="false" data-adapt-container-width="true"
+                 data-hide-cover="false" data-show-facepile="true">
+                <blockquote cite="https://www.facebook.com/TheTakeawayEsprit/" class="fb-xfbml-parse-ignore"><a
+                            href="https://www.facebook.com/TheTakeawayEsprit/">Le Coin des Bonnes Affaires</a>
+                </blockquote>
+            </div>
+        </center>
+
+    </section>
+    <br>
+
+
+    <section>
+        <div class="block no-padding red-bg">
+            <img class="bottom-clouds-mockup" src="{{ asset("assets/front-office/images/resource/clouds2.png") }}" alt="clouds2.png" itemprop="image">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <div class="app-sec">
+                            <div class="row">
+                                <div class="col-md-4 hidden-sm col-md-offset-1 col-sm-4 col-sm-offset-0 col-lg-4 col-lg-offset-1">
+                                    <div class="app-mockup text-right overlape-110 wow fadeInUp" data-wow-delay="0.2s"><img src="{{ asset("assets/front-office/images/resource/app-mockup.png") }}" alt="app-mockup.png" itemprop="image"></div>
+                                </div>
+                                <div class="col-md-6 col-md-offset-1 col-sm-12 col-sm-offset-0 col-lg-6 col-lg-offset-1">
+                                    <div class="app-info">
+                                        <h4 itemprop="headline">
+                                            La meilleure application de livraison de nourriture</h4>
+                                        <p itemprop="description">Nous avons une équipe de lancement qui se concentre sur une ville à la fois. En fin de compte, nous sommes un marché. Pour créer un marché efficace, vous avez besoin d'une masse critique. Nous avons besoin d'assez de restaurants de qualité et variés</p>
+                                        <div class="app-download-btns">
+                                            <a class="" href="#" title="Google Play Store" itemprop="url" target="_blank"><img src="{{ asset("assets/front-office/images/resource/app-download-btn1.png") }}" alt="app-download-btn1.png" itemprop="image"></a>
+                                            <a class="" href="#" title="Apple App Store" itemprop="url" target="_blank"><img src="{{ asset("assets/front-office/images/resource/app-download-btn2.png") }}" alt="app-download-btn2.png" itemprop="image"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- App Section -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- red section -->
+{% endblock %}
+
+{% block scripts %}
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous"
+            src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v13.0&appId=1695494257316856&autoLogAppEvents=1"
+            nonce="tvb24eCW"></script>
+
+{% endblock %}

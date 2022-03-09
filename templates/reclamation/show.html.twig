@@ -1,0 +1,109 @@
+{% extends 'front-office.html.twig' %}
+
+{% block links %}
+    <title>Détails de Votre Reclamation</title>
+{% endblock %}
+{% block contenu %}
+    <div class="content p-5">
+
+        <h1 class="text-center">Détails de Votre Reclamation</h1>
+        <div style="    margin-top: 50px;font-size: 18px">
+            <a href="/reclamations">&lt;&lt;Retourner à vos réclamations</a>
+        </div>
+
+        <form method="post" action="/reclamations/{{ reclamation.id }}/delete">
+            <button style="float: right;margin-bottom: 10px" class="btn btn-danger">Supprimer</button>
+
+        </form>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Sujet</th>
+                <td>{{ reclamation.sujet }}</td>
+
+            </tr>
+            <tr>
+                <th>Statut</th>
+                {% if (reclamation.statut =="Ouvert") %}
+                    <td>
+                        <span class="bg-warning" style="padding:4px 8px;border-radius: 8px">Ouvert</span>
+                    </td>
+                {% else %}
+                    <td>
+                        <span class="bg-danger" style="color:white;padding:4px 8px;border-radius: 8px">Fermé</span>
+                    </td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ reclamation.date ? reclamation.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Heure</th>
+                <td>{{ reclamation.heure ? reclamation.heure|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Contenu</th>
+                <td>{{ reclamation.contenu }}</td>
+            </tr>
+
+
+            </tbody>
+        </table>
+        <h3 class="badge-primary badge ">Réponses</h3>
+        <div class="container justify-content-center mt-100 mb-100">
+            <div class="row">
+                <div class="col-md-12">
+                        <div class="comment-widgets m-b-20">
+                            {% for reponse in reponses %}
+                                <div style="display: flex" class=" flex-row comment-row">
+                                    {% if('ROLE_ADMIN' not in reponse.author.roles) %}
+                                        <div style="margin: 20px" class="p-2"><span class="round"><img
+                                                        src="{{ asset("assets/client.png") }}" alt="user"
+                                                        width="50"></span></div>
+                                    {% else %}
+                                        <div style="margin: 20px" class="p-2"><span class="round"><img
+                                                        src="{{ asset("assets/admin.png") }}" alt="user"
+                                                        width="50"></span></div>
+
+                                    {% endif %}
+                                    <div class="comment-text w-100">
+                                        <h4>{% if('ROLE_ADMIN' not  in reponse.author.roles) %}
+                                                You
+                                            {% else %}
+                                                Admin
+                                            {% endif %}</h4>
+                                        <div class="comment-footer"><span
+                                                    class="date">{{ reponse.date ? reponse.date|date('d M Y') : '' }}</span>
+                                            <span class="label label-info">{{ reponse.heure ? reponse.heure|date('H:i') : '' }}</span>
+                                            <span class="action-icons"> </span></div>
+                                        <p class="m-b-5 m-t-10">{{ reponse.contenu }}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                            {% endfor %}
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        {{ form_start(f) }}
+
+        {% if(reclamation.statut =="Ouvert") %}
+            <form>
+
+                <div style="margin-top: 50px" class="form-group">
+                    {{ form_label(f.contenu, 'Nouveau Reponse',{'attr': {'class': 'form-label'}} ) }}
+                    {{ form_widget(f.contenu , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Le contenu de votre réponse','rows':'3'}} ) }}
+                    {{ form_errors(f.contenu) }}
+                </div>
+                <button type="submit" style="float: right" class="btn btn-success">Ajouter</button>
+                <button type="reset" class="btn btn-warning">Recommencer</button>
+
+                {{ form_end(f) }}
+
+            </form>
+        {% endif %}
+    </div>
+
+{% endblock %}

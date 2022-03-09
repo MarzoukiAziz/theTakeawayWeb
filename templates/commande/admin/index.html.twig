@@ -1,0 +1,79 @@
+{% extends 'back-office.html.twig' %}
+
+{% block links %}
+    <title>Les Commandes</title>
+{% endblock %}
+
+{% block contenu %}
+    <h1>Commandes</h1>
+    <!--
+    <form method="POST">
+        <input type="text" name="Restaurant">
+        <input type="submit" value="recherche">
+    </form>-->
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Réference</th>
+            <th>Restaurant</th>
+            <th>Client</th>
+            <th>PrixTotal</th>
+            <th>Statut</th>
+            <th>Date</th>
+            <th>Methode</th>
+            <th>PointUtilisees</th>
+            <th>StatutPaiement</th>
+            <th>Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for commande in cmds %}
+            <tr>
+
+                <td>{{ commande.id }}</td>
+                <td>{{ commande.restaurant.nom }}</td>
+                <td>{{ commande.client.nom }} {{ commande.client.prenom }}</td>
+                <td>{{ commande.prixTotal }} Dt</td>
+                {% if commande.statut== 'En attente' %}
+                    <td><span class="badge badge-warning">En attente</span></td>
+
+                {% endif %}
+                {% if commande.statut== 'Accepté' %}
+                    <td><span class="badge badge-success" >Accepté</span></td>
+
+                {% endif %}
+                {% if commande.statut== 'Rejeté' %}
+                    <td><span class="badge badge-danger" >Rejeté</span></td>
+
+                {% endif %}
+
+                {% if commande.statut== 'Annulé' %}
+                    <td><span class="badge badge-danger" >Annulé</span></td>
+
+                {% endif %}
+                {% if commande.statut== 'En traitement' %}
+                    <td><span class="badge badge-primary" >En traitement</span></td>
+
+                {% endif %}
+                {% if commande.statut== 'Rejeté' %}
+                    <td><span class="badge badge-secondary" >Complete</span></td>
+
+                {% endif %}
+                <td>{{ commande.date ? commande.date|date('Y-m-d') : '' }}</td>
+                <td>{{ commande.methode }}</td>
+                <td>{{ commande.pointUtilisees }} Pt</td>
+                <td><span class="badge badge-success" >Succés</span></td>
+                <td>
+                    <a href="/admin/commandes/{{ res.id }}/{{ commande.id }}"><button class="btn btn-primary">Details</button> </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">pas de commandes</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+     <button class="btn-info">{{ knp_pagination_render(cmds) }}</button>
+    </table>
+{% endblock %}

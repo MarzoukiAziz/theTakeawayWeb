@@ -1,0 +1,54 @@
+{% extends 'Dasbord-User.html.twig' %}
+
+{% block links %}
+ <title>Carte Bancaire</title>
+{% endblock %}
+
+{% block contenu %}
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">Mes cartes</li>
+            </ol>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Numero</th>
+                    <th>Nomcomplet</th>
+                    <th>Date/exp</th>
+                    <th>Cvv</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for cart_bancaire in cart_bancaires %}
+                    <tr>
+                        <td>{{ cart_bancaire.id }}</td>
+                        <td>{{ cart_bancaire.numero }}</td>
+                        <td>{{ cart_bancaire.nomcomplet }}</td>
+                        <td>{{ cart_bancaire.datexp }}</td>
+                        <td>{{ cart_bancaire.cvv }}</td>
+                        <td style="display: flex">
+                            <div style="padding: 10px; ">
+                                {{ include('cart_bancaire/_delete_form.html.twig') }}
+                            </div>
+                            <a class="btn btn-primary" href="{{ path('cart_bancaire_edit', {'id': cart_bancaire.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <a  class="btn btn-primary" href="{{ path('cart_bancaire_new') }}">Create new</a>
+        </div>
+    </div>
+{% endblock %}

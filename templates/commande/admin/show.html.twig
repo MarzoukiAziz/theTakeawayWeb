@@ -1,0 +1,137 @@
+{% extends 'back-office.html.twig' %}
+
+{% block links %}
+    <title>Commande {{ commande.id }}  </title>
+{% endblock %}
+
+{% block contenu %}
+    <h1>Commande N°{{ commande.id }}</h1>
+
+
+    <table class="table">
+        <tbody>
+
+        <tr>
+            <th>PrixTotal</th>
+            <td>{{ commande.prixTotal }} Dt</td>
+        </tr>
+        <tr>
+            <th>Statut</th>
+            {% if commande.statut== 'En attente' %}
+                <td><span class="badge badge-warning">En attente</span></td>
+
+            {% endif %}
+            {% if commande.statut== 'Accepté' %}
+                <td><span class="badge badge-success" >Accepté</span></td>
+
+            {% endif %}
+            {% if commande.statut== 'Rejeté' %}
+                <td><span class="badge badge-danger" >Rejeté</span></td>
+
+            {% endif %}
+
+            {% if commande.statut== 'Annulé' %}
+                <td><span class="badge badge-danger" >Annulé</span></td>
+
+            {% endif %}
+            {% if commande.statut== 'En traitement' %}
+                <td><span class="badge badge-primary" >En traitement</span></td>
+
+            {% endif %}
+            {% if commande.statut== 'Rejeté' %}
+                <td><span class="badge badge-secondary" >Complete</span></td>
+
+            {% endif %}
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{{ commande.date ? commande.date|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Methode</th>
+            <td>{{ commande.methode }}</td>
+        </tr>
+        <tr>
+            <th>PointUtilisees</th>
+            <td>{{ commande.pointUtilisees }} Pt</td>
+        </tr>
+        <tr>
+            <th>StatutPaiement</th>
+            <td><span class="badge badge-success" >Succés</span></td>
+        </tr>
+        <tr>
+            <th></th>
+            <th>
+                <form method="post" action="{{ path("commande-update-admin",{"cid":commande.id,'rid': commande.restaurant.id}) }}">
+                    <select name="statut">
+                        <option value="En attente">En attente</option>
+                        <option value="Accepté">Accepté</option>
+                        <option value="Rejeté">Rejeté</option>
+                        <option value="En traitement">En traitement</option>
+                        <option value="Pret à ramasser">Pret à ramasser</option>
+                        <option value="Complete">Complete</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+                <form method="post" action="{{ path("commande-delete-admin",{"cid":commande.id,'rid': commande.restaurant.id}) }}">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+
+
+            </th>
+        </tr>
+        </tbody>
+    </table>
+
+
+  <div class="container">
+      {% for element_detail in commande.details %}
+          <h4 class="card-subtitle mb-2 text-muted">Element N° {{ element_detail.id }}</h4>
+
+          <table class="table table-striped">
+              <tbody>
+              <tr>
+                  <td>Element</td>
+                  <td>{{ element_detail.elementId.nom }}</td>
+              </tr>
+              <tr>
+                  <th>Quantite</th>
+                  <td>{{ element_detail.quantite }}</td>
+              </tr>
+              <tr>
+                  <th>Options</th>
+                  <td>{{ element_detail.options }}</td>
+              </tr>
+              <tr>
+                  {#  <td>Mettre à jour</td>
+               <td> <a href="{{ path("element_details_edit",{'id':element_detail.id}) }}">Mettre à jour</a>
+                   {{ include('element_details/_delete_form.html.twig') }}
+
+               </td>
+                  #}
+                  <th><form method="post" action="{{ path("element_details_edit",{'id':element_detail.id}) }}">
+                          <button type="submit" class="btn btn-info">Update</button>
+                      </form></th>
+                  <th>
+                      <form method="post" action="{{ path('element_details_delete', {'id': element_detail.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                          <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ element_detail.id) }}">
+                          <button class="btn btn-danger">Delete</button>
+                      </form>
+                  </th>
+
+              </tr>
+              </tbody>
+          </table>
+      {% endfor %}
+  </div>
+
+
+
+
+
+    {# <a href="{{ path('commande_index') }}">back to list</a> #}
+
+    {# <a href="{{ path('commande_edit', {'id': commande.id}) }}">edit</a> #}
+
+    {# {{ include('commande/_delete_form.html.twig') }} #}
+{% endblock %}

@@ -1,0 +1,40 @@
+
+{% extends "back-office.html.twig" %}
+{% block links %}
+    <title>Modifier Facture</title>
+{% endblock %}
+
+{% block contenu %}
+    <div class="card m-b-20">
+        <div class="card-header">
+            <h3 cl  ass="card-title">Modifier une Facture : </h3>
+
+        </div>
+
+        <div class="card-body">
+            {{ form_start(f)}}
+            <form >
+                <div class="form-group">
+                    <label class="form-label">Quantité</label>
+                    {{ form_widget(f.quantite , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Numéro'}} ) }}
+                    {{ form_errors(f.quantite) }}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Prix</label>
+                    {{ form_widget(f.prixUnitaire , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Nombre des places'}} ) }}
+                    {{ form_errors(f.prixUnitaire) }}
+                    <button type="SubmitType" class="btn btn-primary " onClick="validateSubmit()">Modifier</button>
+
+                </div>
+
+
+
+                </div>
+
+            </form>
+            {{ form_end(f) }}
+
+        </div>
+    </div>
+{% endblock %}

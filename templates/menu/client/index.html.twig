@@ -1,0 +1,77 @@
+{% extends 'front-office.html.twig' %}
+{% block links %}
+<title>Menu</title>
+
+{% endblock %}
+
+
+{% block contenu  %}
+
+
+
+        <div class="bread-crumbs-wrapper">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/" title="" itemprop="url">Home</a></li>
+                    <li class="breadcrumb-item active">our menus</li>
+                </ol>
+            </div>
+        </div>
+
+        <section>
+            <div class="block less-spacing gray-bg ">
+
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+
+                            <div class="sec-box">
+                                <div class="remove-ext">
+                                    <div class="row">
+                                        {% for menu_element in menu_elements %}
+                                        <div class="col-md-4 col-sm-6 col-lg-4">
+                                            <div class="popular-dish-box style2 wow fadeIn" data-wow-delay="0.2s">
+                                                <div class="popular-dish-thumb">
+                                                    <a  title="" itemprop="url"><img src="{{ asset('couvertures/'~ menu_element.image ) }}" alt="popular-dish-img1.jpg" itemprop="image" style="width: 370px;height: 236px"></a>
+                                                    <span class="post-rate red-bg brd-rd2"><i class="fa fa-fire"></i> Hot!</span>
+                                                </div>
+                                                <div class="popular-dish-info">
+                                                    <h4 itemprop="headline"><a  title="" itemprop="url">{{ menu_element.nom }}</a></h4>
+                                                    <p itemprop="description">{{ menu_element.description }}</p>
+                                                    <span class="price">{{ menu_element.prix }}Dt</span>
+                                                    <a class="brd-rd4 " href="{{ path("cart_add", {id :menu_element.id}) }}" title="Ajouter au panier" itemprop="url">Ajouter au panier</a>
+
+                                                </div>
+                                            </div><!-- Popular Dish Box -->
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </section>
+
+
+
+
+
+
+    </main><!-- Main Wrapper -->
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+    <script src="assets/js/main.js"></script>
+    </body>
+
+
+    </html>
+{% endblock %}

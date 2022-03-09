@@ -1,0 +1,30 @@
+{% extends 'back-office.html.twig' %}
+
+{% block links %}
+    <title>
+        Modifier l'utilisateur
+    </title>
+{% endblock %}
+
+
+
+{% block contenu %}
+    <div class="card">
+        <div class="card-title text-center">
+           <h2>Modifier l'utilisateur</h2>
+        </div>
+        <div class="card-body">
+            {{ form_start(f) }}
+            <div class="container"style="justify-content: space-between">
+                <div style="position: relative;display: inline-block ;margin: 10px 30px">
+                    {{ form_widget(f.roles) }}
+                </div>
+                <div style="position: relative;display: inline-block">
+                    Status:
+                    {{ form_widget(f.status) }}
+                </div>
+            </div>
+            {{ form_end(f) }}
+        </div>
+    </div>
+{% endblock  %}

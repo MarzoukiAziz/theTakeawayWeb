@@ -1,0 +1,245 @@
+{% extends 'front-office.html.twig' %}
+
+
+{% block links %} <title>{{ restaurant.nom }}</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+    .a{
+        position: relative;
+        display: inline-block;
+        padding: 25px 30px;
+        margin: 40px 0;
+        color: #03e9f4;
+        background-color: #0c0c0c;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: 0.5s;
+        letter-spacing: 4px;
+        overflow: hidden;
+        margin-right: 50px;
+
+    }
+    .a:hover{
+        background: #03e9f4;
+        color: #050801;
+        box-shadow: 0 0 5px #03e9f4,
+        0 0 25px #03e9f4,
+        0 0 50px #03e9f4,
+        0 0 200px #03e9f4;
+        -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+    }
+    .a:nth-child(1){
+        filter: hue-rotate(270deg);
+    }
+    .a:nth-child(2){
+        filter: hue-rotate(110deg);
+    }
+    .a span{
+        position: absolute;
+        display: block;
+    }
+    .a span:nth-child(1){
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg,transparent,#03e9f4);
+        animation: animate1 1s linear infinite;
+    }
+    @keyframes animate1{
+        0%{
+            left: -100%;
+        }
+        50%,100%{
+            left: 100%;
+        }
+    }
+    .a span:nth-child(2){
+        top: -100%;
+        right: 0;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(180deg,transparent,#03e9f4);
+        animation: animate2 1s linear infinite;
+        animation-delay: 0.25s;
+    }
+    @keyframes animate2{
+        0%{
+            top: -100%;
+        }
+        50%,100%{
+            top: 100%;
+        }
+    }
+    .a span:nth-child(3){
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(270deg,transparent,#03e9f4);
+        animation: animate3 1s linear infinite;
+        animation-delay: 0.50s;
+    }
+    @keyframes animate3{
+        0%{
+            right: -100%;
+        }
+        50%,100%{
+            right: 100%;
+        }
+    }
+
+
+    .a span:nth-child(4){
+        bottom: -100%;
+        left: 0;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(360deg,transparent,#03e9f4);
+        animation: animate4 1s linear infinite;
+        animation-delay: 0.75s;
+    }
+    @keyframes animate4{
+        0%{
+            bottom: -100%;
+        }
+        50%,100%{
+            bottom: 100%;
+        }
+    }
+</style>
+
+{% endblock %}
+
+
+{% block contenu %}
+
+
+
+    <div class="bread-crumbs-wrapper">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/" title="" itemprop="url">Home</a></li>
+                <li class="breadcrumb-item"><a href="/restaurants" title="" itemprop="url">Restaurant</a></li>
+                <li class="breadcrumb-item active">{{ restaurant.nom }}</li>
+            </ol>
+        </div>
+    </div>
+    <section>
+        <div class="block gray-bg top-padd30">
+            <div class="container p-5">
+                <div class="row">
+                    <div class="sec-box">
+                        <div class="sec-wrapper">
+                            <div class="row">
+                                <div class="restaurant-detail-wrapper">
+                                    <div class="restaurant-detail-info">
+
+                                        <div class="restaurant-detail-thumb">
+                                            <ul class="restaurant-detail-img-carousel">
+                                                {% for img in restaurant.images %}
+                                                    <li><img src="{{ asset('couvertures/'~ img) }}"
+                                                             style="width: 600px;height: 400px">
+                                                    </li>
+
+                                                {% endfor %}
+                                            </ul>
+                                            <ul class="restaurant-detail-thumb-carousel">
+                                                {% for img in restaurant.images %}
+                                                    <li><img class="brd-rd3"
+                                                             src="{{ asset('couvertures/'~ img) }}"
+                                                             style="width: 100px;height: 100px"
+                                                             itemprop="image"></li>
+
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <div class="restaurant-detail-title">
+                                            <h1 itemprop="headline">{{ restaurant.nom }}</h1>
+                                            <div class="info-meta">
+
+                                                        <span><a href="#" title="" itemprop="url">Restaurant</a>, <a
+                                                                    href="#" title="" itemprop="url">Cafe</a></span>
+                                            </div>
+                                            <div class="rating-wrapper" style="margin-right: 50px">
+                                                <a class="gradient-brd brd-rd2" href="#" title=""
+                                                   itemprop="url"><i class="fa fa-heart"></i>
+                                                    <i>{{ restaurant.favoris | length }}</i></a>
+
+                                            </div>
+                                        </div>
+                                        <div >
+
+                                            <a class="a" href="/menu">
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                Menu
+                                            </a>
+                                            <a class="a"
+                                               href="{{ path("reserve",{"rid":restaurant.id}) }}">
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                                Réserver
+                                            </a>
+
+                                        </div>
+                                        <table class="table">
+                                            <tbody>
+                                            <tr>
+                                                <th>Adresse</th>
+                                                <td>{{ restaurant.adresse }}</td>
+
+                                            </tr>
+                                            <tr>
+                                                <th>Description</th>
+                                                <td>{{ restaurant.description }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th> Horaire</th>
+                                                <td>          {{ restaurant.heureOuverture|date("H:i") }} -  {{ restaurant.heureFermeture|date("H:i") }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Téléphone</th>
+                                                <td>{{ restaurant.telephone }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Type</th>
+                                                <td>Brunch, Lunch, Dinner</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Alcohol</th>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Credit-cards</th>
+                                                <td>Yes</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Wi-Fi</th>
+                                                <td>Yes</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Outdoor Seating</th>
+                                                <td>Yes</td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div ><iframe src="https://maps.google.com/maps?&q= {{ restaurant.adresse }}&output=embed "
+                                                  width="100%" height="500px"></iframe> </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

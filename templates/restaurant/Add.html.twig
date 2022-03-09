@@ -1,0 +1,34 @@
+
+{% extends 'back-office.html.twig' %}
+
+
+{% block links %} <title>Restaurants</title>{% endblock %}
+
+
+{% block contenu %}
+
+    {% block title %}<ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/admin/restaurants">Restaurants</a>
+        </li>
+        <li class="breadcrumb-item active">Ajout Restaurant</li>
+    </ol>{% endblock %}
+
+{{ form_start(form) }}
+    {{ form_row(form.nom, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_row(form.adresse, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_row(form.description, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_row(form.heureOuverture, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_row(form.heureFermeture, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_row(form.architecture, { 'attr': {'class': 'form-control'} }) }}
+    {{ form_widget(form) }}
+
+    <button class="btn_1 gray approve">{{ button_label|default('Save') }}</button>
+    {{ form_end (form)}}
+
+    <a class="btn_1 gray approve" href="{{ path('restaurantsAdmin') }}"><i class="fa fa-fw fa-reply"></i> back to list</a>
+
+{% endblock %}

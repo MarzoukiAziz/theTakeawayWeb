@@ -1,0 +1,71 @@
+{% extends 'back-office.html.twig' %}
+
+
+{% block links %} <title>Restaurants</title>{% endblock %}
+
+
+{% block contenu %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/admin">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="/admin/restaurants">Restaurants</a>
+    </li>
+    <li class="breadcrumb-item active">{{ restaurant.nom }}</li>
+</ol>
+
+{% block body %}
+    <h1>Restaurant</h1>
+
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ restaurant.id }}</td>
+        </tr>
+        <tr>
+            <th>Nom</th>
+            <td>{{ restaurant.nom }}</td>
+        </tr>
+        <tr>
+            <th>Adresse</th>
+            <td>{{restaurant.adresse}}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ restaurant.description  }}</td>
+        </tr>
+        <tr>
+            <th>Heure Ouverture</th>
+            <td>{{  restaurant.heureOuverture |date ('h:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Heure Fermeture</th>
+            <td>{{ restaurant.heureFermeture |date('h:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Architecture</th>
+            <td>{{ restaurant.architecture }}</td>
+        </tr>
+        <tr>
+            <th>Telephone</th>
+            <td>{{ restaurant.telephone }}</td>
+        </tr>
+        <tr>
+            <th>Images</th>
+            <td> {% for img in restaurant.images %}
+                    <img src="{{ asset('couvertures/'~ img) }}" style="width: 100px;height: 100px">
+                {% endfor %}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="btn_1 gray approve" href="{{ path('restaurantsAdmin') }}"><i class="fa fa-fw fa-reply"></i>back to list</a>
+
+    <a class="btn_1 gray approve" href="{{ path('update', {'id': restaurant.id}) }}">EDIT</a>
+    <a class="btn_1 gray delete" href="{{ path('del',{'id':restaurant.id}) }}" ><i class="fa fa-fw fa-times-circle-o"></i>DELETE</a>
+
+
+{% endblock %}
+{% endblock %}
