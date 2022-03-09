@@ -1,0 +1,52 @@
+{% extends 'back-office.html.twig' %}
+
+{% block links %}
+    <title> Nouveau Article</title>
+
+{% endblock %}
+{% block contenu %}
+
+
+    <div class="card-header " style="font-size: 22px;font-weight: bold;">
+        <i class="fa fa-table"></i> NEW ARTICLE
+
+    </div>
+
+
+    {{ form_start(form) }}
+    <form>
+
+        <div class="form-group">
+            {#        {{ form_widget(form) }}#}
+
+            {{ form_label(form.title, 'titre',{'attr': {'class': 'form-label'}} ) }}
+            {{ form_widget(form.title , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'saisie le titre '}} ) }}
+            {{ form_errors(form.title) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.contenu, 'contenu',{'attr': {'class': 'form-label'}} ) }}
+            {{ form_widget(form.contenu , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'saisie le contenu'}} ) }}
+            {{ form_errors(form.contenu) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.banner, 'image',{'attr': {'class': 'form-label'}} ) }}
+            {{ form_widget(form.banner , {'attr': {'class': 'saisie le contenu'}} ) }}
+            {{ form_errors(form.banner) }}
+        </div>
+        <button type="SubmitType" class="btn btn-primary " onClick="validateSubmit()">Ajouter</button>
+
+        {{ form_end(form) }}
+    </form>
+
+
+    <div class="form-group mb-0">
+        <div class="checkbox checkbox-secondary" style="float: right">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+
+    <a href="{{ path('article_index') }}"><button class="btn btn-outline-primary ">back to list</button></a>
+
+
+{% endblock %}

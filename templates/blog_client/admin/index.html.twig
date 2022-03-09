@@ -1,0 +1,79 @@
+{% extends 'back-office.html.twig' %}
+{% block links %}
+    <title> Blog</title>
+
+{% endblock %}
+{% block contenu %}
+    <div class="card mb-3" >
+        <div class="card-header " style="font-size: 22px;font-weight: bold;">
+            <i class="fa fa-table"></i> LES BLOGS
+        </div>
+            <div class="col-md-3">
+                {% include 'blog_client/admin/filter.html.twig' %}
+            </div>
+        <div class="card-body" style="text-align: center">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr style="background-color: #212529;color: whitesmoke"></th>
+                        <th>id blog</th>
+                        <th>title</th>
+                        <th>image</th>
+                        <th>statut</th>
+                        <th>contenu</th>
+                        <th>Date</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+
+        <body>
+        </div>
+        {% for blog_client in blog_clients %}
+            <tr>
+                <td>{{ blog_client.Id }}</td>
+                <td>{{ blog_client.title }}</td>
+                <td><img src="{{ asset('couvertures/'~blog_client.image) }}"alt="image"  class="card-img-top" ></td>
+            <td>{{ blog_client.statut }}</td>
+                <td>{{ blog_client.contenu| striptags | slice(0, 100) }}...</td>
+                <td>{{ blog_client.date ? blog_client.date|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('blog_admin_show', {'id': blog_client.id}) }}"><button class="btn btn-primary">Consulter</button></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Pas de blog trouvé! </td>
+            </tr>
+        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+        <!-- Optional JavaScript; choose one of the two! -->
+
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <!-- Option 2: Separate Popper and Bootstrap JS -->
+        <!--
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+        -->
+
+        </body>
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'front-office.html.twig' %}
+{% block links %}
+    <title> Articles</title>
+
+{% endblock %}
+{% block contenu %}
+
+    {% block body %}
+
+        <section>
+            <div class="block">
+                <div class="fit-bg"
+                     style="background-image: url(https://www.wallsauce.com/uploads/wallsauce-com/images/thumbs/696/6cce84ef054959a25287f88c037e7e89e78cec2f_800__R_N_90.jpg);"></div>
+                <div class="page-title-wrapper text-center">
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <div class="page-title-inner">
+                            <h1 itemprop="headline">The Takeaway Articles </h1>
+                            <span>Where Experts Talk</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+            <div class="container">
+                <div class="row g-3">
+                    {% for article in articles %}
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card">
+                                <img src="{{ asset('couvertures/'~article.banner) }}" class="card-img-top" >
+
+                                <div class="card-body">
+                                    <small><p>{{ article.date ? article.date|date('d M Y') : '' }}</p></small><br>
+
+                                    <h4 class="card-title">{{ article.title }}</h4>
+
+                                    <p class="card-text"><b>{{ article.contenu | striptags | slice(0, 100) }} ... </b></p><br>
+                                    <a href="{{ path('article_client_show', {'id': article.id}) }}"><button class="btn btn-warning ">show details</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+
+                        <p >no records found</p>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+    {% endblock %}
+{% endblock %}

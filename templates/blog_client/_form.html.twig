@@ -1,0 +1,35 @@
+{{ form_start(form) }}
+<section style="width: 50%; padding: 7px;display: table;margin:30px auto;">
+
+<div>
+    <span>Titre</span>
+    {{ form_widget(form.title , {'attr': {'class': '','style':'display:flex;' , 'placeholder' : 'Donner le titre'}}) }}
+</div>
+
+    <div>
+        <span style="">Contenuu</span>
+        {{ form_widget(form.contenu, {'attr': {'class': '','style':'display:flex;' , 'placeholder' : 'Donner le Contenu'}}) }}
+    </div>
+
+    <div>
+        <span>Status</span>
+        {{ form_widget(form.statut, {'attr': {'class': '','style':'display:flex;' , 'placeholder' : 'Donner le Stqtus'}}) }}
+    </div>
+
+    <div>
+        <span>Image</span>
+        {{ form_widget(form.image) }}
+    </div>
+    <div>
+        <span>Titre</span>
+        {{ form_widget(form.author) }}
+    </div>
+
+
+
+
+
+    <button class="btn">{{ button_label|default('Save') }}</button>
+
+</section>
+{{ form_end(form) }}

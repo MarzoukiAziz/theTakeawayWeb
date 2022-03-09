@@ -1,0 +1,54 @@
+{% extends 'back-office.html.twig' %}
+{% block links %}
+    <title> Articles</title>
+
+{% endblock %}
+{% block contenu %}
+
+
+    {% block body %}
+
+
+
+        <div class="card mb-3">
+            <div class="card-header " style="font-size: 22px;font-weight: bold;">
+                <i class="fa fa-table"></i> LES ARTICLES
+                <a class="float-right" href="{{ path('article_new') }}">
+                    <button class="btn btn-success float-md-left">create new article</button>
+                </a>
+            </div>
+
+
+
+            <div class="container">
+                <div class="row g-3">
+                    {% for article in articles %}
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card">
+                                <img src="{{ asset('couvertures/'~article.banner) }}" class="card-img-top">
+                                <div class="card-body">
+                                    <small><p>{{ article.date ? article.date|date('Y-m-d') : '' }}</p></small><br>
+                                    <h5 class="card-title">{{ article.title }}</h5>
+                                    <p class="card-text"><b>{{ article.contenu | striptags | slice(0, 100) }} ...</b></p><br>
+                                    <a href="{{ path('article_show', {'id': article.id}) }}">
+                                        <button class="btn btn-primary">show details</button>
+                                    </a>
+                                    <a href="{{ path('article_edit', {'id': article.id}) }}">
+                                        <button class="btn btn-primary">edit</button>
+                                    </a>
+                                    <a> {{ include('article/_delete_form.html.twig') }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+
+                        <p>no records found</p>
+                    {% endfor %}
+
+                </div>
+
+
+
+        </div>
+    {% endblock %}
+{% endblock %}

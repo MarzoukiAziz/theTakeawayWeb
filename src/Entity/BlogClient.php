@@ -6,6 +6,7 @@ use App\Repository\BlogClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @ORM\Entity(repositoryClass=BlogClientRepository::class)
@@ -21,11 +22,13 @@ class BlogClient
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     *
      */
     private $contenu;
 
@@ -33,7 +36,6 @@ class BlogClient
      * @ORM\Column(type="date")
      */
     private $date;
-
 
 
     /**
@@ -53,9 +55,9 @@ class BlogClient
     private $commentaires;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $imageBlog;
+    private $image;
 
 
     public function __construct()
@@ -103,7 +105,6 @@ class BlogClient
 
         return $this;
     }
-
 
 
     public function getStatut(): ?string
@@ -160,16 +161,20 @@ class BlogClient
         return $this;
     }
 
-    public function getImageBlog(): ?string
+    public function getImage(): ?string
     {
-        return $this->imageBlog;
+        return $this->image;
     }
 
-    public function setImageBlog(string $imageBlog): self
+    public function setImage($image): self
     {
-        $this->imageBlog = $imageBlog;
+        $this->image = $image;
 
         return $this;
+    }
+    public function __toString()
+    {
+       return $this->title;
     }
 
 

@@ -1,0 +1,101 @@
+{% extends 'back-office.html.twig' %}
+{% block links %}
+    <title> Blog</title>
+
+{% endblock %}
+{% block contenu %}
+
+
+
+    <div class="card mb-3" >
+    <div class="card-header " style="font-size: 22px;font-weight: bold;">
+        <i class="fa fa-table"></i> BLOG DU CLIENT
+
+    </div>
+
+
+    {% if(blog_client.statut =="Ouvert") %}
+        <form method="post" action="">
+            <button style="float: right;margin-bottom: 10px" class="btn btn-warning"><a href="{{ path('admin-close-blog' , {'id' :blog_client.id }) }}">Fermer</a></button>
+
+        </form>
+    {% else %}
+        <form method="post" action="">
+            <button style="float: right;margin-bottom: 10px" class="btn btn-primary"><a href="{{ path('admin-reopen-blog' , {'id' :blog_client.id }) }}">Reopen</a></button>
+
+        </form>
+    {% endif %}
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>title</th>
+            <td>{{ blog_client.title }}</td>
+
+        </tr>
+        <tr>
+            <th>image du blog</th>
+            <td><img src="{{ asset('couvertures/'~ blog_client.image) }}" style="width: px;height: Px"  ></td>
+        </tr>
+
+        <tr>
+            <th>Statut</th>
+            {% if (blog_client.statut =="Ouvert") %}
+                <td>
+                    <span style="background-color: darkgreen;color: whitesmoke;padding:4px 8px;border-radius: 8px">Ouvert</span>
+                </td>
+            {% else %}
+                <td>
+                    <span style="background-color: darkred;color: whitesmoke;padding:4px 8px;border-radius: 8px">Fermé</span>
+                </td>
+            {% endif %}
+        </tr>
+        <tr>
+            <th> client</th>
+            <td>{{ blog_client.author.nom }}</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{{ blog_client.date ? blog_client.date|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Contenu</th>
+            <td>{{blog_client.contenu }}</td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+
+
+    <a href="{{ path('blog_admin_index') }}"><button class="btn btn-primary">back to list</button></a>
+    <a> {{ include('blog_client/admin/delete.html.twig') }}</a>
+
+    <div class="col-md-12">
+        <div class="card-body">
+            <h5>Réponses :</h5>
+        </div>
+        <div class="comment-widgets m-b-20">
+            {% for commentaire in commentaires %}
+                <hr>
+                <div style="display: flex" class=" flex-row comment-row">
+
+                        <div style="margin: 20px" class="p-2"><span class="round"><img
+                                        src="{{ asset("assets/client.png") }}" alt="user"
+                                        width="50"></span></div>
+
+                    <div class="comment-text w-100">
+                        <h5>{{ commentaire.author.nom }}</h5>
+                        <div class="comment-footer"><span
+                                    class="date">{{ commentaire.date ? commentaire.date|date('d M Y') : '' }}</span>
+                            <span class="action-icons"> </span></div>
+                        <p class="m-b-5 m-t-10">{{ commentaire.contenu }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+{% endblock %}

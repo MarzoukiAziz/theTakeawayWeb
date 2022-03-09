@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,11 +22,14 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Entrez LE TITRE")
      */
     private $title;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Type("\DateTime")
+     * @Assert\GreaterThan("today")
      */
     private $date;
 
@@ -33,6 +37,7 @@ class Article
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Entrez LA DESCRIPTION")
      */
     private $contenu;
 
@@ -42,7 +47,7 @@ class Article
     private $banner;
 
     /**
-     * @ORM\ManyToOne(targetEntity=client::class, inversedBy="articles")
+     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;
@@ -90,6 +95,7 @@ class Article
     }
 
 
+
     public function getContenu(): ?string
     {
         return $this->contenu;
@@ -107,7 +113,7 @@ class Article
         return $this->banner;
     }
 
-    public function setBanner(string $banner): self
+    public function setBanner($banner): self
     {
         $this->banner = $banner;
 

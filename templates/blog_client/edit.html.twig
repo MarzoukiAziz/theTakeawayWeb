@@ -1,0 +1,20 @@
+{% extends 'front-office.html.twig' %}
+
+{% block links %}
+    <title>Edit Blog</title>
+
+{% endblock %}
+
+{% block contenu %}
+
+
+{% block body %}
+    <h1>Edit BlogClient</h1>
+
+    {{ include('blog_client/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('blog_client_index') }}">back to list</a>
+
+    {{ include('blog_client/_delete_form.html.twig') }}
+{% endblock %}
+{% endblock %}

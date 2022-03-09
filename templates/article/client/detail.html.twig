@@ -1,0 +1,55 @@
+{% extends 'front-office.html.twig' %}
+{% block links %}
+    <title> {{ article.title }}</title>
+
+{% endblock %}
+{% block contenu %}
+
+
+    {% block body %}
+
+
+
+        <section>
+            <div class="block less-spacing gray-bg top-padd30">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="sec-box">
+                                <div class="col-md-12 col-sm-12 col-lg-12">
+                                    <div class="blog-detail-wrapper">
+                                        <div class="blog-detail-thumb wow fadeIn" data-wow-delay="0.2s">
+                                            <td><img src="{{ asset('couvertures/'~ article.banner) }}" style="height: 500px"  ></td>
+
+                                        </div>
+                                        <div class="blog-detail-info">
+                                            <span class="post-detail-date red-clr"><i class="fa fa-clock-o"></i>{{ article.date ? article.date|date('d M Y') : '' }}</span>
+                                            <div class="post-meta">
+                                            </div>
+                                        </div>
+                                        <tr>
+                                            <h2 itemprop="headline" >{{ article.title }}</h2>
+                                            <p itemprop="description">{{ article.contenu }}</p>
+                                        </tr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+        <a href="{{ path('article_client_index') }}"><button class="btn btn-primary">back to list</button></a>
+
+
+
+
+    {% endblock %}
+{% endblock %}

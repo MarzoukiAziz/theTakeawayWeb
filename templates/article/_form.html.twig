@@ -1,0 +1,24 @@
+{{ form_start(form) }}
+<form>
+
+    <div class="form-group">
+        {#        {{ form_widget(form) }}#}
+
+        {{ form_label(form.title, 'titre',{'attr': {'class': 'form-label'}} ) }}
+        {{ form_widget(form.title , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'saisie le titre '}} ) }}
+        {{ form_errors(form.title) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.contenu, 'contenu',{'attr': {'class': 'form-label'}} ) }}
+        {{ form_widget(form.contenu , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'saisie le contenu'}} ) }}
+        {{ form_errors(form.contenu) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.banner, 'image',{'attr': {'class': 'form-label'}} ) }}
+        {{ form_widget(form.banner , {'attr': {'class': 'saisie le contenu'}} ) }}
+        {{ form_errors(form.banner) }}
+    </div>
+<button class="btn btn-warning">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+

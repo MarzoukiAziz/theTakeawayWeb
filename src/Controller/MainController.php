@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\BlogClient;
 use App\Entity\Commande;
 use App\Entity\Reclamation;
 use App\Entity\Reservation;
@@ -53,12 +54,12 @@ class MainController extends AbstractController
         //shortcuts data
         $reservationsEnAttente=$this->getDoctrine()->getRepository(Reservation::class)->findBy(["statut"=>"En Attente"]);
         $commandesEnAttente=$this->getDoctrine()->getRepository(Commande::class)->findBy(["statut"=>"En attente"]);
-
+        $BlogEnAttente = $this->getDoctrine()->getRepository(BlogClient::class)->findBy(["statut"=>"En Attente"]);
         $reclamationsOuvertes=$this->getDoctrine()->getRepository(Reclamation::class)->findBy(["statut"=>"Ouvert"]);
         $s1=count($commandesEnAttente);
         $s2 =count($reservationsEnAttente);
         $s3=count($reclamationsOuvertes);
-        $s4=3;
+        $s4=count($BlogEnAttente);;
 
         //first chart
         $data1 = array();

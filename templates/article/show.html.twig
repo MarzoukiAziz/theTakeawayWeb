@@ -1,0 +1,49 @@
+{% extends 'back-office.html.twig' %}
+
+{% block links %}
+    <title> Article</title>
+
+{% endblock %}
+
+{% block contenu %}
+
+
+    <h1>Article</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ article.id }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ article.date ? article.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ article.title }}</td>
+            </tr>
+
+            <tr>
+                <th>Contenu</th>
+                <td>{{ article.contenu }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><img src="{{ asset('couvertures/'~ article.banner) }}" style="width: 500px;height: 500px"  ></td>
+            </tr>
+
+
+        </tbody>
+    </table>
+
+    <a href="{{ path('article_index') }}"><button class="btn btn-outline-primary ">back to list</button></a>
+
+    <a href="{{ path('article_edit', {'id': article.id}) }}"><button class="btn btn-outline-primary ">edit</button></a>
+
+    {{ include('article/_delete_form.html.twig') }}
+
+
+
+{% endblock %}

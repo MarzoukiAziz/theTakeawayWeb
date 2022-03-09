@@ -75,7 +75,6 @@ class Commentaire
     }
 
 
-
     public function getAuthor(): ?Client
     {
         return $this->author;

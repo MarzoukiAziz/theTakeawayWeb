@@ -1,0 +1,129 @@
+{% extends 'front-office.html.twig' %}
+
+{% block links %}
+    <title>Blogs</title>
+    <style>
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background: #f8f8f8;
+            color: #1c1c1c;
+        }
+        .container {
+            width: 75%;
+            margin: 0 auto;
+        }
+        .wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            flex-direction: row;
+            align-items: center;
+            height: 100vh;
+            margin-top: -30px;
+        }
+        .blog-content {
+            padding: 25px;
+            padding-top: 0px;
+        }
+        .blog-item {
+            background-color: #FFF;
+            flex: 0 0 30%;
+            border-bottom: 5px solid #e7e7e7;
+            box-shadow: 0px 10px 15px 5px #0000000f;
+            border-radius: 25px;
+            margin-top: 30px;
+            cursor: pointer;
+        }
+        .blog-title {
+            margin-bottom: 5px;
+        }
+        .blog-date {
+            font-size: 1em;
+            color: #898989;
+        }
+        .blog-image > img {
+            width: 100%;
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
+        }
+        .btn {
+            margin: 0 auto;
+            display: block;
+            width: 100%;
+            padding: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            border-radius: 50px;
+            border: none;
+        }
+        .btn-red {
+            background: #FF416C;
+            background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
+            background: linear-gradient(to right, #FF4B2B, #FF416C);
+            color: #FFF;
+        }
+        @media only screen and ( max-width:950px ){
+            .blog-item {
+                flex-basis: 100%;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block contenu %}
+
+
+    <section>
+        <div class="block">
+            <div class="fit-bg"
+                 style="background-image: url(https://www.wallsauce.com/uploads/wallsauce-com/images/thumbs/696/6cce84ef054959a25287f88c037e7e89e78cec2f_800__R_N_90.jpg);"></div>
+            <div class="page-title-wrapper text-center">
+                <div class="col-md-12 col-sm-12 col-lg-12">
+                    <div class="page-title-inner">
+                        <h1 itemprop="headline">The Takeaway Blog </h1>
+                        <span>Express your self</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+<section>
+
+    <a style="margin: auto"  href="{{ path('blog_client_new') }}"><button  class="btn btn-success ">create new blog</button></a>
+
+
+    <div class="container " style="display: flex;justify-content: space-between">
+        {% for blog_client in blog_clients %}
+        {% if blog_client.statut == "Ouvert" %}
+        <div class="blog-item">
+            <div class="blog-image">
+                <img  src="{{ asset('couvertures/'~blog_client.image) }}">
+            </div>
+            <div class="blog-content">
+                <h3 class="blog-title">{{ blog_client.title }}</h3>
+                <span class="blog-date">{{ blog_client.date ? blog_client.date|date(' d M Y') : '' }}</span>
+                <p class="blog-caption">{{ blog_client.contenu| striptags | slice(0, 100) }} ....</p>
+                <a href="/blog/{{ blog_client.id }}"><button class="btn btn-red">Read More</button></a>
+                {% if blog_client.author == app.user %}
+                    <a > {{ include('blog_client/_delete_form.html.twig') }}</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+
+        {% endfor %}
+    </div>
+</section>
+
+
+
+
+
+
+{% endblock %}

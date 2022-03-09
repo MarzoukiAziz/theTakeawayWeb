@@ -1,0 +1,98 @@
+{% extends 'front-office.html.twig' %}
+{% block links %}
+    <title> Blog</title>
+
+{% endblock %}
+{% block contenu %}
+
+
+
+
+
+    <section>
+    <div class="block less-spacing gray-bg top-padd30">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="sec-box">
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+                            <div class="blog-detail-wrapper">
+                                <div class="blog-detail-thumb wow fadeIn" data-wow-delay="0.2s">
+                                    <td><img src="{{ asset('couvertures/'~ blog_client.image) }}" style=""  ></td>
+
+                                </div>
+                                <div class="blog-detail-info">
+                                            <span class="post-detail-date red-clr"><i class="fa fa-clock-o"></i>{{ blog_client.date ? blog_client.date|date('Y-m-d') : '' }}</span>
+                                    <div class="post-meta">
+                                    </div>
+                                </div>
+    <tr>
+                                <h1 itemprop="headline" >{{ blog_client.title }}</h1>
+        <br>
+                                <p itemprop="description">{{ blog_client.contenu }}</p>
+    </tr>
+
+                            </div>
+
+
+                            <a href="{{ path('blog_client_index') }}"><button style="margin-left: 950px" class="btn btn-warning"  >back to list</button></a>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <h2 style="font-family: Arial">Create new Commentaire</h2>
+            {{ form_start(f) }}
+            <form>
+
+                <div style="margin-top: 50px" class="form-group">
+                    {{ form_label(f.contenu, 'Nouveau Reponse',{'attr': {'class': 'form-label'}} ) }}
+                    {{ form_widget(f.contenu , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Le contenu de votre réponse','rows':'3'}} ) }}
+                    {{ form_errors(f.contenu) }}
+                </div>
+                <button type="submit" style="float: right" class="btn btn-success">Ajouter</button>
+                <button type="reset" class="btn btn-warning">Recommencer</button>
+
+                {{ form_end(f) }}
+
+            </form>
+
+<br>
+            <br>
+            {% for commentaire in commentaires %}
+                <div style="display: flex" class=" flex-row comment-row">
+
+                        <div style="margin: 20px" class="p-2"><span class="round"><img src="{{ asset("assets/client.png") }}" alt="user"
+                                                                                       width="50"></span></div>
+
+                    <div class="comment-text w-100">
+
+                                {{ commentaire.author.nom }}
+                        <div class="comment-footer"><span class="date">{{ commentaire.date ? commentaire.date|date('d M Y') : '' }}</span>
+                            <span class="action-icons"> </span></div>
+                        <p class="m-b-5 m-t-10">{{ commentaire.contenu }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            {{ knp_pagination_render(commentaires) }}
+        </div>
+    </div>
+
+    </section>
+
+
+
+
+
+
+
+
+
+{% endblock %}
