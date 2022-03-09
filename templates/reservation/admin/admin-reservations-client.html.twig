@@ -47,7 +47,7 @@
                             </td>
                             <td>{{ r.statut }}</td>
                             <td>
-                                {% if r.statut != "En Attente" %}
+                                {% if r.adminCharge != null %}
                                     {{ r.adminCharge.nom }} {{ r.adminCharge.prenom }}
                                 {% endif %}
                             </td>
