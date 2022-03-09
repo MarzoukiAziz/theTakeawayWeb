@@ -210,7 +210,7 @@ class BlogClientController extends AbstractController
         $commentaires= $paginator->paginate(
             $commentaires,
             $request->query->getInt('page',1),
-            5
+            4
         );
         return $this->render('blog_client/show.html.twig', [
             'blog_client' => $blogClient,
