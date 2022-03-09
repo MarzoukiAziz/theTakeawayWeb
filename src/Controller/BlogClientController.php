@@ -163,7 +163,7 @@ class BlogClientController extends AbstractController
         }
         return $this->render('blog_client/admin/detail.html.twig', [
             'blog_client' => $blogClient,
-            'commenatires' => $commentaires,
+            'commentaires' => $commentaires,
             'f' => $form->createView(),
 
 

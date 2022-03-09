@@ -68,6 +68,41 @@
     <a href="{{ path('blog_admin_index') }}"><button class="btn btn-primary">back to list</button></a>
     <a> {{ include('blog_client/admin/delete.html.twig') }}</a>
 
+    <div class="col-md-12">
+        <div class="card-body">
+            <h5>Réponses :</h5>
+        </div>
+        <div class="comment-widgets m-b-20">
+            {% for commentaire in commentaires %}
+                <hr>
+                <div style="display: flex" class=" flex-row comment-row">
+
+                    {% if("Client" in commentaire.author.roles) %}
+                        <div style="margin: 20px" class="p-2"><span class="round"><img
+                                        src="{{ asset("assets/client.png") }}" alt="user"
+                                        width="50"></span></div>
+                    {% else %}
+                        <div style="margin: 20px" class="p-2"><span class="round"><img
+                                        src="{{ asset("assets/admin.png") }}" alt="user"
+                                        width="50"></span></div>
+
+                    {% endif %}
+                    <div class="comment-text w-100">
+                        <h5>{% if("Client" in commentaire.author.roles) %}
+                                You
+                            {% else %}
+                                Admin
+                            {% endif %}</h5>
+                        <div class="comment-footer"><span
+                                    class="date">{{ commentaire.date ? commentaire.date|date('d M Y') : '' }}</span>
+                            <span class="action-icons"> </span></div>
+                        <p class="m-b-5 m-t-10">{{ commentaire.contenu }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
 
 
 {% endblock %}

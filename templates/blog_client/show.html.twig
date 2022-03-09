@@ -98,10 +98,10 @@
 
     {% endif %}
         <div class="comment-text w-100">
-            <h4>{% if('Client' in commentaire.author.roles) %}
-                    You
+            <h4>{% if (is_granted("ROLE_USER") == 0) %}
+                    YOU
                 {% else %}
-                    Admin
+                    {{ commentaire.author.nom }}
                 {% endif %}</h4>
             <div class="comment-footer"><span class="date">{{ commentaire.date ? commentaire.date|date('d M Y') : '' }}</span>
                 <span class="action-icons"> </span></div>
