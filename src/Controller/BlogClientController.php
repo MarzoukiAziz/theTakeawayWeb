@@ -17,6 +17,7 @@ use App\Form\SearchType;
 use App\Repository\BlogClientRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,6 @@ use Symfony\Component\HttpFoundation\File\File;
 use App\Repository\CommentaireRepository;
 use Snipe\BanBuilder\CensorWords;
 use Twilio\Rest\Client as Twilio ;
-
 
 class BlogClientController extends AbstractController
 {
@@ -92,7 +92,7 @@ class BlogClientController extends AbstractController
         if ($blogClient == null) {
             return $this->redirectToRoute("erreur-back");
         }
-        $user = $this->getDoctrine()->getRepository(Client::class)->find(1);//badel user el connecter
+        $user = $this->getUser();//badel user el connecter
 
             $sid = "AC129fc18c3e71f7ed7330e630d246af42"; // Your Account SID from www.twilio.com/console
             $token = "e88bb294159ad8317d59afc2943f0238"; // Your Auth Token from www.twilio.com/console
@@ -132,6 +132,7 @@ class BlogClientController extends AbstractController
     public function AdminShow(BlogClient $blogClient,Request $request): Response
     {
 
+
         $commentaire= new commentaire();
         $form = $this->createForm(commentaireType::class, $commentaire);
         $form->handleRequest($request);
@@ -149,8 +150,7 @@ class BlogClientController extends AbstractController
             ///Warning
             /// change this later
 
-
-            $author = $this->getDoctrine()->getRepository(commentaire::class)->find("2");
+            $author = $this->getDoctrine()->getRepository(commentaire::class)->find('2');
             $commentaire->setAuthor($author);
             $date = new \DateTime();
             $commentaire->setDate($date);
@@ -173,7 +173,7 @@ class BlogClientController extends AbstractController
     /**
      * @Route("/blog/{id}", name="blog_client_show", methods={"GET","POST"})
      */
-    public function show(BlogClient $blogClient, Request $request ): Response
+    public function show(BlogClient $blogClient, Request $request , PaginatorInterface $paginator): Response
     {
         $commentaire = new Commentaire();
         $form = $this->createForm(CommentaireType::class, $commentaire);
@@ -193,7 +193,7 @@ class BlogClientController extends AbstractController
             $commentaire->setContenu($string['clean']);
             $em = $this->getDoctrine()->getManager();
             $em->getRepository(Reponse::class);
-            $client=$this->getDoctrine()->getRepository(Client::class)->find(1);
+            $client=$this->getUser();
             $commentaire->setAuthor($client);
             $date = new \DateTime();
             $commentaire->setDate(new \DateTime());
@@ -203,9 +203,15 @@ class BlogClientController extends AbstractController
             $em->flush();
 
 
+
             return $this->redirectToRoute('blog_client_show', ['id' => $blogClient->getId()], Response::HTTP_SEE_OTHER);
 
         }
+        $commentaires= $paginator->paginate(
+            $commentaires,
+            $request->query->getInt('page',1),
+            5
+        );
         return $this->render('blog_client/show.html.twig', [
             'blog_client' => $blogClient,
             'commentaires' => $commentaires,

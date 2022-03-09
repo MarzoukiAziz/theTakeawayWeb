@@ -36,7 +36,7 @@
                                 <h3 itemprop="description">{{ blog_client.contenu }}</h3>
     </tr>
                                 <tr>
-                                    <th>Statut</th>
+
                                     {% if (blog_client.statut =="Ouvert") %}
                                         <td>
                                             <span style="background-color: darkgreen;color: whitesmoke;padding:4px 8px;border-radius: 8px">accepté</span>
@@ -51,9 +51,9 @@
                             </div>
 
 
-                            <a href="{{ path('blog_client_index') }}"><button class="btn btn-warning ">back to list</button></a>
+                            <a href="{{ path('blog_client_index') }}"><button style="margin-left: 950px" class="btn btn-warning"  >back to list</button></a>
 
-                            <a> {{ include('blog_client/_delete_form.html.twig') }}</a>
+
 
                         </div>
                     </div>
@@ -109,6 +109,7 @@
         </div>
     </div>
     {% endfor %}
+    {{ knp_pagination_render(commentaires) }}
 
 
 {% endblock %}
