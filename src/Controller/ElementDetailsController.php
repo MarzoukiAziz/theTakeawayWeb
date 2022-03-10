@@ -52,11 +52,15 @@ class ElementDetailsController extends AbstractController
      */
     public function delete(Request $request, ElementDetails $elementDetail, EntityManagerInterface $entityManager): Response
     {
+        $cd=$elementDetail->getCommande();
+
         $cid=$elementDetail->getCommande()->getId();
         if ($this->isCsrfTokenValid('delete'.$elementDetail->getId(), $request->request->get('_token'))) {
+            $cd->setPrixTotal($cd->getPrixTotal()-$elementDetail->getQuantite()*$elementDetail->getElementId()->getPrix());
             $entityManager->remove($elementDetail);
             $entityManager->flush();
         }
+
 
         return $this->redirectToRoute('commande-show-admin', ['cid'=>$cid ,'rid'=>$elementDetail->getCommande()->getRestaurant()->getId()], Response::HTTP_SEE_OTHER);
     }

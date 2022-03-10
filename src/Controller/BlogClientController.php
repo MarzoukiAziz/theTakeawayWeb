@@ -65,7 +65,7 @@ class BlogClientController extends AbstractController
             $blogClient->setStatut("En Attente");
             $entityManager->persist($blogClient);
             $entityManager->flush();
-
+            $this->addFlash("success","wait for your blog acceptation ,you'll receive a message soon");
             return $this->redirectToRoute('blog_client_index', [], Response::HTTP_SEE_OTHER);
         }
 

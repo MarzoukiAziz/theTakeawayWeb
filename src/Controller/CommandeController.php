@@ -96,6 +96,35 @@ class CommandeController extends AbstractController
             'res' => $res,
         ]);
     }
+    /**
+     * @Route("/admin/commandes/{rid}/search", name="rechercher_restaurant")
+     */
+    //show restaurant list before showing the reservations list
+    public function chercherCommandes(Request  $req,$rid, PaginatorInterface $paginator): Response
+    {
+        $rep = $this->getDoctrine()->getRepository(Restaurant::class);
+        $res= $rep->find($rid);
+        //check if the restaurant id is valid
+        if ($res == null) {
+            return $this->redirectToRoute("erreur-back");
+        }
+        //getting the reservations by restaurant id
+        $cmds= $this->getDoctrine()->getRepository(Commande::class)
+            ->createQueryBuilder('r')
+            ->where('r.statut=?1')
+            ->setParameter(1, $req->request->get("key"))
+            ->getQuery()
+            ->getResult();
+        $cmds = $paginator->paginate(
+            $cmds,
+            $req->query->getInt('page',1),
+            4
+        );
+        return $this->render('commande/admin/index.html.twig', [
+            'cmds' => $cmds,
+            'res' => $res,
+        ]);
+    }
 
 
 
