@@ -24,6 +24,7 @@ class RegistrationController extends AbstractController
         $user = new Client();
         $user->setDateCurent(new \DateTime('now'));
         $user->setPoints(0);
+        $user->setStatus(true);
         $user->setRoles(['ROLE_USER']);
 
 

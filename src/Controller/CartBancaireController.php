@@ -49,7 +49,7 @@ class CartBancaireController extends AbstractController
 
         return $this->render('cart_bancaire/new.html.twig', [
             'cart_bancaire' => $cartBancaire,
-            'form' => $form->createView(),
+            'f' => $form->createView(),
         ]);
     }
 
