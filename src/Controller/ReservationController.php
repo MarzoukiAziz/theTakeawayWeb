@@ -573,5 +573,210 @@ class ReservationController extends AbstractController
         return $this->render('reservation/admin/calendar.html.twig', compact('data'));
     }
 
+/////////////////MOBILE SERVICE//////////////
 
+    /**
+     * @Route("/mobile/rev/", name="mobile_rev", methods={"GET"})
+     */
+    public function mobileReservations( Request $request)
+    {
+
+        try {
+            $rep = $this->getDoctrine()->getRepository(Reservation::class);
+            $rev = $rep->findAll();
+
+            $res = array();
+
+            for ($i = 0; $i < sizeof($rev); $i++) {
+
+                $t = $rev[$i]->getTables();
+                $tables = array();
+                for ($j = 0; $j < sizeof($t); $j++) {
+                    $tab = array(
+                        "id" => $t[$j]->getId(),
+                        "posX" => $t[$j]->getPosX(),
+                        "posY" => $t[$j]->getPosY(),
+                        "nbPalces" => $t[$j]->getNbPalces(),
+                        "numero" => $t[$j]->getNumero(),
+                        "restaurant_id" => $t[$j]->getRestaurantId()->getId(),
+                    );
+                    $tables[$j] = $tab;
+                }
+
+
+                $data = array(
+                    'id' => $rev[$i]->getId(),
+                    'date' => $rev[$i]->getDate(),
+                    'heureArrive' => $rev[$i]->getHeureArrive(),
+                    'heureDepart' => $rev[$i]->getHeureDepart(),
+                    'nbPersonne' => $rev[$i]->getNbPersonne(),
+                    'clientId' => $rev[$i]->getClientId()->getId(),
+                    'restaurant' => $rev[$i]->getRestaurant()->getId(),
+                    'statut' => $rev[$i]->getStatut(),
+                    'tables' => $tables
+                );
+                $res[$i] = $data;
+            }
+
+            return $this->json(array('error' => false, 'res' => $res));
+        } catch (Exception $e) {
+            print($e);
+            return $this->json(array('error' => true));
+        }
+    }
+
+
+    /**
+     * @Route("/mobile/rev/change/", name="menu_rev_change_statut", methods={"POST"})
+     */
+    public function MobileChangeStatutReservation(Request $request): Response
+    {
+        try {
+            $id = $request->get("id");
+            $statut = $request->get('statut');
+            $rep = $this->getDoctrine()->getRepository(Reservation::class);
+            $rev=$rep->find($id);
+            $rev->setStatut($statut);
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+
+            return $this->json(array('error' => false));
+        } catch (Exception $e) {
+            print($e);
+            return $this->json(array('error' => true));
+        }
+    }
+
+
+
+
+    /**
+     * @Route("/mobile/tables/{rid}/{date}/{ha}/{d}/{nb}", name="free_tables-mobile")
+     */
+
+    public function mobileGetTablesDispo(Request $request, $rid,$date,$ha,$d,$nb): Response
+    {
+            try{
+            //getting the reservations by date and restaurant id
+            $today = new \DateTime("now");
+            $today->setTime(0, 0);
+            $res = $this->getDoctrine()->getRepository(Restaurant::class)->find($rid);
+           $currentReservations = $this->getDoctrine()->getRepository(Reservation::class)
+                ->createQueryBuilder('r')
+                ->where('r.date=?1')
+                ->setParameter(1, $date)
+                ->andWhere('r.restaurant=?2')
+                ->setParameter(2, $res)
+                ->getQuery()
+                ->getResult();
+               $heureDepart = date_create($ha);
+               $heureDepart->add(new \DateInterval('PT' . $d . 'M'));
+               $heureDepart = $heureDepart->format('H:i');
+               $allTables = $res->getTables();
+               $ut = array();
+                     foreach ($currentReservations as $cr) {
+                        if ($cr->getStatut() == "Accepté" or $cr->getStatut() == "En Attente") {
+                            if (($cr->getHeureDepart() >= date_create($ha) and $cr->getHeureArrive() <= date_create($ha))
+                                or ($cr->getHeureArrive() >= $heureDepart and $cr->getHeureDepart() <= $heureDepart)) {
+                                foreach ($cr->getTables() as $tab) {
+                                    array_push($ut, $tab->getId());
+                                }
+                            }
+                        }
+                    }
+                   $ft = array();
+                    foreach ($allTables as $f) {
+                        array_push($ft, $f->getId());
+                    }
+                    $ft = array_diff($ft, $ut);
+                    $freeTables = array();
+                    $unavailableTables = array();
+                    $rep = $this->getDoctrine()->getRepository(Table::class);
+                    foreach ($ft as $x) {
+                        array_push($freeTables, $rep->find($x));
+                    }
+                    foreach ($ut as $x) {
+                        array_push($unavailableTables, $rep->find($x));
+                    }
+                  $rev = new Reservation();
+                    $rev->setRestaurant($res);
+                 $rev->setDate(date_create($date));
+                  $rev->setHeureArrive(date_create($ha));
+                 $h = date_create($heureDepart);
+                $rev->setHeureDepart($h);
+                $rev->setNbPersonne($nb);
+
+
+                $ftables = array();
+                for ($j = 0; $j < sizeof($freeTables); $j++) {
+                    $tab = array(
+                        "id" => $freeTables[$j]->getId(),
+                        "posX" => $freeTables[$j]->getPosX(),
+                        "posY" => $freeTables[$j]->getPosY(),
+                        "nbPalces" => $freeTables[$j]->getNbPalces(),
+                        "numero" => $freeTables[$j]->getNumero(),
+                        "restaurant_id" => $freeTables[$j]->getRestaurantId()->getId(),
+                    );
+                    $ftables[$j] = $tab;
+                }
+
+
+                return $this->json(array('error' => false
+                ,'freeTables' => $ftables));
+            } catch (\Exception $e) {
+                print($e);
+                return $this->json(array('error' => true));
+            }
+        }
+
+
+
+
+    /**
+     * @Route("/mobile/create-rev/{rid}/{date}/{ha}/{d}/{nb}/{client}/{tabs}", name="mobile_create_reservation", methods={"POST"})
+     */
+
+    public function createReservationMobile(Request $request, $rid,$date,$ha,$d,$nb,$client,$tabs)
+    {
+        $rep = $this->getDoctrine()->getRepository(Restaurant::class);
+        $res = $rep->find($rid);
+        $users = $this->getDoctrine()->getRepository(Client::class);
+        $user = $users->find($client);
+        if ($res == null or $client ==null) {
+            return $this->json(array('error' => true));
+        }
+        //setting the data of the new reservation object
+        $newRev = new Reservation();
+        $newRev->setRestaurant($res);
+        $newRev->setDate(date_create($date));
+        $newRev->setClientId($user);
+        $newRev->setHeureArrive(date_create($ha));
+        $heureDepart = date_create($ha);
+        $heureDepart->add(new \DateInterval('PT' . $d . 'M'));
+        $heureDepart = $heureDepart->format('H:i');
+        $newRev->setHeureDepart(date_create($heureDepart));
+        $newRev->setNbPersonne((int)$nb);
+        $newRev->setStatut("En Attente");
+        //finding and checking the selected tables
+        $tabRep = $this->getDoctrine()->getRepository(Table::class);
+        $selected = explode('-', $tabs);
+
+        foreach ($selected as $s){
+            $t = $tabRep->find($s);
+            if($t ==null){
+                return $this->json(array('error' => true));
+            }
+            $newRev->addTable($t);
+        }
+
+        if ($newRev->getTables()->count() == 0) {
+            return $this->json(array('error' => true));
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($newRev);
+        $em->flush();
+        return $this->json(array('error' => false));
+    }
 }

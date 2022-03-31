@@ -121,4 +121,118 @@ class MenuController extends AbstractController
 
         return $this->redirectToRoute('menu_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    /////MOBILE SERVICES/////
+
+    /**
+     * @Route("/mobile/menu/", name="mobile_menu", methods={"GET"})
+     */
+    public function mobileMenu(MenuElementRepository $menuElementRepository, request $request)
+    {
+
+        try {
+            $menu = $menuElementRepository->findAll();
+
+            $res = array();
+
+            for ($i = 0; $i < sizeof($menu); $i++) {
+                $data = array(
+                    'id' => $menu[$i]->getId(),
+                    'nom' => $menu[$i]->getNom(),
+                    'categorie' => $menu[$i]->getCategorie(),
+                    'image' => $menu[$i]->getImage(),
+                    'prix' => $menu[$i]->getPrix(),
+                    'description' => $menu[$i]->getDescription()
+                );
+                $res[$i] = $data;
+            }
+
+            return $this->json(array('error' => false, 'res' => $res));
+        }catch (Exception $e) {
+        print($e);
+        return $this->json(array('error' => true));
+    }
+
+    }
+    /**
+     * @Route("/mobile/menu/edit/", name="menu_edit_mobile", methods={"POST"})
+     */
+    public function MobileEditMenu(Request $request, MenuElementRepository $rep): Response
+    {
+        try {
+            $id = $request->get("id");
+            $nom = $request->get('nom');
+            $description = $request->get('description');
+            $cat = $request->get("categorie");
+            $prix = $request->get("prix");
+
+            $ele = $rep->find($id);
+            $ele->setNom($nom);
+            $ele->setCategorie($cat);
+            $ele->setDescription($description);
+            $ele->setPrix((float)$prix);
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+
+            return $this->json(array('error' => false));
+        } catch (Exception $e) {
+            print($e);
+            return $this->json(array('error' => true));
+        }
+    }
+
+    /**
+     * @Route("/mobile/menu/add/", name="mobile_menu_add", methods={"POST"})
+     */
+    public function MobileAddMenu(Request $request)
+    {
+
+        $nom = $request->get('nom');
+        $description = $request->get('description');
+        $cat = $request->get("categorie");
+        $prix = $request->get("prix");
+        if ($nom && $description && $cat && $prix) {
+            try {
+                $OP = new MenuElement();
+                $OP->setNom($nom);
+                $OP->setDescription($description);
+                $OP->setCategorie($cat);
+                $OP->setPrix((float)$prix);
+                $OP->setImage("d80207a703c8aac12cef6090d5e9af49.jpeg");
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($OP);
+                $em->flush();
+                return $this->json(array('error' => false, 'adsID' => $OP->getId()));
+            } catch (Exception $e) {
+                return $this->json(array('error' => true));
+            }
+
+        } else {
+            return $this->json(array('error' => true));
+        }
+    }
+
+
+    /**
+     * @Route("/mobile/menu/delete/{id}", name="mobile_menu_delete", methods={"POST"})
+     */
+    public function MobileDeleteMenu( $id, MenuElementRepository $rep)
+    {
+
+        try {
+            $m = $rep->find($id);
+            //  if ($this->isCsrfTokenValid('delete' .$id, $request->request->get('_token'))) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($m);
+            $em->flush();
+            //}
+
+            return $this->json(array('error' => false));
+        } catch (Exception $e) {
+            return $this->json(array('error' => true));
+        }
+    }
+
+
 }

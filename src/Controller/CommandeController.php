@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\Entity\MenuElement;
 use App\Services\QrcodeService;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
 
@@ -19,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
+use Symfony\Component\Validator\Constraints\Date;
 
 
 class CommandeController extends AbstractController
@@ -202,4 +203,123 @@ class CommandeController extends AbstractController
     }
 
 
+/////////////////MOBILE SERVICE//////////////
+
+    /**
+     * @Route("/mobile/cmd/", name="mobile_cmd", methods={"GET"})
+     */
+    public function mobileCommandes( Request $request)
+    {
+
+        try {
+            $rep = $this->getDoctrine()->getRepository(Commande::class);
+            $cmds = $rep->findAll();
+
+            $res = array();
+
+            for ($i = 0; $i < sizeof($cmds); $i++) {
+
+                $t = $cmds[$i]->getDetails();
+                $eles = array();
+                for ($j = 0; $j < sizeof($t); $j++) {
+                    $e = array(
+                        "id" => $t[$j]->getId(),
+                        "eid" => $t[$j]->getElementId()->getId(),
+                        "q" => $t[$j]->getQuantite(),
+                    );
+                    $eles[$j] = $e;
+                }
+
+
+                $data = array(
+                    'id' => $cmds[$i]->getId(),
+                    'date' => $cmds[$i]->getDate(),
+                    'rid' => $cmds[$i]->getRestaurant()->getId(),
+                    'cid' => $cmds[$i]->getClient()->getId(),
+                    'total' => $cmds[$i]->getPrixTotal(),
+                    'methode' => $cmds[$i]->getMethode(),
+                    'statut' => $cmds[$i]->getStatut(),
+                    'elements' => $eles
+                );
+                $res[$i] = $data;
+            }
+
+            return $this->json(array('error' => false, 'res' => $res));
+        } catch (Exception $e) {
+            print($e);
+            return $this->json(array('error' => true));
+        }
+    }
+
+    /**
+     * @Route("/mobile/cmd/change/", name="cmd_change_statut", methods={"POST"})
+     */
+    public function MobileChangeStatutCommande(Request $request): Response
+    {
+        try {
+            $id = $request->get("id");
+            $statut = $request->get('statut');
+            $rep = $this->getDoctrine()->getRepository(Commande::class);
+            $cmd=$rep->find($id);
+            $cmd->setStatut($statut);
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+
+            return $this->json(array('error' => false));
+        } catch (Exception $e) {
+            print($e);
+            return $this->json(array('error' => true));
+        }
+    }
+    /**
+     * @Route("/mobile/cmd/qrcode/", name="qrcode", methods={"GET"})
+     */
+    public  function qrcode(Request $request): Response
+    {
+        try {
+            $id = $request->get("id");
+            return $this->json(array('error' => false,"qrcode"=>$id.".png"));
+        } catch (Exception $e) {
+            print($e);
+            return $this->json(array('error' => true));
+        }
+    }
+    /**
+     * @Route("/mobile/cmd/new/", name="mobile_new_cmd", methods={"POST"})
+     */
+    public function mobileNewCommande(Request  $request){
+        $cid=$request->get("cid");
+        $rid=$request->get("rid");
+        $total=$request->get("total");
+        $eid = $request->get("eid");
+        $eq=$request->get("eq");
+        $elemntIds = explode('-', $eid);
+        $elemntIQuantity = explode('-', $eq);
+
+
+        $cmd = new Commande();
+
+        $cmd->setClientId($this->getDoctrine()->getRepository(Client::class)->find($cid));
+        $cmd->setRestaurant($this->getDoctrine()->getRepository(Restaurant::class)->find($rid));
+        $cmd->setPrixTotal((float)$total);
+        $cmd->setDate(new \DateTime());
+        $cmd->setStatut("En attente");
+        $cmd->setMethode("Cash");
+        $cmd->setStatutPaiement("Success");
+        $cmd->setPointUtilisees(0);
+        $ma = $this->getDoctrine()->getManager();
+        $ma->persist($cmd);
+         for( $i=0;$i<sizeof($elemntIds);$i++){
+              $e = new ElementDetails();
+              $e->setCommande($cmd);
+              $e->setElementId($this->getDoctrine()->getRepository(MenuElement::class)->find((int)$elemntIds[$i]));
+              $e->setOptions("");
+              $e->setQuantite((int)$elemntIQuantity[$i]);
+              $cmd->addDetail($e);
+             $ma->persist($e);
+          }
+          $ma->flush();
+        return $this->json(array('error' => false));
+    }
 }

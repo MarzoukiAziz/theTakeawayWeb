@@ -218,5 +218,36 @@ class RestaurantController extends AbstractController
             return $this->json(['code' => 200, 'message' => 'ajouutéééééé', 'favoris' => $likerepo->count(['Restaurant' => $resto])], 200);
         }}
 
+    /////MOBILE SERVICES/////
+    /**
+     * @Route("/mobile/restaurants/", name="mobile_restaurants", methods={"GET"})
+     */
+    public function mobileMenu(RestaurantRepository $resRepository,request $request)
+    {
+        $res = $resRepository->findAll();
+
+        $response = array();
+
+        for ($i = 0; $i < sizeof($res); $i++) {
+            $data = array(
+                'id' => $res[$i]->getId(),
+                'nom' => $res[$i]->getNom(),
+                'adresse'=>$res[$i]->getAdresse(),
+                'images' => $res[$i]->getImages(),
+                'heure_ouverture' => $res[$i]->getHeureOuverture(),
+                'heure_fermeture' => $res[$i]->getHeureFermeture(),
+                'telephone'=> $res[$i]->getTelephone(),
+                'description' => $res[$i]->getDescription(),
+                'x'=>$res[$i]->getX(),
+                'y'=>$res[$i]->getY()
+            );
+            $response[$i] = $data;
+        }
+
+        return $this->json(array('error' => false, 'res' => $response));
+
+        //return $this->json(array('error' => true));
+
+    }
 
 }

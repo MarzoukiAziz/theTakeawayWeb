@@ -16,6 +16,7 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 class RegistrationController extends AbstractController
 {
+
     /**
      * @Route("/register", name="registre")
      */
@@ -72,4 +73,41 @@ class RegistrationController extends AbstractController
             'f' => $form->createView(),
         ]);
     }
+    /////MOBILE SERVICES/////
+    /**
+     * @Route("mobile/register", name="mobile_register" , methods={"POST"})
+     */
+    public function registerMobile(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, GuardAuthenticatorHandler $guardHandler, ClientAuthenticationAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    {
+        $email = $request->get("email");
+        $nom = $request->get("nom");
+        $prenom = $request->get("prenom");
+        $tel = $request->get("tel");
+        $pwd = $request->get('plainPassword');
+        if($email && $nom && $prenom && $tel && $pwd) {
+            $user = new Client();
+            $user->setEmail($email);
+            $user->setNom($nom);
+            $user->setPrenom($prenom);
+            $user->setDateCurent(new \DateTime('now'));
+            $user->setPoints(0);
+            $user->setStatus(true);
+            $user->setRoles(['ROLE_USER']);
+            $user->setNumTel($tel);
+            $newFilename = 'avatar.jpg';
+            $user->setBrochureFilename($newFilename);
+            $user->setPassword(
+                $userPasswordEncoder->encodePassword(
+                    $user,
+                    $pwd
+                )
+            );
+            $entityManager->persist($user);
+            $entityManager->flush();
+            return $this->json(array('error' => false));
+        }
+        return $this->json(array('error' => true));
+    }
+
+
 }

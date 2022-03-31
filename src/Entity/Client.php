@@ -65,10 +65,8 @@ class Client implements UserInterface
     private $prenom;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Assert\NotBlank
-     * @Assert\Range(min = 1000000, max = 99999999, notInRangeMessage = "Phone must content 8 Numbers")
-     * @Assert\Type("integer")
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Type("String")
      */
     private $num_tel;
     
@@ -295,12 +293,12 @@ class Client implements UserInterface
 
         return $this;
     }
-    public function getNumTel(): ?int
+    public function getNumTel(): ?String
     {
         return $this->num_tel;
     }
 
-    public function setNumTel(int $num_tel): self
+    public function setNumTel(String $num_tel): self
     {
         $this->num_tel = $num_tel;
 

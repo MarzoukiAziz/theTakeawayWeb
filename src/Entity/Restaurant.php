@@ -82,6 +82,16 @@ class Restaurant
      */
     private $tables;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $x;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $y;
+
     public function __construct()
     {
         $this->tables = new ArrayCollection();
@@ -262,6 +272,30 @@ class Restaurant
 
         }
         return false;
+    }
+
+    public function getX(): ?float
+    {
+        return $this->x;
+    }
+
+    public function setX(?float $x): self
+    {
+        $this->x = $x;
+
+        return $this;
+    }
+
+    public function getY(): ?float
+    {
+        return $this->y;
+    }
+
+    public function setY(?float $y): self
+    {
+        $this->y = $y;
+
+        return $this;
     }
 
 }
