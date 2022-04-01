@@ -298,4 +298,173 @@ class BlogClientController extends AbstractController
 
         return $this->redirectToRoute('blog_admin_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
+
+
+    /////////////////////////Mobile Services//////////////////////
+    /**
+     * @Route("/mobile/blogs/", name="mobile_blogs", methods={"GET"})
+     */
+    public function mobileBlogs(BlogClientRepository $rep,request $request)
+    {
+        $res = $rep->findAll();
+
+        $response = array();
+
+        for ($i = 0; $i < sizeof($res); $i++) {
+            $data = array(
+                'id' => $res[$i]->getId(),
+                'title' => $res[$i]->getTitle(),
+                'date'=>$res[$i]->getDate(),
+                'contenu' => $res[$i]->getContenu(),
+                'aid' => $res[$i]->getAuthor()->getId(),
+                'aname'=> $res[$i]->getAuthor()->getNom()." ".$res[$i]->getAuthor()->getPrenom(),
+                'statut' => $res[$i]->getStatut(),
+                'image'=>$res[$i]->getImage()
+
+            );
+            $response[$i] = $data;
+        }
+
+        return $this->json(array('error' => false, 'res' => $response));
+
+
+    }
+
+
+    /**
+     * @Route("/mobile/blog/add/", name="mobile_blog_add", methods={"POST"})
+     */
+    public function MobileAddBlog(Request $request)
+    {
+
+        $title = $request->get('title');
+        $contenu = $request->get('contenu');
+        $aid = $request->get("author");
+        if ($title && $contenu && $aid) {
+            try {
+                $OP = new BlogClient();
+                $date = new \DateTime();
+                $OP->setDate($date);
+                $OP->setAuthor($this->getDoctrine()->getRepository(Client::class)->find($aid));
+                $OP->setStatut("En Attente");
+                $OP->setImage('no_image.jpg');
+                $OP->setTitle($title);
+                $OP->setContenu($contenu);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($OP);
+                $em->flush();
+                return $this->json(array('error' => false, 'adsID' => $OP->getId()));
+            } catch (Exception $e) {
+                return $this->json(array('error' => true));
+            }
+
+        } else {
+            return $this->json(array('error' => true));
+        }
+    }
+
+
+
+
+    /**
+     * @Route("/mobile/blog/delete/{id}", name="mobile_blog_delete", methods={"POST"})
+     */
+    public function MobileDeleteBlog($id, Request $request,EntityManagerInterface $entityManager)
+    {
+        try {
+            $blogClient = $this->getDoctrine()->getRepository(BlogClient::class)->find($id);
+
+            foreach ($blogClient->getCommentaires() as $c){
+                $entityManager->remove($c);
+            }
+            $entityManager->remove($blogClient);
+            $entityManager->flush();
+
+            return $this->json(array('error' => false));
+        } catch (Exception $e) {
+            return $this->json(array('error' => true));
+        }
+    }
+
+    /**
+     * @Route("/mobile/comments/{bid}", name="mobile_comments", methods={"GET"})
+     */
+    public function mobileComments(Request $request,$bid,BlogClientRepository $rep)
+    {
+        $c = $rep->find($bid);
+        $res=$c->getCommentaires();
+       $response = array();
+
+        for ($i = 0; $i < sizeof($res); $i++) {
+                $data = array(
+                    'id' => $res[$i]->getId(),
+                    'date' => $res[$i]->getDate(),
+                    'contenu' => $res[$i]->getContenu(),
+                    'aid' => $res[$i]->getAuthor()->getId(),
+                    'aname' => $res[$i]->getAuthor()->getNom() . " " . $res[$i]->getAuthor()->getPrenom(),
+                );
+                array_push($response,$data);
+        }
+
+        return $this->json(array('error' => false, 'res' => $response));
+
+
+    }
+
+    /**
+     * @Route("/mobile/comment/add/", name="mobile_comment_add", methods={"POST"})
+     */
+    public function MobileAddComment(Request $request)
+    {
+
+        $blogid = $request->get('blogid');
+        $contenu = $request->get('contenu');
+        $aid = $request->get("author");
+        if ($blogid && $contenu && $aid) {
+            try {
+                $OP = new Commentaire();
+                $date = new \DateTime();
+                $OP->setDate($date);
+                $OP->setAuthor($this->getDoctrine()->getRepository(Client::class)->find($aid));
+                $OP->setBlogClient($this->getDoctrine()->getRepository(BlogClient::class)->find($blogid));
+                $OP->setContenu($contenu);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($OP);
+                $em->flush();
+                return $this->json(array('error' => false, 'adsID' => $OP->getId()));
+            } catch (Exception $e) {
+                return $this->json(array('error' => true));
+            }
+
+        } else {
+            return $this->json(array('error' => true));
+        }
+    }
+
+    /**
+     * @Route("/mobile/blog/change/", name="menu_blog_change_statut", methods={"POST"})
+     */
+    public function MobileChangeStatutBlog(Request $request): Response
+    {
+        try {
+            $id = $request->get("id");
+            $statut = $request->get('statut');
+            $rep = $this->getDoctrine()->getRepository(BlogClient::class);
+            $rev = $rep->find($id);
+            $rev->setStatut($statut);
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+
+            return $this->json(array('error' => false));
+        } catch (Exception $e) {
+            print($e);
+            return $this->json(array('error' => true));
+        }
+    }
+
+
 }

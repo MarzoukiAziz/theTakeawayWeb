@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\Entity\Commentaire;
 use App\Entity\MenuElement;
 use App\Services\QrcodeService;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
@@ -322,4 +323,5 @@ class CommandeController extends AbstractController
           $ma->flush();
         return $this->json(array('error' => false));
     }
+
 }

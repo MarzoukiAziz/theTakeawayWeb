@@ -222,11 +222,9 @@ class MenuController extends AbstractController
 
         try {
             $m = $rep->find($id);
-            //  if ($this->isCsrfTokenValid('delete' .$id, $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($m);
             $em->flush();
-            //}
 
             return $this->json(array('error' => false));
         } catch (Exception $e) {
