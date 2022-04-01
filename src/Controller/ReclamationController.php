@@ -280,4 +280,168 @@ class ReclamationController extends AbstractController
         $this->addFlash("success","Réclamation supprimée avec succès!");
         return $this->redirectToRoute('reclamation_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+    /////////////////////////Mobile Services//////////////////////
+    /**
+     * @Route("/mobile/recs/", name="mobile_recs", methods={"GET"})
+     */
+    public function mobileRecs(ReclamationRepository $rep,request $request)
+    {
+        $res = $rep->findAll();
+
+        $response = array();
+
+        for ($i = 0; $i < sizeof($res); $i++) {
+            $data = array(
+                'id' => $res[$i]->getId(),
+                'title' => $res[$i]->getSujet(),
+                'date'=>$res[$i]->getDate(),
+                'contenu' => $res[$i]->getContenu(),
+                'aid' => $res[$i]->getClientId()->getId(),
+                'aname'=> $res[$i]->getClientId()->getNom()." ".$res[$i]->getClientId()->getPrenom(),
+                'statut' => $res[$i]->getStatut(),
+
+            );
+            $response[$i] = $data;
+        }
+
+        return $this->json(array('error' => false, 'res' => $response));
+
+
+    }
+
+
+    /**
+     * @Route("/mobile/rec/add/", name="mobile_recc_add", methods={"POST"})
+     */
+    public function MobileAddRec(Request $request)
+    {
+
+        $sujet = $request->get('sujet');
+        $contenu = $request->get('contenu');
+        $aid = $request->get("author");
+        if ($sujet && $contenu && $aid) {
+            try {
+                $OP = new Reclamation();
+                $date = new \DateTime();
+                $OP->setDate($date);
+                $OP->setClientId($this->getDoctrine()->getRepository(Client::class)->find($aid));
+                $OP->setStatut("Ouvert");
+                $OP->setSujet($sujet);
+                $OP->setContenu($contenu);
+                $OP->setHeure($date);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($OP);
+                $em->flush();
+                return $this->json(array('error' => false, 'adsID' => $OP->getId()));
+            } catch (Exception $e) {
+                return $this->json(array('error' => true));
+            }
+
+        } else {
+            return $this->json(array('error' => true));
+        }
+    }
+
+    /**
+     * @Route("/mobile/rec/delete/{id}", name="mobile_rec_delete", methods={"POST"})
+     */
+    public function MobileDeleteRec($id, Request $request,EntityManagerInterface $entityManager)
+    {
+        try {
+            $rec = $this->getDoctrine()->getRepository(Reclamation::class)->find($id);
+
+            foreach ($rec->getReponses() as $c){
+                $entityManager->remove($c);
+            }
+            $entityManager->remove($rec);
+            $entityManager->flush();
+
+            return $this->json(array('error' => false));
+        } catch (Exception $e) {
+            return $this->json(array('error' => true));
+        }
+    }
+
+    /**
+     * @Route("/mobile/rep/{bid}", name="mobile_reponses", methods={"GET"})
+     */
+    public function mobileReponses(Request $request,$bid,ReclamationRepository $rep)
+    {
+        $c = $rep->find($bid);
+        $res=$c->getReponses();
+        $response = array();
+
+        for ($i = 0; $i < sizeof($res); $i++) {
+            $data = array(
+                'id' => $res[$i]->getId(),
+                'date' => $res[$i]->getDate(),
+                'contenu' => $res[$i]->getContenu(),
+                'aid' => $res[$i]->getAuthor()->getId(),
+                'aname' => $res[$i]->getAuthor()->getNom() . " " . $res[$i]->getAuthor()->getPrenom(),
+            );
+            array_push($response,$data);
+        }
+
+        return $this->json(array('error' => false, 'res' => $response));
+
+
+    }
+
+    /**
+     * @Route("/mobile/rep/add/", name="mobile_rep_add", methods={"POST"})
+     */
+    public function MobileAddRep(Request $request)
+    {
+
+        $recid = $request->get('recid');
+        $contenu = $request->get('contenu');
+        $aid = $request->get("author");
+        if ($recid && $contenu && $aid) {
+            try {
+                $OP = new Reponse();
+                $date = new \DateTime();
+                $OP->setDate($date);
+                $OP->setAuthor($this->getDoctrine()->getRepository(Client::class)->find($aid));
+                $OP->setReclamation($this->getDoctrine()->getRepository(Reclamation::class)->find($recid));
+                $OP->setContenu($contenu);
+                $OP->setHeure($date);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($OP);
+                $em->flush();
+                return $this->json(array('error' => false, 'adsID' => $OP->getId()));
+            } catch (Exception $e) {
+                return $this->json(array('error' => true));
+            }
+
+        } else {
+            return $this->json(array('error' => true));
+        }
+    }
+
+    /**
+     * @Route("/mobile/rec/change/", name="menu_rec_change_statut", methods={"POST"})
+     */
+    public function MobileChangeStatutRec(Request $request): Response
+    {
+        try {
+            $id = $request->get("id");
+            $statut = $request->get('statut');
+
+            $rep = $this->getDoctrine()->getRepository(Reclamation::class);
+            $rev = $rep->find($id);
+            $rev->setStatut($statut);
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+
+            return $this->json(array('error' => false));
+        } catch (Exception $e) {
+            print($e);
+            return $this->json(array('error' => true));
+        }
+    }
+
+
 }
