@@ -78,10 +78,7 @@ class Client implements UserInterface
      */
     private $points;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Restaurant::class)
-     */
-    private $restaurant;
+
 
     /**
      * @ORM\Column(type="datetime" , nullable=true)
@@ -258,29 +255,7 @@ class Client implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Restaurant[]
-     */
-    public function getRestaurant(): Collection
-    {
-        return $this->restaurant;
-    }
 
-    public function addRestaurant(Restaurant $restaurant): self
-    {
-        if (!$this->restaurant->contains($restaurant)) {
-            $this->restaurant[] = $restaurant;
-        }
-
-        return $this;
-    }
-
-    public function removeRestaurant(Restaurant $restaurant): self
-    {
-        $this->restaurant->removeElement($restaurant);
-
-        return $this;
-    }
 
     public function getDateCurent(): ?\DateTimeInterface
     {
