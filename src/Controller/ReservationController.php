@@ -190,7 +190,7 @@ class ReservationController extends AbstractController
         } else if ($s == "Réfusé") {
             $email->subject('Reservation Réfusé')
                 ->html('
-<h2>R&eacute;servation accept&eacute;e</h2>
+<h2>R&eacute;servation Refuse</h2>
 
 <p>Bonjour ' . $reservation->getClientId()->getNom() . ',</p>
 <p>

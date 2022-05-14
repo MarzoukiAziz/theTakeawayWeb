@@ -203,4 +203,28 @@ class Reservation
 
         return $this;
     }
+
+    /**
+     * @return Collection|Table[]
+     */
+    public function getTables(): Collection
+    {
+        return $this->tables;
+    }
+
+    public function addTable(Table $table): self
+    {
+        if (!$this->tables->contains($table)) {
+            $this->tables[] = $table;
+        }
+
+        return $this;
+    }
+
+    public function removeTable(Table $table): self
+    {
+        $this->tables->removeElement($table);
+
+        return $this;
+    }
 }

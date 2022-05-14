@@ -20,9 +20,6 @@
         countDownDate.setFullYear({{ promotion.dateDebut|date("Y") }})
         countDownDate.setUTCMonth({{ promotion.dateDebut|date("m") }}-1)
         countDownDate.setUTCDate({{ promotion.dateDebut|date("d") }})
-        countDownDate.setHours({{ promotion.heureDebut|date("H") }})
-        countDownDate.setMinutes({{ promotion.heureDebut|date("i") }})
-        countDownDate.setSeconds({{ promotion.heureDebut|date("s") }})
 
         // Update the count down every 1 second
         var x = setInterval(function() {
@@ -73,9 +70,28 @@
         {% for promotion in promotions %}
 
 
-
+<div>
             <p style=" text-align: center;font-size: 60px;margin-top: 0px;" id="demo"></p>
             <ul class="countdown">
+                {% if loop.index == 1 %}
+                    <li class="brd-rd50 yellow-bg wow bounceIn" data-wow-delay="0.2s">
+                        <span id="day" class="days"></span>
+                        <p class="days_ref">Days</p>
+                    </li>
+                    <li class="brd-rd50 yellow-bg wow bounceIn" data-wow-delay="0.4s">
+                        <span id="hour" class="hours"></span>
+                        <p class="hours_ref">Hours</p>
+                    </li>
+                    <li class="brd-rd50 yellow-bg wow bounceIn" data-wow-delay="0.5s">
+                        <span id="minute" class="minutes"></span>
+                        <p class="minutes_ref">Minutes</p>
+                    </li>
+                    <li class="brd-rd50 yellow-bg wow bounceIn" data-wow-delay="0.6s">
+                        <span id="second" class="seconds"></span>
+                        <p class="seconds_ref">Seconds</p>
+                    </li>
+                {% endif %}
+                <br>
                 <h1 class="badge badge-danger " style="font-size: 30px"><a
                             href="{{ path('promo',{'pid':promotion.id}) }}">{{ promotion.element.nom }}</a></h1>
                 <br>
@@ -83,27 +99,11 @@
                     {{ promotion.dateDebut | date("d M Y") }} - {{ promotion.dateFin | date("d M Y") }}
                 </p>
                 <br>
-                <img src="{{ promotion.banner }}" width="700px">
+                <img src="/couvertures/{{ promotion.banner }}" width="700px">
                 <br>
-                {% if loop.index == 1 %}
-                <li class="brd-rd50 yellow-bg wow bounceIn" data-wow-delay="0.2s">
-                    <span id="day" class="days"></span>
-                    <p class="days_ref">Days</p>
-                </li>
-                <li class="brd-rd50 yellow-bg wow bounceIn" data-wow-delay="0.4s">
-                    <span id="hour" class="hours"></span>
-                    <p class="hours_ref">Hours</p>
-                </li>
-                <li class="brd-rd50 yellow-bg wow bounceIn" data-wow-delay="0.5s">
-                    <span id="minute" class="minutes"></span>
-                    <p class="minutes_ref">Minutes</p>
-                </li>
-                <li class="brd-rd50 yellow-bg wow bounceIn" data-wow-delay="0.6s">
-                    <span id="second" class="seconds"></span>
-                    <p class="seconds_ref">Seconds</p>
-                </li>
-                {% endif %}
+
             </ul>
+</div>
         {% endfor %}
 
     </div>

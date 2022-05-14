@@ -22,8 +22,7 @@
                 <th scope="col">Id</th>
                 <th scope="col">DateDebut</th>
                 <th scope="col">DateFin</th>
-                <th scope="col">HeureDebut</th>
-                <th scope="col">HeureFin</th>
+
                 <th scope="col">PrixPromo</th>
                 <th scope="col">Nom du plat</th>
 
@@ -37,8 +36,6 @@
                 <td>{{ promotion.id }}</td>
                 <td>{{ promotion.dateDebut ? promotion.dateDebut|date('Y-m-d') : '' }}</td>
                 <td>{{ promotion.dateFin ? promotion.dateFin|date('Y-m-d') : '' }}</td>
-                <td>{{ promotion.heureDebut ? promotion.heureDebut|date('H:i:s') : '' }}</td>
-                <td>{{ promotion.heureFin ? promotion.heureFin|date('H:i:s') : '' }}</td>
                 <td>{{ promotion.prixPromo }}</td>
                 <td>{{ promotion.element.nom }}</td>
 

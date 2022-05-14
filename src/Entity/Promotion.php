@@ -32,16 +32,6 @@ class Promotion
      */
     private $dateFin;
 
-    /**
-     * @ORM\Column(type="time")
-     */
-    private $heureDebut;
-
-    /**
-     * @ORM\Column(type="time")
-     * @Assert\GreaterThan(propertyPath="heureDebut")
-     */
-    private $heureFin;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -89,29 +79,6 @@ class Promotion
         return $this;
     }
 
-    public function getHeureDebut(): ?\DateTimeInterface
-    {
-        return $this->heureDebut;
-    }
-
-    public function setHeureDebut(\DateTimeInterface $heureDebut): self
-    {
-        $this->heureDebut = $heureDebut;
-
-        return $this;
-    }
-
-    public function getHeureFin(): ?\DateTimeInterface
-    {
-        return $this->heureFin;
-    }
-
-    public function setHeureFin(\DateTimeInterface $heureFin): self
-    {
-        $this->heureFin = $heureFin;
-
-        return $this;
-    }
 
     public function getBanner(): ?string
     {

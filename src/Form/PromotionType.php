@@ -16,8 +16,7 @@ class PromotionType extends AbstractType
         $builder
             ->add('dateDebut')
             ->add('dateFin')
-            ->add('heureDebut')
-            ->add('heureFin')
+
             ->add('banner')
             ->add('prixPromo')
             ->add('element',EntityType::class,[

@@ -67,7 +67,7 @@ class Restaurant
     private $telephone;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="string")
      */
     private $images = [];
 
@@ -188,12 +188,12 @@ class Restaurant
         return $this;
     }
 
-    public function getImages(): ?array
+    public function getImages(): ?string
     {
         return $this->images;
     }
 
-    public function setImages(array $images): self
+    public function setImages(string $images): self
     {
         $this->images = $images;
 

@@ -30,14 +30,7 @@
                 <th>DateFin</th>
                 <td>{{ promotion.dateFin ? promotion.dateFin|date('Y-m-d') : '' }}</td>
             </tr>
-            <tr>
-                <th>HeureDebut</th>
-                <td>{{ promotion.heureDebut ? promotion.heureDebut|date('H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>HeureFin</th>
-                <td>{{ promotion.heureFin ? promotion.heureFin|date('H:i:s') : '' }}</td>
-            </tr>
+
             <tr>
                 <th>Banner</th>
                 <td><img src="{{ promotion.banner }}"></td>

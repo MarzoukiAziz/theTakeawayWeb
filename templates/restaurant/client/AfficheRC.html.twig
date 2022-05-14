@@ -138,12 +138,11 @@
 
                                         <div class="restaurant-detail-thumb">
                                             <ul class="restaurant-detail-img-carousel">
-                                                {% for img in restaurant.images %}
-                                                    <li><img src="{{ asset('couvertures/'~ img) }}"
+                                                    <li><img src="{{ asset('couvertures/'~ restaurant.images) }}"
                                                              style="width: 600px;height: 400px">
                                                     </li>
 
-                                                {% endfor %}
+
                                             </ul>
                                             <ul class="restaurant-detail-thumb-carousel">
                                                 {% for img in restaurant.images %}
